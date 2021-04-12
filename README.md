@@ -20,6 +20,16 @@ April 2021
 
 `npm i eslint --save-dev`
 
+`npm install --save-dev eslint-config-prettier`
+
+- [cors](https://www.npmjs.com/package/cors): CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
+
+`npm i cors`
+
+- [nodemon](https://www.npmjs.com/package/nodemon): nodemon is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected.
+
+`npm install --save-dev nodemon`
+
 ## Useful links
 
 - [codeconcept/whisky-cms-ng](https://github.com/codeconcept/whisky-cms-ng).
