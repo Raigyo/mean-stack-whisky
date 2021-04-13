@@ -8,6 +8,40 @@ April 2021
 
 ![logo](_readme-img/logo.jpg)
 
+## Front End Part
+
+### Observable
+
+Source of data pushed when we suscribe.
+
+### Modules
+
+**material**
+
+`ng g m material --flat` => Ceate module _\_src/app/material.module.ts_
+
+### Components
+
+**blogpost**
+
+`ng g c blogpost --skip-tests --module=app` => Create new blogpost component
+
+**blogpost-list**
+
+`ng g c blogpost-list --skip-tests --module=app` => Create new blogpost-list component
+
+### Models: Interfaces
+
+We use interfaces instead classes because we don't need behaviors (methods).
+
+Interface _blogpost.ts_ in _\_src/app/models_
+
+### Services
+
+**blogpost**
+
+`ng g s blogpost`
+
 ## Dependancies
 
 ### API
@@ -50,9 +84,21 @@ April 2021
 
 `npm i mongoose`
 
-- [body-parser](https://www.npmjs.com/package/body-parser): Node.js body parsing middleware.
+### APP
 
-`npm i body-parser`
+- [Angular CLI](https://angular.io/cli): The Angular CLI is a command-line interface tool that you use to initialize, develop, scaffold, and maintain Angular applications directly from a command shell.
+
+```batch
+ng new my-first-project
+cd my-first-project
+ng serve
+```
+
+`npm install -g @angular/cli`
+
+- [Angular Material](https://material.angular.io/): Material Design components for Angular.
+
+`ng add @angular/material`
 
 ## Useful links
 
