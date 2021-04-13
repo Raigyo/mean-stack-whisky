@@ -43,9 +43,13 @@ April 2021
 - `mongo`: MongoDB shell
 - `show dbs`: View databases
 
-- [mongoose](https://www.npmjs.com/package/mongoose): Mongoose is a MongoDB object modeling tool designed to work in an asynchronous environment. Mongoose supports both promises and callbacks..
+- [mongoose](https://www.npmjs.com/package/mongoose): Mongoose is a MongoDB object modeling tool designed to work in an asynchronous environment. Mongoose supports both promises and callbacks.
 
 `npm i mongoose`
+
+- [body-parser](https://www.npmjs.com/package/body-parser): Node.js body parsing middleware.
+
+`npm i body-parser`
 
 ## Useful links
 
