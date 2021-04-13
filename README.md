@@ -42,6 +42,9 @@ April 2021
 
 - `mongo`: MongoDB shell
 - `show dbs`: View databases
+- `use [DB_NAME]`: Choose databases
+- `show collections`: View collections
+- `db.[COLLECTION_NAME].find({})`: View documents in collection
 
 - [mongoose](https://www.npmjs.com/package/mongoose): Mongoose is a MongoDB object modeling tool designed to work in an asynchronous environment. Mongoose supports both promises and callbacks.
 
