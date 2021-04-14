@@ -12,20 +12,35 @@ April 2021
 
 ## Front End part
 
-- _./src/app/app.module.ts_: import / export all modules used in the application
-- _./src/app/app-routing.module.ts_: routing
-- _./src/app/material.module.ts_: import / export modules related to material design. _./src/app/material.module.ts_ has to be imported in _./src/app/app.module.ts_
+- _./src/app/app.module.ts_: import / export all modules used in the application.
+- _./src/app/app-routing.module.ts_: routing.
+- _./src/app/material.module.ts_: import / export modules related to material design. _./src/app/material.module.ts_ has to be imported in _./src/app/app.module.ts_.
 
 **Home**
 
-- _./src/app/app.component.html_: \<router-outlet\> add the content from routing component _./src/app/app-routing.module.ts_
+- _./src/app/app.component.html_: \<router-outlet\> add the content from routing component _./src/app/app-routing.module.ts_.
 
-**blogpost**
+**blogposts list**
 
-- _./src/app/models/blogpost.ts_: typed schema
-- _./src/app/services/blogpost.service.ts_: request on MongoDB
-- _./src/app/blogpost-list/blogpost-list.component.ts_: observable on Blogpost[]
-- _./src/app/blogpost-list/blogpost-list.component.html_: view
+- _./src/app/models/blogpost.ts_: typed schema.
+- _./src/app/services/blogpost.service.ts_: request on MongoDB.
+- _./src/app/blogpost-list/blogpost-list.component.ts_: observable on Blogpost[].
+- _./src/app/blogpost-list/blogpost-list.component.html_: view. Uses routerLink to not reload the page when we click on a link.
+
+**blogpost by id**
+
+- _./src/app/models/blogpost.ts_: typed schema.
+- _./src/app/app-routing.module.ts_: add a route for "blog-posts/:id".
+- _./src/app/services/blogpost.service.ts_: request on MongoDB.
+- _whisky-cms-ng\src\app\blogpost\blogpost.component.ts_: observable on Blogpost. Uses ActivatedRoute to retrieve url and id.
+- _./src/app/blogpost/blogpost.component.html_: view.
+
+Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>`
+
+**admin**
+
+_./src/app/admin/admin.component.html_: view.
+_./src/app/admin/admin.component.ts_: request on MongoDB. CRUD on all articles.
 
 ## Angular concepts
 

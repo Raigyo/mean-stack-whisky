@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Blogpost = require("../models/blogpost");
+const mongoose = require("mongoose");
 
 router.get("/ping", (req, res) => {
   res.status(200).json({ msg: "pong", date: new Date() });
@@ -50,6 +51,28 @@ router.delete("/blog-posts/:id", (req, res) => {
     res.status(202).json({
       message: `blog post with id ${blogPostDeletedById._id} deleted`,
     });
+  });
+});
+
+// delete several ids sent from front-end
+router.delete("/blog-posts", (req, res) => {
+  const ids = req.query.ids;
+  console.log("ids", ids);
+  const allIds = ids.split(",").map((id) => {
+    // cast string to check if it matches mongoose keys (ObjectId) and return bool
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+      // change string to ObjectId
+      return mongoose.Types.ObjectId(id);
+    } else {
+      console.log("Id not valid!");
+    }
+  });
+  const condition = { _id: { $in: allIds } };
+  Blogpost.deleteMany(condition, (err, result) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+    res.status(202).json(result);
   });
 });
 

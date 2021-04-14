@@ -8,9 +8,11 @@ import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { BlogpostComponent } from "./blogpost/blogpost.component";
 import { BlogpostListComponent } from "./blogpost-list/blogpost-list.component";
+import { ErrorpageComponent } from './errorpage/errorpage.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
-  declarations: [AppComponent, BlogpostComponent, BlogpostListComponent],
+  declarations: [AppComponent, BlogpostComponent, BlogpostListComponent, ErrorpageComponent, AdminComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
