@@ -1,3 +1,4 @@
+import { MaterialModule } from "./material.module";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule } from "@angular/common/http";
@@ -15,6 +16,7 @@ import { BlogpostListComponent } from "./blogpost-list/blogpost-list.component";
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

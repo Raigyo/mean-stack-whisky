@@ -9,6 +9,7 @@ import { Blogpost } from "../models/blogpost";
   styleUrls: ["./blogpost-list.component.css"],
 })
 export class BlogpostListComponent implements OnInit {
+  // suffix $ = observable
   blogPostList$!: Observable<Blogpost[]>;
 
   constructor(private blogpostService: BlogpostService) {}

@@ -8,7 +8,26 @@ April 2021
 
 ![logo](_readme-img/logo.jpg)
 
-## Front End Part
+## Test localy
+
+## Front End part
+
+- _./src/app/app.module.ts_: import / export all modules used in the application
+- _./src/app/app-routing.module.ts_: routing
+- _./src/app/material.module.ts_: import / export modules related to material design. _./src/app/material.module.ts_ has to be imported in _./src/app/app.module.ts_
+
+**Home**
+
+- _./src/app/app.component.html_: \<router-outlet\> add the content from routing component _./src/app/app-routing.module.ts_
+
+**blogpost**
+
+- _./src/app/models/blogpost.ts_: typed schema
+- _./src/app/services/blogpost.service.ts_: request on MongoDB
+- _./src/app/blogpost-list/blogpost-list.component.ts_: observable on Blogpost[]
+- _./src/app/blogpost-list/blogpost-list.component.html_: view
+
+## Angular concepts
 
 ### Observable
 
@@ -16,31 +35,25 @@ Source of data pushed when we suscribe.
 
 ### Modules
 
-**material**
-
-`ng g m material --flat` => Ceate module _\_src/app/material.module.ts_
+Ex: `ng g m material --flat` => Ceate module _\_src/app/material.module.ts_
 
 ### Components
 
-**blogpost**
+Ex: `ng g c blogpost --skip-tests --module=app` => Create new blogpost component
 
-`ng g c blogpost --skip-tests --module=app` => Create new blogpost component
-
-**blogpost-list**
-
-`ng g c blogpost-list --skip-tests --module=app` => Create new blogpost-list component
+Ex: `ng g c blogpost-list --skip-tests --module=app` => Create new blogpost-list component
 
 ### Models: Interfaces
 
 We use interfaces instead classes because we don't need behaviors (methods).
 
-Interface _blogpost.ts_ in _\_src/app/models_
+Ex: Interface _blogpost.ts_ in _\_src/app/models_
 
 ### Services
 
 **blogpost**
 
-`ng g s blogpost`
+Ex: `ng g s blogpost` => Create new blogpost service
 
 ## Dependancies
 
@@ -107,3 +120,4 @@ ng serve
 - [Comment installer MongoDB sur Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-20-04-fr).
 - [Install MongoDB - WSL 2](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database).
 - [The mongo Shell](https://docs.mongodb.com/manual/mongo/).
+- [Angular - Text interpolation](https://angular.io/guide/interpolation#text-interpolation).
