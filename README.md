@@ -39,14 +39,34 @@ Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>
 
 **admin**
 
-_./src/app/admin/admin.component.html_: view.
-_./src/app/admin/admin.component.ts_: request on MongoDB. CRUD on all articles.
+- _./src/app/admin/admin.component.html_: view.
+- _./src/app/admin/admin.component.ts_: request on MongoDB. CRUD on all articles.
+
+**blogposts create**
+
+- _./src/app/services/blogpost.service.ts_: request on MongoDB + `subject` to refresh _./src/app/admin/admin.component.html_.
+- _./src/app/blogpost-create/blogpost-create.component.html_: view.
+- _./src/app/blogpost-create/blogpost-create.component.ts_: manage FormGroup and dispatching for refresh.
 
 ## Angular concepts
 
 ### Observable
 
-Source of data pushed when we suscribe.
+An observable is source of ollections of multiple values pushed when we suscribe.
+
+### Observer
+
+An Observer is a consumer of values delivered by an Observable. Observers are simply a set of callbacks, one for each type of notification delivered by the Observable: `next`, `error`, and `complete`.
+
+### Subject
+
+A subject is a special type of Observable that allows values to be multicasted to many Observers. While plain Observables are unicast (each subscribed Observer owns an independent execution of the Observable), Subjects are multicast.
+
+### Pipeable Operators
+
+### Creation Operators
+
+### Higher-order Observables
 
 ### Modules
 

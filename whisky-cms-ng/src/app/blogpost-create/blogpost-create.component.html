@@ -1,0 +1,17 @@
+<h2 class="mat-h2">Create</h2>
+<mat-card>
+  <form [formGroup]="creationForm" #formDirective="ngForm" (submit)="createBlogpost(formDirective)">
+    <div class="example-container">
+      <mat-form-field>
+        <input matInput placeholder="Title" formControlName="title" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Sub-title" formControlName="subtitle" required>
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput placeholder="Content" formControlName="content" required></textarea>
+      </mat-form-field>
+      <button mat-button type="submit">Create</button>
+    </div>
+  </form>
+</mat-card>

@@ -17,3 +17,10 @@ a {
 a:hover {
   color: blanchedalmond;
 }
+
+h2 {
+  text-align: center;
+  text-transform: uppercase;
+  padding-top: 15px;
+  color: white;
+}

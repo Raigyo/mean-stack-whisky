@@ -18,8 +18,10 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     // this.blogPosts$ = this.blogpostService.getBlogposts();
-    this.blogpostService.getBlogposts().subscribe((data) => {
-      this.allBlogposts = data;
+    this.blogpostService.getBlogposts().subscribe((data) => this.refresh(data));
+    this.blogpostService.handleBlogpostCreated().subscribe((data) => {
+      console.log("Admin component received", data);
+      this.refresh(data);
     });
   }
 
@@ -38,7 +40,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  refresh(data: Object) {
+  refresh(data: any) {
     console.log("data", data);
     this.blogpostService.getBlogposts().subscribe((data) => {
       this.allBlogposts = data;
@@ -47,11 +49,5 @@ export class AdminComponent implements OnInit {
 
   handleError(error: { status: number; statusText: any }) {
     console.error(error);
-
-    // if (error.status === 401) {
-    //   this.router.navigate(["/auth"]);
-    // } else {
-    //   this.errorFromServer = `Error ${error.status} - ${error.statusText}`;
-    // }
   }
 }

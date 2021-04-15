@@ -1,3 +1,4 @@
+<h2 class="mat-h2">Delete</h2>
 <mat-selection-list #blogposts>
   <mat-list-option *ngFor="let bp of allBlogposts" [value]="bp._id">
     {{bp.title}}
@@ -11,3 +12,5 @@
       *ngIf="blogposts.selectedOptions.selected.length>0">Delete</button>
   </mat-card-actions>
 </mat-card>
+
+<app-blogpost-create></app-blogpost-create>
