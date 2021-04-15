@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const Blogpost = require("../models/blogpost");
 const mongoose = require("mongoose");
+const multer = require("multer");
+const crypto = require("crypto");
+const path = require("path");
+
+const Blogpost = require("../models/blogpost");
 
 router.get("/ping", (req, res) => {
   res.status(200).json({ msg: "pong", date: new Date() });
@@ -19,6 +23,32 @@ router.get("/blog-posts", (req, res) => {
       })
     );
 });
+
+// file upload configuration
+const storage = multer.diskStorage({
+  destination: "./uploads/",
+  filename: function (req, file, callback) {
+    crypto.pseudoRandomBytes(16, function (err, raw) {
+      if (err) return callback(err);
+      callback(null, raw.toString("hex") + path.extname(file.originalname));
+    });
+  },
+});
+const upload = multer({ storage: storage });
+
+// file upload route
+router.post("/blog-posts/images", upload.single("blogimage"), (req, res) => {
+  console.log("req.file", req.file);
+  if (!req.file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+    return res.status(400).json({ msg: "only image files please" });
+  }
+  res.status(201).send({ fileName: req.file.filename, file: req.file });
+});
+
+// file upload
+// router.post("/blog-posts/images", upload.single("blogimage"), (req, res) => {
+//   res.status(201).send({ fileName: req.file.filename, file: req.file });
+// });
 
 router.post("/blog-posts", (req, res) => {
   const blogPost = new Blogpost(req.body);

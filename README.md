@@ -132,6 +132,10 @@ Ex: `ng g s blogpost` => Create new blogpost service
 
 `npm i mongoose`
 
+- [multer](https://www.npmjs.com/package/multer): Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files.
+
+`npm i multer`
+
 ### APP
 
 - [Angular CLI](https://angular.io/cli): The Angular CLI is a command-line interface tool that you use to initialize, develop, scaffold, and maintain Angular applications directly from a command shell.
