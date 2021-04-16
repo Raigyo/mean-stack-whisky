@@ -26,6 +26,7 @@ April 2021
 - _./src/app/services/blogpost.service.ts_: request on MongoDB.
 - _./src/app/blogpost-list/blogpost-list.component.ts_: observable on Blogpost[].
 - _./src/app/blogpost-list/blogpost-list.component.html_: view. Uses routerLink to not reload the page when we click on a link.
+- _./src/environments/environment.ts_: images path
 
 **blogpost by id**
 
@@ -160,5 +161,7 @@ ng serve
 - [Install MongoDB - WSL 2](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database).
 - [The mongo Shell](https://docs.mongodb.com/manual/mongo/).
 - [Angular - Text interpolation](https://angular.io/guide/interpolation#text-interpolation).
+- [Understanding Angular Property Binding and Interpolation](https://www.telerik.com/blogs/understanding-angular-property-binding-and-interpolation).
+- [Interpolation Vs Property Binding in Angular2](https://www.codementor.io/@adekunleoyaniyi/interpolation-vs-property-binding-in-angular2-eu1tzbyn4?utm_content=68092897&utm_medium=social&utm_source=twitter).
 - [How to deploy a MERN Stack App to Heroku](https://www.youtube.com/watch?v=5PaUiPyBDJY).
 - [How to deploy MERN applications 🚨 (Heroku and Atlas)](https://www.youtube.com/watch?v=2AIL1c-cJM0).
