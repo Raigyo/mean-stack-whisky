@@ -7,30 +7,33 @@ const path = require("path");
 
 const Blogpost = require("../models/blogpost");
 
-router.get("/ping", (req, res) => {
-  res.status(200).json({ msg: "pong", date: new Date() });
+// CREATE
+
+router.post("/blog-posts", (req, res) => {
+  const blogPost = new Blogpost({
+    ...req.body,
+    image: lastUploadedImageName,
+  });
+  console.log("blogPost:", req.body);
+  blogPost.save((err, blogPost) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+    res.status(201).json(blogPost);
+  });
 });
 
-router.get("/blog-posts", (req, res) => {
-  Blogpost.find()
-    .sort({ createdOn: -1 })
-    .exec()
-    .then((blogPosts) => res.status(200).json(blogPosts))
-    .catch((err) =>
-      res.status(500).json({
-        message: "blog posts not found",
-        error: err,
-      })
-    );
-});
-
-// file upload configuration
+// File upload configuration
+let lastUploadedImageName = "";
 const storage = multer.diskStorage({
   destination: "./uploads/",
   filename: function (req, file, callback) {
     crypto.pseudoRandomBytes(16, function (err, raw) {
       if (err) return callback(err);
-      callback(null, raw.toString("hex") + path.extname(file.originalname));
+      // callback(null, raw.toString("hex") + path.extname(file.originalname));
+      lastUploadedImageName =
+        raw.toString("hex") + path.extname(file.originalname);
+      callback(null, lastUploadedImageName);
     });
   },
 });
@@ -62,14 +65,23 @@ router.post("/blog-posts/images", (req, res) => {
   });
 });
 
-router.post("/blog-posts", (req, res) => {
-  const blogPost = new Blogpost(req.body);
-  blogPost.save((err, blogPost) => {
-    if (err) {
-      return res.status(500).json(err);
-    }
-    res.status(201).json(blogPost);
-  });
+// READ
+
+router.get("/ping", (req, res) => {
+  res.status(200).json({ msg: "pong", date: new Date() });
+});
+
+router.get("/blog-posts", (req, res) => {
+  Blogpost.find()
+    .sort({ createdOn: -1 })
+    .exec()
+    .then((blogPosts) => res.status(200).json(blogPosts))
+    .catch((err) =>
+      res.status(500).json({
+        message: "blog posts not found",
+        error: err,
+      })
+    );
 });
 
 router.get("/blog-posts/:id", (req, res) => {
@@ -84,6 +96,15 @@ router.get("/blog-posts/:id", (req, res) => {
     );
 });
 
+// router.get("/images/:image", (req, res) => {
+//   const image = req.params.image;
+//   res.sendFile(path.join(__dirname, `./uploads/${image}`));
+// });
+
+// UPDATE
+
+// DELETE
+
 router.delete("/blog-posts/:id", (req, res) => {
   const id = req.params.id;
   Blogpost.findByIdAndDelete(id, (err, blogPostDeletedById) => {
@@ -96,7 +117,7 @@ router.delete("/blog-posts/:id", (req, res) => {
   });
 });
 
-// delete several ids sent from front-end
+// Delete several ids sent from front-end
 router.delete("/blog-posts", (req, res) => {
   const ids = req.query.ids;
   console.log("ids", ids);

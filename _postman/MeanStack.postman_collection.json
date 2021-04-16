@@ -48,6 +48,25 @@
 			"response": []
 		},
 		{
+			"name": "GET blog-posts image",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/adc1db09f8ef86dd9e52610e675ec709.png",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"adc1db09f8ef86dd9e52610e675ec709.png"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GET blog-posts by ID",
 			"request": {
 				"method": "GET",
@@ -143,7 +162,7 @@
 						{
 							"key": "blogimage",
 							"type": "file",
-							"src": "///wsl$/Ubuntu-18.04/home/chilot/development/MeanStack/_readme-img/logo.jpg"
+							"src": []
 						}
 					]
 				},

@@ -39,13 +39,13 @@ Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>
 
 **admin**
 
-- _./src/app/admin/admin.component.html_: view.
+- _./src/app/admin/admin.component.html_: view with CRUD.
 - _./src/app/admin/admin.component.ts_: request on MongoDB. CRUD on all articles.
 
 **blogposts create**
 
-- _./src/app/services/blogpost.service.ts_: request on MongoDB + `subject` to refresh _./src/app/admin/admin.component.html_.
-- _./src/app/blogpost-create/blogpost-create.component.html_: view.
+- _./src/app/services/blogpost.service.ts_: request on MongoDB + `subject` to refresh _./src/app/admin/admin.component.html_. Method upload().
+- _./src/app/blogpost-create/blogpost-create.component.html_: view with submission form.
 - _./src/app/blogpost-create/blogpost-create.component.ts_: manage FormGroup and dispatching for refresh.
 
 ## Angular concepts

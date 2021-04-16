@@ -1,6 +1,6 @@
-import { BlogpostService } from "./../services/blogpost.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ElementRef } from "@angular/core";
 import { FormBuilder, FormGroup, FormGroupDirective } from "@angular/forms";
+import { BlogpostService } from "./../services/blogpost.service";
 
 @Component({
   selector: "app-blogpost-create",
@@ -11,7 +11,8 @@ export default class BlogpostCreateComponent implements OnInit {
   creationForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
-    private blogpostService: BlogpostService
+    private blogpostService: BlogpostService,
+    private el: ElementRef
   ) {}
 
   ngOnInit() {
@@ -23,12 +24,31 @@ export default class BlogpostCreateComponent implements OnInit {
       title: "",
       subtitle: "",
       content: "",
+      image: "",
     });
+  }
+
+  upload() {
+    let inputEl: HTMLInputElement = this.el.nativeElement.querySelector(
+      "#image"
+    );
+    let fileCount: number = inputEl.files!.length; // !: we confirm it won't be null
+    console.log("fileCount:", fileCount);
+    let formData = new FormData();
+    if (fileCount > 0) {
+      //append the key name 'image' with the first file in the element
+      // name has to match with the one used in single method on server side
+      formData.append("blogimage", inputEl.files!.item(0)!);
+      this.blogpostService.uploadImage(formData).subscribe(
+        (data) => console.log(data),
+        (error) => console.error(error)
+      );
+    }
   }
 
   createBlogpost(formDirective: FormGroupDirective) {
     if (this.creationForm.valid) {
-      console.log("this.creationForm:", this.creationForm);
+      // console.log("this.creationForm:", this.creationForm);
       this.blogpostService.createBlogpost(this.creationForm.value).subscribe(
         (data) => this.handleSuccess(data, formDirective),
         (error) => this.handleError(error)
