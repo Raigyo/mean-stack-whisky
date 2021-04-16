@@ -160,3 +160,5 @@ ng serve
 - [Install MongoDB - WSL 2](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database).
 - [The mongo Shell](https://docs.mongodb.com/manual/mongo/).
 - [Angular - Text interpolation](https://angular.io/guide/interpolation#text-interpolation).
+- [How to deploy a MERN Stack App to Heroku](https://www.youtube.com/watch?v=5PaUiPyBDJY).
+- [How to deploy MERN applications 🚨 (Heroku and Atlas)](https://www.youtube.com/watch?v=2AIL1c-cJM0).

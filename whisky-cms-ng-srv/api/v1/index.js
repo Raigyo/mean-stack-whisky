@@ -34,21 +34,33 @@ const storage = multer.diskStorage({
     });
   },
 });
-const upload = multer({ storage: storage });
 
-// file upload route
-router.post("/blog-posts/images", upload.single("blogimage"), (req, res) => {
-  console.log("req.file", req.file);
-  if (!req.file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-    return res.status(400).json({ msg: "only image files please" });
-  }
-  res.status(201).send({ fileName: req.file.filename, file: req.file });
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype == "image/png" ||
+      file.mimetype == "image/jpg" ||
+      file.mimetype == "image/jpeg" ||
+      file.mimetype == "image/gif"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error("Only .png, .gif, .jpg and .jpeg format allowed!"));
+    }
+  },
+}).single("blogimage");
+
+// File upload route
+router.post("/blog-posts/images", (req, res) => {
+  upload(req, res, function (error) {
+    if (error) {
+      return res.status(400).send(error.message);
+    }
+    res.status(201).send({ fileName: req.file.filename, file: req.file });
+  });
 });
-
-// file upload
-// router.post("/blog-posts/images", upload.single("blogimage"), (req, res) => {
-//   res.status(201).send({ fileName: req.file.filename, file: req.file });
-// });
 
 router.post("/blog-posts", (req, res) => {
   const blogPost = new Blogpost(req.body);
