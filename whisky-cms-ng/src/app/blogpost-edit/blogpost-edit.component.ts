@@ -1,7 +1,9 @@
 import { Component, OnInit, ElementRef } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { FormBuilder, FormGroup, FormGroupDirective } from "@angular/forms";
-import { Observable } from "rxjs";
+// import { FormBuilder, FormGroup, FormGroupDirective } from "@angular/forms";
+import { FormGroupDirective } from "@angular/forms";
+// import { Observable } from "rxjs";
+import { NgForm } from "@angular/forms";
 
 import { Blogpost } from "../models/blogpost";
 import { BlogpostService } from "../services/blogpost.service";
@@ -12,12 +14,10 @@ import { BlogpostService } from "../services/blogpost.service";
   styleUrls: ["./blogpost-edit.component.css"],
 })
 export class BlogpostEditComponent implements OnInit {
-  editForm!: FormGroup;
   blogpostId!: string;
   blogpost!: Blogpost;
 
   constructor(
-    private fb: FormBuilder,
     private blogpostService: BlogpostService,
     private el: ElementRef,
     private activatedRoute: ActivatedRoute
@@ -32,17 +32,7 @@ export class BlogpostEditComponent implements OnInit {
       },
       (error) => console.error(error)
     );
-    // this.createForm();
   }
-
-  // createForm() {
-  //   this.editForm = this.fb.group({
-  //     title: "",
-  //     subTitle: "",
-  //     content: "",
-  //     image: "",
-  //   });
-  // }
 
   upload() {
     //retrieve file upload HTML tag
@@ -62,31 +52,18 @@ export class BlogpostEditComponent implements OnInit {
     }
   }
 
-  updateBlogpost(formDirective: FormGroupDirective) {
-    if (this.editForm.valid) {
-      console.log("editForm.value", this.editForm.value);
-      // this.editForm.controls.image.setValue(this.editForm.controls.image || 'aze');
-      this.blogpostService
-        .updateBlogpost(this.blogpostId, this.editForm.value)
-        .subscribe(
-          (data) => this.handleSuccess(data, formDirective),
-          (error) => this.handleError(error)
-        );
-    }
+  updateBlogpost(formDirective: NgForm) {
+    console.log(this.blogpost);
+    const editedBlogpost = this.blogpost;
+    this.blogpostService
+      .updateBlogpost(this.blogpostId, editedBlogpost)
+      .subscribe(
+        (data) => this.handleSuccess(data, formDirective),
+        (error) => this.handleError(error)
+      );
   }
 
-  // updateBlogpost(formDirective: FormGroupDirective) {
-  //   console.log(this.blogpost);
-  //   const editedBlogpost = this.blogpost;
-  //   this.blogpostService
-  //     .updateBlogpost(this.blogpostId, editedBlogpost)
-  //     .subscribe(
-  //       (data) => this.handleSuccess(data, formDirective),
-  //       (error) => this.handleError(error)
-  //     );
-  // }
-
-  handleSuccess(data: any, formDirective: FormGroupDirective) {
+  handleSuccess(data: any, formDirective: NgForm) {
     console.log("OK handleSuccess - blog post updated", data);
     formDirective.reset();
     formDirective.resetForm();

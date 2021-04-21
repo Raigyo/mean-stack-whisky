@@ -113,15 +113,30 @@ router.get("/blog-posts/:id", (req, res) => {
 // UPDATE
 
 router.put("/blog-posts/:id", (req, res) => {
-  // upload(req, res, function (error) {
-  //   if (error) {
-  //     return res.status(400).send(error.message);
-  //   }
-  //   res.status(201).send({ fileName: req.file.filename, file: req.file });
-  // });
+  const smallImagePath = `./uploads/${lastUploadedImageName}`;
+  const outputName = `./uploads/small-${lastUploadedImageName}`;
+  resize({
+    path: smallImagePath,
+    width: 200,
+    height: 200,
+    outputName: outputName,
+  })
+    .then((data) => {
+      console.log("OK resize", data.size);
+    })
+    .catch((err) => console.error("err from resize", err));
   const id = req.params.id;
   const conditions = { _id: id };
-  const blogPost = { ...req.body, image: lastUploadedImageName };
+  // const article = {
+  //   ...req.body,
+  //   image: lastUploadedImageName,
+  //   smallImage: `small-${lastUploadedImageName}`,
+  // };
+  const blogPost = {
+    ...req.body,
+    image: lastUploadedImageName,
+    smallImage: `small-${lastUploadedImageName}`,
+  };
   const update = { $set: blogPost };
   const options = {
     upsert: true, // if document exists: update, else create

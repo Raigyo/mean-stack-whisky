@@ -51,14 +51,18 @@ Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>
 
 **blogposts edit**
 
-- _./src/app/blogpost-edit/blogpost-edit.component.html_:
+- _./src/app/services/blogpost.service.ts_: request on MongoDB
+- _./src/app/blogpost-edit/blogpost-edit.component.html_: Template driven form
+- _./src/app/blogpost-edit/blogpost-edit.component.ts_: Manage upload and updated blogpost
+
+Todo: create / edit : disable create button if not valid
 
 ## Back-end part
 
-- _./appjs_:
+- _./appjs_: Express and Mongo connection. Static folders.
 - _./utils/resize.js_: Helper to resize images.
-- _./api/models/blogpost.js_:
-- _./api/v1/index.js_:
+- _./api/models/blogpost.js_: Mongoose model.
+- _./api/v1/index.js_: Routes + Api CRUD.
 
 ## Angular concepts
 
@@ -98,9 +102,9 @@ Ex: Interface _blogpost.ts_ in _\_src/app/models_
 
 ### Services
 
-**blogpost**
-
 Ex: `ng g s blogpost` => Create new blogpost service
+
+### Reactive form vs Template driven form
 
 ## Dependancies
 
