@@ -11,7 +11,8 @@ import { BlogpostComponent } from "./blogpost/blogpost.component";
 import { BlogpostListComponent } from "./blogpost-list/blogpost-list.component";
 import { ErrorpageComponent } from "./errorpage/errorpage.component";
 import { AdminComponent } from "./admin/admin.component";
-import BlogpostCreateComponent from "./blogpost-create/blogpost-create.component";
+import { BlogpostCreateComponent } from "./blogpost-create/blogpost-create.component";
+import { BlogpostEditComponent } from "./blogpost-edit/blogpost-edit.component";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import BlogpostCreateComponent from "./blogpost-create/blogpost-create.component
     ErrorpageComponent,
     AdminComponent,
     BlogpostCreateComponent,
+    BlogpostEditComponent,
   ],
   imports: [
     BrowserModule,

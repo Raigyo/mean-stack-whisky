@@ -7,7 +7,7 @@ import { BlogpostService } from "./../services/blogpost.service";
   templateUrl: "./blogpost-create.component.html",
   styleUrls: ["./blogpost-create.component.css"],
 })
-export default class BlogpostCreateComponent implements OnInit {
+export class BlogpostCreateComponent implements OnInit {
   creationForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -22,7 +22,7 @@ export default class BlogpostCreateComponent implements OnInit {
   createForm() {
     this.creationForm = this.fb.group({
       title: "",
-      subtitle: "",
+      subTitle: "",
       content: "",
       image: "",
     });

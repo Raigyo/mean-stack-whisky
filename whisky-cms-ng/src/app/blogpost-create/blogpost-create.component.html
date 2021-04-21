@@ -6,13 +6,13 @@
         <input matInput placeholder="Title" formControlName="title" required>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Sub-title" formControlName="subtitle" required>
+        <input matInput placeholder="Sub-title" formControlName="subTitle" required>
       </mat-form-field>
       <mat-form-field>
         <textarea matInput placeholder="Content" formControlName="content" required></textarea>
       </mat-form-field>
       <label for="image">Choose image</label>
-      <input type="file" name="image" formControlName="image" id="image">
+      <input type="file" name="image" formControlName="image" id="image" required>
       <button type="button" mat-button (click)="upload()">Upload image</button>
       <button mat-button type="submit">Create blogpost</button>
     </div>

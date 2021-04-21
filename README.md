@@ -49,6 +49,17 @@ Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>
 - _./src/app/blogpost-create/blogpost-create.component.html_: view with submission form.
 - _./src/app/blogpost-create/blogpost-create.component.ts_: manage FormGroup and dispatching for refresh.
 
+**blogposts edit**
+
+- _./src/app/blogpost-edit/blogpost-edit.component.html_:
+
+## Back-end part
+
+- _./appjs_:
+- _./utils/resize.js_: Helper to resize images.
+- _./api/models/blogpost.js_:
+- _./api/v1/index.js_:
+
 ## Angular concepts
 
 ### Observable
@@ -136,6 +147,10 @@ Ex: `ng g s blogpost` => Create new blogpost service
 - [multer](https://www.npmjs.com/package/multer): Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files.
 
 `npm i multer`
+
+- [sharp](https://www.npmjs.com/package/sharp): The typical use case for this high speed Node.js module is to convert large images in common formats to smaller, web-friendly JPEG, PNG, WebP and AVIF images of varying dimensions.
+
+`npm i sharp`
 
 ### APP
 

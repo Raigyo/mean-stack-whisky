@@ -5,16 +5,31 @@ const multer = require("multer");
 const crypto = require("crypto");
 const path = require("path");
 
+const resize = require("../../utils/resize");
+
 const Blogpost = require("../models/blogpost");
 
 // CREATE
 
 router.post("/blog-posts", (req, res) => {
+  const smallImagePath = `./uploads/${lastUploadedImageName}`;
+  const outputName = `./uploads/small-${lastUploadedImageName}`;
+  resize({
+    path: smallImagePath,
+    width: 200,
+    height: 200,
+    outputName: outputName,
+  })
+    .then((data) => {
+      console.log("OK resize", data.size);
+    })
+    .catch((err) => console.error("err from resize", err));
+  console.log("blogPost:", req.body);
   const blogPost = new Blogpost({
     ...req.body,
     image: lastUploadedImageName,
+    smallImage: `small-${lastUploadedImageName}`,
   });
-  console.log("blogPost:", req.body);
   blogPost.save((err, blogPost) => {
     if (err) {
       return res.status(500).json(err);
@@ -30,7 +45,6 @@ const storage = multer.diskStorage({
   filename: function (req, file, callback) {
     crypto.pseudoRandomBytes(16, function (err, raw) {
       if (err) return callback(err);
-      // callback(null, raw.toString("hex") + path.extname(file.originalname));
       lastUploadedImageName =
         raw.toString("hex") + path.extname(file.originalname);
       callback(null, lastUploadedImageName);
@@ -96,12 +110,30 @@ router.get("/blog-posts/:id", (req, res) => {
     );
 });
 
-// router.get("/images/:image", (req, res) => {
-//   const image = req.params.image;
-//   res.sendFile(path.join(__dirname, `./uploads/${image}`));
-// });
-
 // UPDATE
+
+router.put("/blog-posts/:id", (req, res) => {
+  // upload(req, res, function (error) {
+  //   if (error) {
+  //     return res.status(400).send(error.message);
+  //   }
+  //   res.status(201).send({ fileName: req.file.filename, file: req.file });
+  // });
+  const id = req.params.id;
+  const conditions = { _id: id };
+  const blogPost = { ...req.body, image: lastUploadedImageName };
+  const update = { $set: blogPost };
+  const options = {
+    upsert: true, // if document exists: update, else create
+    new: true, // return modified document
+  };
+  Blogpost.findOneAndUpdate(conditions, update, options, (err, response) => {
+    if (err) return res.status(500).json({ msg: "update failed", error: err });
+    res
+      .status(200)
+      .json({ msg: `document with id ${id} updated`, response: response });
+  });
+});
 
 // DELETE
 

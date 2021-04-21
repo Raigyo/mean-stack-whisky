@@ -50,4 +50,8 @@ export class BlogpostService {
     const allIds = ids.join(","); // array with ids list "id1,id2,id3"
     return this.httpClient.delete(`${this.baseUrl}/?ids=${allIds}`); // query parameter with all ids
   }
+
+  updateBlogpost(id: string, blogpost: Blogpost) {
+    return this.httpClient.put(`${this.baseUrl}/${id}`, blogpost);
+  }
 }
