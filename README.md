@@ -172,6 +172,10 @@ ng serve
 
 `ng add @angular/material`
 
+- [@kolkov/angular-editor](https://www.npmjs.com/package/ngx-editor): A simple native WYSIWYG/Rich Text editor for Angular 6-10+.
+
+`npm i @kolkov/angular-editor`
+
 ## Useful links
 
 - [codeconcept/whisky-cms-ng](https://github.com/codeconcept/whisky-cms-ng).

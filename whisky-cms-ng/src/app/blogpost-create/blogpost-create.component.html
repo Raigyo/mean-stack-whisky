@@ -8,9 +8,11 @@
       <mat-form-field>
         <input matInput placeholder="Sub-title" formControlName="subTitle" required>
       </mat-form-field>
-      <mat-form-field>
+      <!-- <mat-form-field>
         <textarea matInput placeholder="Content" formControlName="content" required></textarea>
-      </mat-form-field>
+      </mat-form-field> -->
+      <angular-editor placeholder="Enter text here..." formControlName="content" [config]="editorConfig" required>
+      </angular-editor>
       <label for="image">Choose image</label>
       <input type="file" name="image" formControlName="image" id="image" required>
       <button type="button" mat-button (click)="upload()">Upload image</button>

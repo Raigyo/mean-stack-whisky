@@ -3,10 +3,12 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
+import { AngularEditorModule } from "@kolkov/angular-editor";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { BlogpostComponent } from "./blogpost/blogpost.component";
 import { BlogpostListComponent } from "./blogpost-list/blogpost-list.component";
 import { ErrorpageComponent } from "./errorpage/errorpage.component";
@@ -32,6 +34,8 @@ import { BlogpostEditComponent } from "./blogpost-edit/blogpost-edit.component";
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    AngularEditorModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
