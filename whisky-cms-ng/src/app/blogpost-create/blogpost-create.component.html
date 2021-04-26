@@ -11,12 +11,13 @@
       <!-- <mat-form-field>
         <textarea matInput placeholder="Content" formControlName="content" required></textarea>
       </mat-form-field> -->
-      <angular-editor placeholder="Enter text here..." formControlName="content" [config]="editorConfig" required>
+      <angular-editor placeholder="Enter text here..." formControlName="content" required>
       </angular-editor>
       <label for="image">Choose image</label>
       <input type="file" name="image" formControlName="image" id="image" required>
-      <button type="button" mat-button (click)="upload()">Upload image</button>
-      <button mat-button type="submit">Create blogpost</button>
+      <!-- <button type="button" mat-button (click)="upload()">Upload image</button> -->
+      <button mat-button type="submit" (click)="upload()" [disabled]="!formDirective.form.valid">Create
+        blogpost</button>
     </div>
   </form>
 </mat-card>

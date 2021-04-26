@@ -7,14 +7,15 @@
       <mat-form-field>
         <input matInput placeholder="sub-title" [(ngModel)]="bp.subTitle" name="subTitle" required>
       </mat-form-field>
-      <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="bp.content" name="content"></angular-editor>
-      <!-- <mat-form-field>
-        <textarea matInput [(ngModel)]="bp.content" name="content"></textarea>
-      </mat-form-field> -->
-      <label for="image">choose image</label>
-      <input type="file" name="image" id="image">
-      <button type="button" mat-button (click)="upload()">upload image</button>
-      <button mat-button type="submit" [disabled]="!formDirective.form.valid">update blog post</button>
+      <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="bp.content" name="content" required>
+      </angular-editor>
+      <label for="image">Choose image</label>
+      <div class="col-6">
+        <img [src]="imagePreview.name" alt="">
+      </div>
+      <input type="file" name="image" id="image" ngModel (change)="getFiles($event)">
+      <button mat-button type="submit" [disabled]="formDirective.invalid">Update blog
+        post</button>
     </div>
   </form>
 </mat-card>

@@ -14,6 +14,7 @@ const Blogpost = require("../models/blogpost");
 router.post("/blog-posts", (req, res) => {
   const smallImagePath = `./uploads/${lastUploadedImageName}`;
   const outputName = `./uploads/small-${lastUploadedImageName}`;
+  console.log("lastUploadedImageName:", lastUploadedImageName);
   resize({
     path: smallImagePath,
     width: 200,
@@ -35,6 +36,7 @@ router.post("/blog-posts", (req, res) => {
       return res.status(500).json(err);
     }
     res.status(201).json(blogPost);
+    lastUploadedImageName = "";
   });
 });
 
@@ -110,11 +112,16 @@ router.get("/blog-posts/:id", (req, res) => {
     );
 });
 
+// Todo
+/* Function that delete all images that are not in json when delete or update */
+
 // UPDATE
 
 router.put("/blog-posts/:id", (req, res) => {
-  const smallImagePath = `./uploads/${lastUploadedImageName}`;
-  const outputName = `./uploads/small-${lastUploadedImageName}`;
+  const imageName = req.body.image;
+  console.log("Image name: ", imageName);
+  const smallImagePath = `./uploads/${imageName}`;
+  const outputName = `./uploads/small-${imageName}`;
   resize({
     path: smallImagePath,
     width: 200,
@@ -134,8 +141,8 @@ router.put("/blog-posts/:id", (req, res) => {
   // };
   const blogPost = {
     ...req.body,
-    image: lastUploadedImageName,
-    smallImage: `small-${lastUploadedImageName}`,
+    image: imageName,
+    smallImage: `small-${imageName}`,
   };
   const update = { $set: blogPost };
   const options = {

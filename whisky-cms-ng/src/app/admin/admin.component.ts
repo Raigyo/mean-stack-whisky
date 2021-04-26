@@ -20,7 +20,7 @@ export class AdminComponent implements OnInit {
     // this.blogPosts$ = this.blogpostService.getBlogposts();
     this.blogpostService.getBlogposts().subscribe((data) => this.refresh(data));
     this.blogpostService.handleBlogpostCreated().subscribe((data) => {
-      console.log("Admin component received", data);
+      // console.log("Admin component received", data);
       this.refresh(data);
     });
   }
@@ -41,7 +41,7 @@ export class AdminComponent implements OnInit {
   }
 
   refresh(data: any) {
-    console.log("data", data);
+    // console.log("data", data);
     this.blogpostService.getBlogposts().subscribe((data) => {
       this.allBlogposts = data;
     });
