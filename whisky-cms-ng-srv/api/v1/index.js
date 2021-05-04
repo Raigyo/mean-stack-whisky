@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const crypto = require("crypto");
 const path = require("path");
+// const readChunk = require("read-chunk");
+// const fileType = require("file-type");
+const fs = require("fs");
 
 const resize = require("../../utils/resize");
 
@@ -56,6 +59,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
+  limits: {
+    fileSize: 1 * 1024 * 1024, // 1 MB
+  },
   fileFilter: (req, file, cb) => {
     if (
       file.mimetype == "image/png" ||
@@ -75,7 +81,12 @@ const upload = multer({
 router.post("/blog-posts/images", (req, res) => {
   upload(req, res, function (error) {
     if (error) {
-      return res.status(400).send(error.message);
+      if (error.code == "LIMIT_FILE_SIZE") {
+        error.message = "File Size is too large. Allowed file size is 1MB";
+        return res.status(500).send(error.message);
+      } else {
+        return res.status(400).send(error.message);
+      }
     }
     res.status(201).send({ fileName: req.file.filename, file: req.file });
   });
@@ -159,8 +170,36 @@ router.put("/blog-posts/:id", (req, res) => {
 
 // DELETE
 
+// Delete files in UPLOAD
+function deleteFiles(files, callback) {
+  var i = files.length;
+  files.forEach(function (filepath) {
+    fs.unlink(filepath, function (err) {
+      i--;
+      if (err) {
+        callback(err);
+        return;
+      } else if (i <= 0) {
+        callback(null);
+      }
+    });
+  });
+}
+
 router.delete("/blog-posts/:id", (req, res) => {
   const id = req.params.id;
+  // Delete files in uploads
+  Blogpost.findById(id, function (err, res) {
+    const filesToDelete = [`uploads/${res.image}`, `uploads/${res.smallImage}`];
+    deleteFiles(filesToDelete, function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("All files removed");
+      }
+    });
+  });
+  // Delete in DB
   Blogpost.findByIdAndDelete(id, (err, blogPostDeletedById) => {
     if (err) {
       return res.status(500).json(err);
@@ -184,6 +223,24 @@ router.delete("/blog-posts", (req, res) => {
       console.log("Id not valid!");
     }
   });
+  // Delete files in uploads
+  allIds.forEach(function (item, index) {
+    console.log(item, index);
+    Blogpost.findById(item, function (err, res) {
+      const filesToDelete = [
+        `uploads/${res.image}`,
+        `uploads/${res.smallImage}`,
+      ];
+      deleteFiles(filesToDelete, function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("All files removed");
+        }
+      });
+    });
+  });
+  // Delete in DB
   const condition = { _id: { $in: allIds } };
   Blogpost.deleteMany(condition, (err, result) => {
     if (err) {

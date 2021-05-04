@@ -183,6 +183,7 @@ ng serve
 - [Comment installer MongoDB sur Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-20-04-fr).
 - [Install MongoDB - WSL 2](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database).
 - [The mongo Shell](https://docs.mongodb.com/manual/mongo/).
+- [Moogose - Models](https://mongoosejs.com/docs/api/model.html).
 - [Angular - Text interpolation](https://angular.io/guide/interpolation#text-interpolation).
 - [Angular - https://angular.io/guide/router](https://angular.io/guide/router).
 - [Understanding Angular Property Binding and Interpolation](https://www.telerik.com/blogs/understanding-angular-property-binding-and-interpolation).

@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef } from "@angular/core";
 import { FormBuilder, FormGroup, FormGroupDirective } from "@angular/forms";
 import { BlogpostService } from "./../services/blogpost.service";
-import { AngularEditorConfig } from "@kolkov/angular-editor";
+// import { AngularEditorConfig } from "@kolkov/angular-editor";
 
 @Component({
   selector: "app-blogpost-create",
@@ -74,6 +74,7 @@ export class BlogpostCreateComponent implements OnInit {
     console.log("OK blogpost created", data);
     this.creationForm.reset();
     formDirective.resetForm();
+    this.imagePreview.name = "";
     this.blogpostService.dispatchBlogpostCreated(data._id);
   }
 
