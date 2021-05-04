@@ -6,3 +6,17 @@
 .example-container > * {
   width: 100%;
 }
+
+.submitPost {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 8px 8px 8px 0;
+}
+
+button {
+  opacity: 90%;
+}
+
+button:hover {
+  opacity: 100%;
+}

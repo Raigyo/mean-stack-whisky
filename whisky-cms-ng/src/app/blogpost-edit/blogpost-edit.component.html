@@ -14,8 +14,12 @@
         <img [src]="imagePreview.name" alt="">
       </div>
       <input type="file" name="image" id="image" ngModel (change)="getFiles($event)">
-      <button mat-button type="submit" [disabled]="formDirective.invalid">Update blog
-        post</button>
+      <!-- <button type="button" mat-button (click)="upload()">Upload image</button> -->
+      <div class="submitEdit">
+        <button mat-raised-button color="accent" type="submit" [disabled]="formDirective.invalid">Update blog
+          post</button>
+        <button mat-raised-button color="warn" routerLink="/admin" routerLinkActive="active">Cancel</button>
+      </div>
     </div>
   </form>
 </mat-card>

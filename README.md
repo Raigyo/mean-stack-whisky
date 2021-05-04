@@ -1,6 +1,6 @@
 # MEAN Stack
 
-April 2021
+April / May 2021
 
 > 🔨 From udemy: [La MEAN stack par la pratique - Samir Medjdoub / Code Concept](https://www.udemy.com/course/la-mean-stack-par-la-pratique/)
 
@@ -184,6 +184,7 @@ ng serve
 - [Install MongoDB - WSL 2](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database).
 - [The mongo Shell](https://docs.mongodb.com/manual/mongo/).
 - [Angular - Text interpolation](https://angular.io/guide/interpolation#text-interpolation).
+- [Angular - https://angular.io/guide/router](https://angular.io/guide/router).
 - [Understanding Angular Property Binding and Interpolation](https://www.telerik.com/blogs/understanding-angular-property-binding-and-interpolation).
 - [Interpolation Vs Property Binding in Angular2](https://www.codementor.io/@adekunleoyaniyi/interpolation-vs-property-binding-in-angular2-eu1tzbyn4?utm_content=68092897&utm_medium=social&utm_source=twitter).
 - [How to deploy a MERN Stack App to Heroku](https://www.youtube.com/watch?v=5PaUiPyBDJY).

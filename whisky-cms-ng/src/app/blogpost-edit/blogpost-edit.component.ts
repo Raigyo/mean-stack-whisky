@@ -35,6 +35,7 @@ export class BlogpostEditComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = (e) => (this.imagePreview.name = reader.result);
       reader.readAsDataURL(file);
+      this.upload();
     }
   }
 
@@ -77,21 +78,24 @@ export class BlogpostEditComponent implements OnInit {
   }
 
   updateBlogpost(formDirective: NgForm) {
-    this.upload()
-      .then(() => {
-        const editedBlogpost = this.blogpost;
-        console.log("this.newImg updateBlogpost(): ", this.newImg);
-        // OUTPUT: Undefined
-        editedBlogpost["image"] = this.newImg;
-        this.blogpostService
-          .updateBlogpost(this.blogpostId, editedBlogpost)
-          .subscribe(
-            (data) => this.handleSuccess(data, formDirective),
-            (error) => this.handleError(error)
-          );
-        console.log("data sent:", editedBlogpost);
-      })
-      .catch((error) => console.log(error.message));
+    // this.upload()
+    //   .then(() => {
+    const editedBlogpost = this.blogpost;
+    console.log("this.newImg updateBlogpost(): ", this.newImg);
+    // OUTPUT: Undefined^
+    if (this.newImg !== undefined) {
+      editedBlogpost["image"] = this.newImg;
+    }
+
+    this.blogpostService
+      .updateBlogpost(this.blogpostId, editedBlogpost)
+      .subscribe(
+        (data) => this.handleSuccess(data, formDirective),
+        (error) => this.handleError(error)
+      );
+    console.log("data sent:", editedBlogpost);
+    // })
+    // .catch((error) => console.log(error.message));
   }
 
   handleSuccess(data: any, formDirective: NgForm) {

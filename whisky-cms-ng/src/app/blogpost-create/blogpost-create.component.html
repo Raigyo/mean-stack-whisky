@@ -14,10 +14,18 @@
       <angular-editor placeholder="Enter text here..." formControlName="content" required>
       </angular-editor>
       <label for="image">Choose image</label>
-      <input type="file" name="image" formControlName="image" id="image" required>
+      <div class="col-6">
+        <img [src]="imagePreview.name" alt="">
+      </div>
+      <input type="file" name="image" formControlName="image" id="image" (change)="getFiles($event)" required>
       <!-- <button type="button" mat-button (click)="upload()">Upload image</button> -->
-      <button mat-button type="submit" (click)="upload()" [disabled]="!formDirective.form.valid">Create
-        blogpost</button>
+      <!-- <button mat-button type="submit" (click)="upload()" [disabled]="!formDirective.form.valid">Create
+        blogpost</button> -->
+      <div class="submitPost">
+        <button mat-raised-button color="accent" type="submit" [disabled]="formDirective.invalid">Create
+          blogpost</button>
+        <button mat-raised-button color="warn" routerLink="/admin" routerLinkActive="active">Cancel</button>
+      </div>
     </div>
   </form>
 </mat-card>
