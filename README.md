@@ -61,6 +61,7 @@ Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>
 - _./src/app/auth/auth.component.ts_: Manage login.
 - _./src/app/models/user.ts_: typed interface for Blogpost.
 - _./src/app/services/auth.service.ts_: Connect to base url.
+- \_./src/app/services/add-cookie.interceptor.ts: HTTP Interceptor: centralizes the sending of the header in each request (used for the cookie).
 
 ## Back-end part
 
@@ -113,6 +114,8 @@ Ex: `ng g s blogpost` => Create new blogpost service
 
 ### Reactive form vs Template driven form
 
+### @Injectable
+
 ### HTTP Interceptor
 
 ### Serialization
@@ -161,6 +164,13 @@ In JavaScript, for example, you can serialize an object to a JSON string by call
 - `show collections`: View collections
 - `db.[COLLECTION_NAME].find({})`: View documents in collection
 
+**Kill process on port (here 3000)**
+
+```batch
+lsof -i:3000
+kill -9 [PID]
+```
+
 - [mongoose](https://www.npmjs.com/package/mongoose): Mongoose is a MongoDB object modeling tool designed to work in an asynchronous environment. Mongoose supports both promises and callbacks.
 
 `npm i mongoose`
@@ -173,9 +183,13 @@ In JavaScript, for example, you can serialize an object to a JSON string by call
 
 `npm i sharp`
 
-- [passport](https://www.npmjs.com/package/passport): Passport is Express-compatible authentication middleware for Node.js..
+- [passport](https://www.npmjs.com/package/passport): Passport is Express-compatible authentication middleware for Node.js.
 
 `npm i passport cookie-parser express-session passport-local`
+
+- [dotenv](https://www.npmjs.com/package/dotenv): PDotenv is a zero-dependency module that loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology..
+
+`npm i dotenv`
 
 ### APP
 

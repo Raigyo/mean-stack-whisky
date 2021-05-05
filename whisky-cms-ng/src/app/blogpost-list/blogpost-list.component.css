@@ -6,16 +6,24 @@
 }
 
 .example-card {
-  padding-bottom: 100px;
-  border-radius: 0px;
+  margin-top: 5px;
+  border: thick double #32a1ce;
+  padding-bottom: 50px;
+  border-radius: 10px;
+  background: #6b6666;
 }
 
 mat-card img {
-  padding-left: 15px;
+  /* padding-left: 15px; */
+  border-radius: 50%;
 }
 
 .no-margin {
   margin-left: -20px;
+}
+
+.mat-card-title {
+  text-transform: uppercase;
 }
 
 .mat-card-header-text {
