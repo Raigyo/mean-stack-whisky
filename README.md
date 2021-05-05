@@ -22,7 +22,7 @@ April / May 2021
 
 **blogposts list**
 
-- _./src/app/models/blogpost.ts_: typed schema.
+- _./src/app/models/blogpost.ts_: typed interface for Blogpost.
 - _./src/app/services/blogpost.service.ts_: request on MongoDB.
 - _./src/app/blogpost-list/blogpost-list.component.ts_: observable on Blogpost[].
 - _./src/app/blogpost-list/blogpost-list.component.html_: view. Uses routerLink to not reload the page when we click on a link.
@@ -33,7 +33,7 @@ April / May 2021
 - _./src/app/models/blogpost.ts_: typed schema.
 - _./src/app/app-routing.module.ts_: add a route for "blog-posts/:id".
 - _./src/app/services/blogpost.service.ts_: request on MongoDB.
-- _whisky-cms-ng\src\app\blogpost\blogpost.component.ts_: observable on Blogpost. Uses ActivatedRoute to retrieve url and id.
+- _./src/app/services/blogpost/blogpost.component.ts_: observable on Blogpost. Uses ActivatedRoute to retrieve url and id.
 - _./src/app/blogpost/blogpost.component.html_: view.
 
 Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>`
@@ -55,16 +55,23 @@ Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>
 - _./src/app/blogpost-edit/blogpost-edit.component.html_: Template driven form
 - _./src/app/blogpost-edit/blogpost-edit.component.ts_: Manage upload and updated blogpost
 
-Todo: create / edit : disable create button if not valid
+**auth**
+
+- _./src/app/auth/auth.component.html_: Display login.
+- _./src/app/auth/auth.component.ts_: Manage login.
+- _./src/app/models/user.ts_: typed interface for Blogpost.
+- _./src/app/services/auth.service.ts_: Connect to base url.
 
 ## Back-end part
 
-- _./appjs_: Express and Mongo connection. Static folders.
+- _./appjs_: Express and Mongo connection. Static folders. Session mudlewares
 - _./utils/resize.js_: Helper to resize images.
-- _./api/models/blogpost.js_: Mongoose model.
+- _./api/models/blogpost.js_: Mongoose model for CRUD.
 - _./api/v1/index.js_: Routes + Api CRUD.
+- _./auth/models/user_: Mongoose model for users.
+- _./auth/routes/user_: Routes + Api users.
 
-## Angular concepts
+## Angular / JS concepts
 
 ### Observable
 
@@ -105,6 +112,16 @@ Ex: Interface _blogpost.ts_ in _\_src/app/models_
 Ex: `ng g s blogpost` => Create new blogpost service
 
 ### Reactive form vs Template driven form
+
+### HTTP Interceptor
+
+### Serialization
+
+The process whereby an object or data structure is translated into a format suitable for transferral over a network, or storage (e.g. in an array buffer or file format).
+
+![startrek](_readme-img/teleport.gif)
+
+In JavaScript, for example, you can serialize an object to a JSON string by calling the function JSON.stringify().
 
 ## Dependancies
 
@@ -155,6 +172,10 @@ Ex: `ng g s blogpost` => Create new blogpost service
 - [sharp](https://www.npmjs.com/package/sharp): The typical use case for this high speed Node.js module is to convert large images in common formats to smaller, web-friendly JPEG, PNG, WebP and AVIF images of varying dimensions.
 
 `npm i sharp`
+
+- [passport](https://www.npmjs.com/package/passport): Passport is Express-compatible authentication middleware for Node.js..
+
+`npm i passport cookie-parser express-session passport-local`
 
 ### APP
 

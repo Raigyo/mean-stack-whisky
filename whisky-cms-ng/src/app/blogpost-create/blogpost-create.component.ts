@@ -70,6 +70,11 @@ export class BlogpostCreateComponent implements OnInit {
     }
   }
 
+  resetForm() {
+    this.creationForm.reset();
+    this.imagePreview.name = "";
+  }
+
   handleSuccess(data: any, formDirective: any) {
     console.log("OK blogpost created", data);
     this.creationForm.reset();

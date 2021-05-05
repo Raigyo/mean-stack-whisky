@@ -83,9 +83,9 @@ router.post("/blog-posts/images", (req, res) => {
     if (error) {
       if (error.code == "LIMIT_FILE_SIZE") {
         error.message = "File Size is too large. Allowed file size is 1MB";
-        return res.status(500).send(error.message);
+        return res.status(415).send(error.message);
       } else {
-        return res.status(400).send(error.message);
+        return res.status(415).send(error.message);
       }
     }
     res.status(201).send({ fileName: req.file.filename, file: req.file });
@@ -99,6 +99,7 @@ router.get("/ping", (req, res) => {
 });
 
 router.get("/blog-posts", (req, res) => {
+  console.log("req.user:", req.user); // test which is loggued
   Blogpost.find()
     .sort({ createdOn: -1 })
     .exec()
@@ -123,14 +124,35 @@ router.get("/blog-posts/:id", (req, res) => {
     );
 });
 
-// Todo
-/* Function that delete all images that are not in json when delete or update */
-
 // UPDATE
 
+// Todo
+/* Function that delete all images that are not in json when  update */
+
 router.put("/blog-posts/:id", (req, res) => {
+  const id = req.params.id;
+  let previousImage;
+  // Delete files in uploads
+  Blogpost.findById(id, (err, res) => {
+    previousImage = res.image;
+    console.log("Previous image:", previousImage);
+  });
   const imageName = req.body.image;
   console.log("Image name: ", imageName);
+  // If it's a new image we delete the previous one in UPLOADS
+  if (previousImage !== imageName) {
+    const filesToDelete = [
+      `./uploads/${previousImage}`,
+      `./uploads/small-${previousImage}`,
+    ];
+    deleteFiles(filesToDelete, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Older images removed after update");
+      }
+    });
+  }
   const smallImagePath = `./uploads/${imageName}`;
   const outputName = `./uploads/small-${imageName}`;
   resize({
@@ -143,13 +165,8 @@ router.put("/blog-posts/:id", (req, res) => {
       console.log("OK resize", data.size);
     })
     .catch((err) => console.error("err from resize", err));
-  const id = req.params.id;
+  // const id = req.params.id;
   const conditions = { _id: id };
-  // const article = {
-  //   ...req.body,
-  //   image: lastUploadedImageName,
-  //   smallImage: `small-${lastUploadedImageName}`,
-  // };
   const blogPost = {
     ...req.body,
     image: imageName,
@@ -170,10 +187,10 @@ router.put("/blog-posts/:id", (req, res) => {
 
 // DELETE
 
-// Delete files in UPLOAD
-function deleteFiles(files, callback) {
+// Helper: Delete files in UPLOADs
+const deleteFiles = (files, callback) => {
   var i = files.length;
-  files.forEach(function (filepath) {
+  files.forEach((filepath) => {
     fs.unlink(filepath, function (err) {
       i--;
       if (err) {
@@ -184,14 +201,14 @@ function deleteFiles(files, callback) {
       }
     });
   });
-}
+};
 
 router.delete("/blog-posts/:id", (req, res) => {
   const id = req.params.id;
   // Delete files in uploads
   Blogpost.findById(id, function (err, res) {
     const filesToDelete = [`uploads/${res.image}`, `uploads/${res.smallImage}`];
-    deleteFiles(filesToDelete, function (err) {
+    deleteFiles(filesToDelete, (err) => {
       if (err) {
         console.log(err);
       } else {
@@ -204,7 +221,7 @@ router.delete("/blog-posts/:id", (req, res) => {
     if (err) {
       return res.status(500).json(err);
     }
-    res.status(202).json({
+    res.status(200).json({
       message: `blog post with id ${blogPostDeletedById._id} deleted`,
     });
   });
@@ -224,14 +241,14 @@ router.delete("/blog-posts", (req, res) => {
     }
   });
   // Delete files in uploads
-  allIds.forEach(function (item, index) {
-    console.log(item, index);
+  allIds.forEach((item) => {
+    // console.log(item, index);
     Blogpost.findById(item, function (err, res) {
       const filesToDelete = [
         `uploads/${res.image}`,
         `uploads/${res.smallImage}`,
       ];
-      deleteFiles(filesToDelete, function (err) {
+      deleteFiles(filesToDelete, (err) => {
         if (err) {
           console.log(err);
         } else {

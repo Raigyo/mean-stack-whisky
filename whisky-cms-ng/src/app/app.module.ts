@@ -15,6 +15,7 @@ import { ErrorpageComponent } from "./errorpage/errorpage.component";
 import { AdminComponent } from "./admin/admin.component";
 import { BlogpostCreateComponent } from "./blogpost-create/blogpost-create.component";
 import { BlogpostEditComponent } from "./blogpost-edit/blogpost-edit.component";
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { BlogpostEditComponent } from "./blogpost-edit/blogpost-edit.component";
     AdminComponent,
     BlogpostCreateComponent,
     BlogpostEditComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,

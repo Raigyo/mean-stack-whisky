@@ -19,7 +19,7 @@ export class BlogpostEditComponent implements OnInit {
   imagePreview: any = {
     name: "",
   };
-  files!: FileList;
+  file!: File;
   newImg!: string;
 
   constructor(
@@ -27,17 +27,6 @@ export class BlogpostEditComponent implements OnInit {
     private el: ElementRef,
     private activatedRoute: ActivatedRoute
   ) {}
-
-  // Onchange: Img preview - todo: put in a helper
-  getFiles(event: any) {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (e) => (this.imagePreview.name = reader.result);
-      reader.readAsDataURL(file);
-      this.upload();
-    }
-  }
 
   ngOnInit() {
     this.blogpostId = this.activatedRoute.snapshot.paramMap.get("id")!;
@@ -48,6 +37,17 @@ export class BlogpostEditComponent implements OnInit {
       },
       (error) => console.error(error)
     );
+  }
+
+  // Onchange: Img preview - todo: put in a helper
+  getFiles(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => (this.imagePreview.name = reader.result);
+      reader.readAsDataURL(file);
+      this.upload();
+    }
   }
 
   // Upload img to node
@@ -78,11 +78,7 @@ export class BlogpostEditComponent implements OnInit {
   }
 
   updateBlogpost(formDirective: NgForm) {
-    // this.upload()
-    //   .then(() => {
     const editedBlogpost = this.blogpost;
-    console.log("this.newImg updateBlogpost(): ", this.newImg);
-    // OUTPUT: Undefined^
     if (this.newImg !== undefined) {
       editedBlogpost["image"] = this.newImg;
     }
@@ -94,15 +90,15 @@ export class BlogpostEditComponent implements OnInit {
         (error) => this.handleError(error)
       );
     console.log("data sent:", editedBlogpost);
-    // })
-    // .catch((error) => console.log(error.message));
   }
 
   handleSuccess(data: any, formDirective: NgForm) {
-    console.log("OK handleSuccess - blog post updated: ", data);
+    // console.log("OK handleSuccess - blog post updated: ", data);
+    console.log("OK handleSuccess - blog post updated: ");
     // todo: replace by modal and redirect to dashboard
-    formDirective.reset();
-    formDirective.resetForm();
+    // formDirective.reset();
+    // this.imagePreview.name = "";
+    // formDirective.resetForm();
     this.blogpostService.dispatchBlogpostCreated(data._id);
   }
 

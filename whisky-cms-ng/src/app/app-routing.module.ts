@@ -5,10 +5,12 @@ import { BlogpostComponent } from "./blogpost/blogpost.component";
 import { ErrorpageComponent } from "./errorpage/errorpage.component";
 import { AdminComponent } from "./admin/admin.component";
 import { BlogpostEditComponent } from "./blogpost-edit/blogpost-edit.component";
+import { AuthComponent } from "./auth/auth.component";
 
 const routes: Routes = [
   { path: "", component: BlogpostListComponent },
   { path: "blog-posts/:id", component: BlogpostComponent },
+  { path: "auth", component: AuthComponent },
   { path: "admin", component: AdminComponent },
   { path: "admin/blog-posts/:id", component: BlogpostEditComponent },
   // Catch-all route: has to be in last position

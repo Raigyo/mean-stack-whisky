@@ -24,7 +24,7 @@
       <div class="submitPost">
         <button mat-raised-button color="accent" type="submit" [disabled]="formDirective.invalid">Create
           blogpost</button>
-        <button mat-raised-button color="warn" routerLink="/admin" routerLinkActive="active">Cancel</button>
+        <button mat-raised-button color="warn" (click)="resetForm()">Reset form</button>
       </div>
     </div>
   </form>
