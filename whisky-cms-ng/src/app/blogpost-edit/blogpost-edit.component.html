@@ -1,3 +1,7 @@
+<mat-card>
+  <button mat-raised-button color="warn" (click)="logout()">logout</button>
+  {{ errorFromServer }}
+</mat-card>
 <mat-card *ngIf="blogpost as bp; else loading">
   <form #formDirective="ngForm" (ngSubmit)="updateBlogpost(formDirective)">
     <div class="example-container">

@@ -60,7 +60,7 @@ Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>
 - _./src/app/auth/auth.component.html_: Display login.
 - _./src/app/auth/auth.component.ts_: Manage login.
 - _./src/app/models/user.ts_: typed interface for Blogpost.
-- _./src/app/services/auth.service.ts_: Connect to base url.
+- _./src/app/services/auth.service.ts_: Connect to base url. Manage login/logout.
 - \_./src/app/services/add-cookie.interceptor.ts: HTTP Interceptor: centralizes the sending of the header in each request (used for the cookie).
 
 ## Back-end part
@@ -69,8 +69,8 @@ Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>
 - _./utils/resize.js_: Helper to resize images.
 - _./api/models/blogpost.js_: Mongoose model for CRUD.
 - _./api/v1/index.js_: Routes + Api CRUD.
-- _./auth/models/user_: Mongoose model for users.
-- _./auth/routes/user_: Routes + Api users.
+- _./auth/models/user.js_: Mongoose model for users.
+- _./auth/routes/index.js_: Routes + Api users.
 
 ## Angular / JS concepts
 
@@ -223,5 +223,7 @@ ng serve
 - [Angular - https://angular.io/guide/router](https://angular.io/guide/router).
 - [Understanding Angular Property Binding and Interpolation](https://www.telerik.com/blogs/understanding-angular-property-binding-and-interpolation).
 - [Interpolation Vs Property Binding in Angular2](https://www.codementor.io/@adekunleoyaniyi/interpolation-vs-property-binding-in-angular2-eu1tzbyn4?utm_content=68092897&utm_medium=social&utm_source=twitter).
+- [Understanding Angular Property Binding and Interpolation](https://www.telerik.com/blogs/understanding-angular-property-binding-and-interpolation#:~:text=Property%20binding%20is%20the%20base,properties%20bound%20in%20the%20template.).
+- [Angular 11 MatDialog Basics](https://www.developer.com/languages/javascript/angular-11-matdialog-basics/)
 - [How to deploy a MERN Stack App to Heroku](https://www.youtube.com/watch?v=5PaUiPyBDJY).
 - [How to deploy MERN applications 🚨 (Heroku and Atlas)](https://www.youtube.com/watch?v=2AIL1c-cJM0).

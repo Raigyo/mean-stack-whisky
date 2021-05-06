@@ -17,6 +17,8 @@ import { BlogpostCreateComponent } from "./blogpost-create/blogpost-create.compo
 import { BlogpostEditComponent } from "./blogpost-edit/blogpost-edit.component";
 import { AuthComponent } from "./auth/auth.component";
 import { AddCookieInterceptor } from "./services/add-cookie.interceptor";
+import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { AddCookieInterceptor } from "./services/add-cookie.interceptor";
     BlogpostCreateComponent,
     BlogpostEditComponent,
     AuthComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { AddCookieInterceptor } from "./services/add-cookie.interceptor";
     FormsModule,
     AngularEditorModule,
     ReactiveFormsModule,
+    MatDialogModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AddCookieInterceptor, multi: true },

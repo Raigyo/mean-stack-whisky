@@ -6,6 +6,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [],
@@ -17,6 +18,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
+    MatDialogModule,
   ],
   exports: [
     MatToolbarModule,

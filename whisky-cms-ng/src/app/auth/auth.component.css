@@ -1,0 +1,22 @@
+.cookieConsent {
+  color: aliceblue;
+  text-align: center;
+}
+
+.example-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.mat-raised-button {
+  margin-left: 2em;
+}
+
+button {
+  opacity: 90%;
+}
+
+button:hover {
+  opacity: 100%;
+}

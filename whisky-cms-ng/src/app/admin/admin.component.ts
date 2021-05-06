@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
 import { BlogpostService } from "../services/blogpost.service";
 import { Blogpost } from "../models/blogpost";
 import { Router } from "@angular/router";
+import { AuthService } from "./../services/auth.service";
 
 @Component({
   selector: "app-admin",
@@ -13,15 +15,41 @@ export class AdminComponent implements OnInit {
   // blogPosts$: Observable<Blogpost[]> | undefined;
   allBlogposts: Blogpost[] | undefined;
   errorFromServer = "";
+  ngFormRef: any;
 
-  constructor(private blogpostService: BlogpostService) {}
+  constructor(
+    public dialog: MatDialog,
+    private blogpostService: BlogpostService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    // this.blogPosts$ = this.blogpostService.getBlogposts();
+    if (!this.authService.isAuthenticated) {
+      this.router.navigate(["/auth"]);
+    }
     this.blogpostService.getBlogposts().subscribe((data) => this.refresh(data));
     this.blogpostService.handleBlogpostCreated().subscribe((data) => {
       // console.log("Admin component received", data);
       this.refresh(data);
+    });
+  }
+
+  // Modal
+  private displayModal() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: "26.5rem",
+      data: {
+        dialogTitle: "You've been disconnected",
+        dialogMessageLine1: "Please login again",
+        // dialogMessageLine2: "Are you sure you want to leave the page?",
+        yesButtonText: "OK",
+        // noButtonText: "Stay on this Page",
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      this.router.navigate(["/auth"]);
     });
   }
 
@@ -47,7 +75,19 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  handleError(error: { status: number; statusText: any }) {
-    console.error(error);
+  handleError(error: { status: number; statusText: any; error: any }) {
+    console.error(error.error.msg);
+    this.errorFromServer = `Error: ${error.status} - ${error.error.msg}`;
+    if (error.status === 401) this.displayModal();
+  }
+
+  logout() {
+    this.authService.logout().subscribe(
+      (data) => {
+        console.log(data);
+        this.router.navigate(["/auth"]);
+      },
+      (err) => console.error(err)
+    );
   }
 }

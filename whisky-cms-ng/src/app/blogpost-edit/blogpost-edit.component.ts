@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { environment } from "./../../environments/environment";
+import { Router } from "@angular/router";
+import { AuthService } from "./../services/auth.service";
 
 import { Blogpost } from "../models/blogpost";
 import { BlogpostService } from "../services/blogpost.service";
@@ -15,17 +17,20 @@ export class BlogpostEditComponent implements OnInit {
   blogpostId!: string;
   imagePath = environment.imagePath;
   blogpost!: Blogpost;
-  oldImg!: string;
   imagePreview: any = {
     name: "",
   };
+  oldImage = "";
   file!: File;
   newImg!: string;
+  errorFromServer = "";
 
   constructor(
     private blogpostService: BlogpostService,
     private el: ElementRef,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -37,6 +42,7 @@ export class BlogpostEditComponent implements OnInit {
       },
       (error) => console.error(error)
     );
+    this.oldImage = this.imagePreview.name;
   }
 
   // Onchange: Img preview - todo: put in a helper
@@ -69,11 +75,17 @@ export class BlogpostEditComponent implements OnInit {
             // OUTPUT ex: d55a75b5d26778b034275cd693812710.png
             return this.newImg;
           },
-          (error) => console.error(error)
+          (error) => {
+            console.error(error);
+            const reader = new FileReader();
+            reader.onload = (e) => (this.imagePreview.name = this.oldImage);
+            this.errorFromServer = `Error: ${error.status} - ${error.statusText}`;
+          }
         );
       }
     } catch (error) {
       (error: any) => console.error(error);
+      this.errorFromServer = `Error: ${error.status} - ${error.error.msg}`;
     }
   }
 
@@ -101,8 +113,18 @@ export class BlogpostEditComponent implements OnInit {
     // formDirective.resetForm();
     this.blogpostService.dispatchBlogpostCreated(data._id);
   }
+  logout() {
+    this.authService.logout().subscribe(
+      (data) => {
+        console.log(data);
+        this.router.navigate(["/auth"]);
+      },
+      (err) => console.error(err)
+    );
+  }
 
-  handleError(error: { status: number; statusText: any }) {
+  handleError(error: { status: number; statusText: any; error: any }) {
     console.log("KO handleError - blog post NOT updated: ", error);
+    this.errorFromServer = `Error: ${error.status} - ${error.error.msg}`;
   }
 }

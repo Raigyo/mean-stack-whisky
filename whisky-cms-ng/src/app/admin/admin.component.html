@@ -1,4 +1,7 @@
-<h2 class="mat-h2">Delete</h2>
+<div class="logoutButton"><button mat-raised-button color="warn" (click)="logout()">Logout</button></div>
+<!-- {{ errorFromServer }} -->
+
+<h2 class="mat-h2">Update / Delete</h2>
 <mat-selection-list #blogposts>
   <mat-list-option *ngFor="let bp of allBlogposts" [value]="bp._id">
     <a [routerLink]="['/admin/blog-posts/', bp._id]">{{bp.title}}</a>
@@ -12,5 +15,6 @@
       *ngIf="blogposts.selectedOptions.selected.length>0">Delete</button>
   </mat-card-actions>
 </mat-card>
+
 
 <app-blogpost-create></app-blogpost-create>

@@ -16,6 +16,12 @@ const Blogpost = require("../models/blogpost");
 // CREATE
 
 router.post("/blog-posts", (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({
+      result: "KO",
+      msg: "You are not authorized to edit a blog post",
+    });
+  }
   const smallImagePath = `./uploads/${lastUploadedImageName}`;
   const outputName = `./uploads/small-${lastUploadedImageName}`;
   console.log("lastUploadedImageName:", lastUploadedImageName);
@@ -83,10 +89,10 @@ router.post("/blog-posts/images", (req, res) => {
   upload(req, res, function (error) {
     if (error) {
       if (error.code == "LIMIT_FILE_SIZE") {
-        error.message = "File Size is too large. Allowed file size is 1MB";
-        return res.status(415).send(error.message);
+        error.msg = "File Size is too large. Allowed file size is 1MB";
+        return res.status(415).send(error.msg);
       } else {
-        return res.status(415).send(error.message);
+        return res.status(415).send(error.msg);
       }
     }
     res.status(201).send({ fileName: req.file.filename, file: req.file });
@@ -107,7 +113,7 @@ router.get("/blog-posts", (req, res) => {
     .then((blogPosts) => res.status(200).json(blogPosts))
     .catch((err) =>
       res.status(500).json({
-        message: "blog posts not found",
+        msg: "blog posts not found",
         error: err,
       })
     );
@@ -119,7 +125,7 @@ router.get("/blog-posts/:id", (req, res) => {
     .then((blogPostById) => res.status(200).json(blogPostById))
     .catch((err) =>
       res.status(500).json({
-        message: `blog post with id ${id} not found`,
+        msg: `blog post with id ${id} not found`,
         error: err,
       })
     );
@@ -131,6 +137,12 @@ router.get("/blog-posts/:id", (req, res) => {
 /* Function that delete all images that are not in json when  update */
 
 router.put("/blog-posts/:id", (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({
+      result: "KO",
+      msg: "You are not authorized to edit a blog post",
+    });
+  }
   const id = req.params.id;
   let previousImage;
   // Delete files in uploads
@@ -205,6 +217,15 @@ const deleteFiles = (files, callback) => {
 };
 
 router.delete("/blog-posts/:id", (req, res) => {
+  // console.log("req.isAuthenticated()", req.isAuthenticated());
+  // req.logOut();
+  // console.log("req.isAuthenticated()", req.isAuthenticated());
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({
+      result: "KO",
+      msg: "You are not authorized to delete a blog post",
+    });
+  }
   const id = req.params.id;
   // Delete files in uploads
   Blogpost.findById(id, function (err, res) {
@@ -223,13 +244,19 @@ router.delete("/blog-posts/:id", (req, res) => {
       return res.status(500).json(err);
     }
     res.status(200).json({
-      message: `blog post with id ${blogPostDeletedById._id} deleted`,
+      msg: `blog post with id ${blogPostDeletedById._id} deleted`,
     });
   });
 });
 
 // Delete several ids sent from front-end
 router.delete("/blog-posts", (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({
+      result: "KO",
+      msg: "You are not authorized to delete blogs posts",
+    });
+  }
   const ids = req.query.ids;
   console.log("ids", ids);
   const allIds = ids.split(",").map((id) => {

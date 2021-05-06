@@ -17,10 +17,12 @@
       <div class="col-6">
         <img [src]="imagePreview.name" alt="">
       </div>
-      <input type="file" name="image" formControlName="image" id="image" (change)="getFiles($event)" required>
+      <input #takeInput type="file" name="image" formControlName="image" id="image" (change)="getFiles($event)"
+        required>
       <!-- <button type="button" mat-button (click)="upload()">Upload image</button> -->
       <!-- <button mat-button type="submit" (click)="upload()" [disabled]="!formDirective.form.valid">Create
         blogpost</button> -->
+      <p>Only .png, .gif, .jpg and .jpeg files under 2MB are allowed!</p>
       <div class="submitPost">
         <button mat-raised-button color="accent" type="submit" [disabled]="formDirective.invalid">Create
           blogpost</button>

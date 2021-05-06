@@ -1,0 +1,19 @@
+.logoutButton {
+  text-align: right;
+  padding-right: 10px;
+}
+
+button {
+  opacity: 90%;
+}
+
+button:hover {
+  opacity: 100%;
+}
+
+.mat-list-item:nth-child(2n + 1) {
+  background-color: blueviolet;
+}
+.mat-list-item:nth-child(2n) {
+  background-color: rgb(0, 0, 0);
+}
