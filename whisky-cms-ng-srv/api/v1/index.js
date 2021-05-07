@@ -55,12 +55,15 @@ let lastUploadedImageName = "";
 const storage = multer.diskStorage({
   destination: "./uploads/",
   filename: function (req, file, callback) {
+    console.log("uid filename", file);
     crypto.pseudoRandomBytes(16, function (err, raw) {
       if (err) return callback(err);
       lastUploadedImageName =
         raw.toString("hex") + path.extname(file.originalname);
       callback(null, lastUploadedImageName);
     });
+    // lastUploadedImageName =
+    //   file.originalname + +path.extname(file.originalname);
   },
 });
 
@@ -106,7 +109,7 @@ router.get("/ping", (req, res) => {
 });
 
 router.get("/blog-posts", (req, res) => {
-  console.log("req.user:", req.user); // test which is loggued
+  // console.log("req.user:", req.user); // test which is loggued
   Blogpost.find()
     .sort({ createdOn: -1 })
     .exec()

@@ -114,6 +114,8 @@ Ex: `ng g s blogpost` => Create new blogpost service
 
 ### Reactive form vs Template driven form
 
+### Two way binding
+
 ### @Injectable
 
 ### HTTP Interceptor
@@ -164,13 +166,6 @@ In JavaScript, for example, you can serialize an object to a JSON string by call
 - `show collections`: View collections
 - `db.[COLLECTION_NAME].find({})`: View documents in collection
 
-**Kill process on port (here 3000)**
-
-```batch
-lsof -i:3000
-kill -9 [PID]
-```
-
 - [mongoose](https://www.npmjs.com/package/mongoose): Mongoose is a MongoDB object modeling tool designed to work in an asynchronous environment. Mongoose supports both promises and callbacks.
 
 `npm i mongoose`
@@ -190,6 +185,15 @@ kill -9 [PID]
 - [dotenv](https://www.npmjs.com/package/dotenv): PDotenv is a zero-dependency module that loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology..
 
 `npm i dotenv`
+
+#### Tip
+
+**Kill process on port (here 3000)**
+
+```batch
+lsof -i:3000
+kill -9 [PID]
+```
 
 ### APP
 
@@ -225,5 +229,7 @@ ng serve
 - [Interpolation Vs Property Binding in Angular2](https://www.codementor.io/@adekunleoyaniyi/interpolation-vs-property-binding-in-angular2-eu1tzbyn4?utm_content=68092897&utm_medium=social&utm_source=twitter).
 - [Understanding Angular Property Binding and Interpolation](https://www.telerik.com/blogs/understanding-angular-property-binding-and-interpolation#:~:text=Property%20binding%20is%20the%20base,properties%20bound%20in%20the%20template.).
 - [Angular 11 MatDialog Basics](https://www.developer.com/languages/javascript/angular-11-matdialog-basics/)
+- [How to reset file input form after uploading the image in Angular?](https://stackoverflow.com/questions/54251208/how-to-reset-file-input-form-after-uploading-the-image-in-angular)
+- [FormData.append()](https://developer.mozilla.org/en-US/docs/Web/API/FormData/append)
 - [How to deploy a MERN Stack App to Heroku](https://www.youtube.com/watch?v=5PaUiPyBDJY).
 - [How to deploy MERN applications 🚨 (Heroku and Atlas)](https://www.youtube.com/watch?v=2AIL1c-cJM0).
