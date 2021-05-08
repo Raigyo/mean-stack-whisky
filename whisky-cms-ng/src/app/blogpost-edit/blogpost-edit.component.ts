@@ -50,7 +50,7 @@ export class BlogpostEditComponent implements OnInit {
         this.blogpost = data;
         this.imagePreview.name = this.imagePath + this.blogpost.smallImage;
         this.oldImage = this.imagePreview.name;
-        console.log("this.oldImage:", this.oldImage);
+        // console.log("this.oldImage:", this.oldImage);
       },
       (error) => console.error(error)
     );
@@ -69,40 +69,49 @@ export class BlogpostEditComponent implements OnInit {
 
   updateBlogpost(formDirective: NgForm): any {
     const editedBlogpost = this.blogpost;
+    console.log("editedBlogpost", editedBlogpost);
 
     const inputEl: HTMLInputElement = this.el.nativeElement.querySelector(
       "#image"
     );
     const fileCount: number = inputEl.files!.length;
     const formData = new FormData();
+    console.log(inputEl.files!.item(0));
     if (fileCount > 0) {
       formData.append("blogimage", inputEl.files!.item(0)!);
-    }
-    this.blogpostService.uploadImage(formData).subscribe(
-      (data) => {
-        this.newImageName = data.file.filename;
-        if (this.newImageName !== undefined) {
+      this.blogpostService.uploadImage(formData).subscribe(
+        (data) => {
+          console.log("we are in data");
+
+          this.newImageName = data.file.filename;
+          // if (this.newImageName !== undefined) {
           editedBlogpost["image"] = this.newImageName;
           editedBlogpost["smallImage"] = "small-" + this.newImageName;
+          // }
+          this.blogpostService
+            .updateBlogpost(this.blogpostId, editedBlogpost)
+            .subscribe(
+              (data) => this.handleSuccess(data, formDirective),
+              (error) => this.handleError(error)
+            );
+        },
+        (error) => {
+          console.log("error", error);
+
+          this.dialogTitleTxt = "Wrong image format";
+          this.dialogMessageLine1Txt =
+            "Only .png, .gif, .jpg and .jpeg files under 2MB are allowed!";
+          this.displayModal();
         }
-        this.blogpostService
-          .updateBlogpost(this.blogpostId, editedBlogpost)
-          .subscribe(
-            (data) => this.handleSuccess(data, formDirective),
-            (error) => this.handleError(error)
-          );
-        console.log("data sent to mongo:", editedBlogpost);
-        console.log("data sent to server:", data);
-      },
-      (error) => {
-        // console.error(error);
-        this.dialogTitleTxt = "Wrong image format";
-        this.dialogMessageLine1Txt =
-          "Only .png, .gif, .jpg and .jpeg files under 2MB are allowed!";
-        this.displayModal();
-        // this.errorFromServer = `Error: ${error.status} - ${error.statusText}`;
-      }
-    );
+      );
+    } else {
+      this.blogpostService
+        .updateBlogpost(this.blogpostId, editedBlogpost)
+        .subscribe(
+          (data) => this.handleSuccess(data, formDirective),
+          (error) => this.handleError(error)
+        );
+    }
   }
 
   // Modal
@@ -124,13 +133,17 @@ export class BlogpostEditComponent implements OnInit {
         this.imagePreview.name = this.oldImage;
         this.takeInput!.nativeElement.value = null;
       }
+      if (this.dialogTitleTxt === "Success") {
+        this.router.navigate(["/admin"]);
+      }
     });
   }
 
   handleSuccess(data: any, formDirective: NgForm): any | NgForm {
-    // console.log("OK handleSuccess - blog post updated: ", data);
-    console.log("OK handleSuccess - blog post updated: ");
     this.blogpostService.dispatchBlogpostCreated(data._id);
+    this.dialogTitleTxt = "Success";
+    this.dialogMessageLine1Txt = "The article has been updated!";
+    this.displayModal();
   }
 
   logout(): any {

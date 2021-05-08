@@ -116,6 +116,9 @@ export class BlogpostCreateComponent implements OnInit {
 
         this.takeInput!.nativeElement.value = null;
       }
+      if (this.dialogTitleTxt === "Success") {
+        this.router.navigate(["/admin"]);
+      }
     });
   }
 
@@ -131,6 +134,9 @@ export class BlogpostCreateComponent implements OnInit {
     formDirective.resetForm();
     this.imagePreview.name = "";
     this.blogpostService.dispatchBlogpostCreated(data._id);
+    this.dialogTitleTxt = "Success";
+    this.dialogMessageLine1Txt = "The article has been created!";
+    this.displayModal();
   }
 
   handleError(error: {

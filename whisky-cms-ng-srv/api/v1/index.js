@@ -55,7 +55,7 @@ let lastUploadedImageName = "";
 const storage = multer.diskStorage({
   destination: "./uploads/",
   filename: function (req, file, callback) {
-    console.log("uid filename", file);
+    console.log("filename", file);
     crypto.pseudoRandomBytes(16, function (err, raw) {
       if (err) return callback(err);
       lastUploadedImageName =
@@ -89,6 +89,7 @@ const upload = multer({
 
 // File upload route
 router.post("/blog-posts/images", (req, res) => {
+  console.log(req.file);
   upload(req, res, function (error) {
     if (error) {
       if (error.code == "LIMIT_FILE_SIZE") {
