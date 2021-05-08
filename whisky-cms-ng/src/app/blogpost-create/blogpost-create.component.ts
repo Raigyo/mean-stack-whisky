@@ -1,15 +1,11 @@
 import { Component, ViewChild, OnInit, ElementRef } from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-} from "@angular/forms";
-import { BlogpostService } from "./../services/blogpost.service";
+import { FormBuilder, FormGroup, FormGroupDirective } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
 import { Router } from "@angular/router";
 import { v4 as uuid } from "uuid";
+
+import { BlogpostService } from "./../services/blogpost.service";
+import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "app-blogpost-create",
@@ -18,7 +14,6 @@ import { v4 as uuid } from "uuid";
 })
 export class BlogpostCreateComponent implements OnInit {
   @ViewChild("takeInput") takeInput: ElementRef | undefined;
-  @ViewChild(NgForm) form: any;
   creationForm!: FormGroup;
   imagePreview: any = {
     name: "",
@@ -27,32 +22,34 @@ export class BlogpostCreateComponent implements OnInit {
   dialogTitleTxt = "";
   dialogMessageLine1Txt = "";
   newImageName = "";
-  validToSendToServer: boolean = false;
 
   constructor(
     public dialog: MatDialog,
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private blogpostService: BlogpostService,
     private el: ElementRef,
     private router: Router
   ) {}
 
+  // Used from template to manage file preview
   getFiles(event: any) {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       const reader = new FileReader();
       reader.onload = (e) => (this.imagePreview.name = reader.result);
       reader.readAsDataURL(file);
-      // this.upload();
+    } else {
+      this.imagePreview.name = "";
     }
   }
 
   ngOnInit() {
     this.createForm();
+    // this.newImageName = uuid();
   }
 
   createForm() {
-    this.creationForm = this.fb.group({
+    this.creationForm = this.formBuilder.group({
       title: "",
       subTitle: "",
       content: "",
@@ -60,40 +57,41 @@ export class BlogpostCreateComponent implements OnInit {
     });
   }
 
-  upload() {
+  createBlogpost(formDirective: FormGroupDirective) {
+    // Upload image to server and wait response for validity
     let inputEl: HTMLInputElement = this.el.nativeElement.querySelector(
       "#image"
     );
-    let fileCount: number = inputEl.files!.length; // !: we confirm it won't be null
+    let fileCount: number = inputEl.files!.length;
     let formData = new FormData();
-    if (fileCount > 0) {
-      formData.append("blogimage", inputEl.files!.item(0)!, this.newImageName);
+    if (fileCount > 0 && this.creationForm.valid) {
+      console.log("add image", this.newImageName);
+      // formData.append("blogimage", inputEl.files!.item(0)!, this.newImageName);
+      formData.append("blogimage", inputEl.files!.item(0)!);
       this.blogpostService.uploadImage(formData).subscribe(
+        // If ok from server, we send all the data
         (data) => {
-          this.validToSendToServer = true;
-          console.log(data);
+          if (this.creationForm.valid) {
+            console.log("this.creationForm:", this.creationForm);
+            this.blogpostService
+              .createBlogpost(this.creationForm.value)
+              .subscribe(
+                (data) => this.handleSuccess(data, formDirective),
+                (error) => this.handleError(error)
+              );
+          }
         },
+        // Else we display a msg to user using modal and reset image field
         (error) => {
-          this.validToSendToServer = false;
           this.dialogTitleTxt = "Wrong image format";
           this.dialogMessageLine1Txt =
             "Only .png, .gif, .jpg and .jpeg files under 2MB are allowed!";
           this.displayModal();
+          this.creationForm.patchValue({
+            image: "",
+          });
           console.error(error);
         }
-      );
-    }
-  }
-
-  createBlogpost(formDirective: FormGroupDirective) {
-    this.newImageName = uuid();
-    this.upload();
-
-    if (this.creationForm.valid && this.validToSendToServer) {
-      console.log("this.creationForm:", this.creationForm);
-      this.blogpostService.createBlogpost(this.creationForm.value).subscribe(
-        (data) => this.handleSuccess(data, formDirective),
-        (error) => this.handleError(error)
       );
     }
   }

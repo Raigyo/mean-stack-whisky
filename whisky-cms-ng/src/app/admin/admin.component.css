@@ -17,3 +17,8 @@ button:hover {
 .mat-list-item:nth-child(2n) {
   background-color: rgb(0, 0, 0);
 }
+
+.deleteButton {
+  text-align: center;
+  padding-right: 10px;
+}

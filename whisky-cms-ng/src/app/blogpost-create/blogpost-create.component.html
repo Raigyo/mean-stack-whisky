@@ -8,9 +8,6 @@
       <mat-form-field>
         <input matInput placeholder="Sub-title" formControlName="subTitle" required>
       </mat-form-field>
-      <!-- <mat-form-field>
-        <textarea matInput placeholder="Content" formControlName="content" required></textarea>
-      </mat-form-field> -->
       <angular-editor placeholder="Enter text here..." formControlName="content" required>
       </angular-editor>
       <label for="image">Choose image</label>
@@ -19,12 +16,9 @@
       </div>
       <input #takeInput type="file" name="image" formControlName="image" id="image" (change)="getFiles($event)"
         required>
-      <!-- <button type="button" mat-button (click)="upload()">Upload image</button> -->
-      <!-- <button mat-button type="submit" (click)="upload()" [disabled]="!formDirective.form.valid">Create
-        blogpost</button> -->
       <p>Only .png, .gif, .jpg and .jpeg files under 2MB are allowed!</p>
       <div class="submitPost">
-        <button mat-raised-button id="submitBtn" color="accent" type="submit" [disabled]="formDirective.invalid">Create
+        <button mat-raised-button id="submitBtn" color="accent" type="submit" [disabled]="!formDirective.valid">Create
           blogpost</button>
         <button mat-raised-button color="warn" (click)="resetForm()">Reset form</button>
       </div>

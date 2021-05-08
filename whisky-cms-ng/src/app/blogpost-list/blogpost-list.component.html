@@ -1,12 +1,14 @@
 <div class="container">
   <mat-card class="example-card" *ngFor="let bp of blogPostList$ | async">
-    <mat-card-header class="no-margin">
-      <mat-card-title><a [routerLink]="['/blog-posts', bp._id]">{{ bp.title }}</a></mat-card-title>
-      <mat-card-subtitle>{{ bp.subTitle }}</mat-card-subtitle>
-    </mat-card-header>
-    <img [src]="imagePath + bp.smallImage" alt="{{ bp.title }}">
-    <mat-card-content>
-      <p [innerHTML]=bp.content></p>
-    </mat-card-content>
+    <a [routerLink]="['/blog-posts', bp._id]">
+      <mat-card-header class="no-margin">
+        <mat-card-title>{{ bp.title }}</mat-card-title>
+        <mat-card-subtitle>{{ bp.subTitle }}</mat-card-subtitle>
+      </mat-card-header>
+      <img [src]="imagePath + bp.smallImage" alt="{{ bp.title }}">
+      <mat-card-content>
+        <p [innerHTML]=bp.content></p>
+      </mat-card-content>
+    </a>
   </mat-card>
 </div>

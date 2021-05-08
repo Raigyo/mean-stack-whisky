@@ -10,7 +10,7 @@
 
 <mat-card>Blog posts selected: {{blogposts.selectedOptions.selected.length}}</mat-card>
 <mat-card>
-  <mat-card-actions>
+  <mat-card-actions class="deleteButton">
     <button mat-raised-button color="warn" (click)="deleteBlogposts(blogposts.selectedOptions.selected)"
       *ngIf="blogposts.selectedOptions.selected.length>0">Delete</button>
   </mat-card-actions>
