@@ -151,11 +151,12 @@ router.put("/blog-posts/:id", (req, res) => {
   // Delete files in uploads
   Blogpost.findById(id, (err, res) => {
     previousImage = res.image;
-    console.log("Previous image:", previousImage);
   });
   const imageName = req.body.image;
+  console.log("Previous image:", previousImage);
   console.log("Image name: ", imageName);
   // If it's a new image we delete the previous one in UPLOADS
+  console.log("previousImage", previousImage);
   if (previousImage !== imageName) {
     const filesToDelete = [
       `./uploads/${previousImage}`,

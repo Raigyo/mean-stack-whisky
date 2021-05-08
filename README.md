@@ -114,6 +114,32 @@ Ex: `ng g s blogpost` => Create new blogpost service
 
 ### Reactive form vs Template driven form
 
+Template Driven Forms Features
+
+- Easy to use
+- Suitable for simple scenarios and fails for complex scenarios
+- Similar to AngularJS
+- Two way data binding(using [(NgModel)] syntax)
+- Minimal component code
+- Automatic track of the form and its data(handled by Angular)
+- Unit testing is another challenge
+
+EX: _./src/app/blogpost-create/blogpost-edit.component.html_:
+
+Reactive Forms Features
+
+- More flexible, but needs a lot of practice
+- Handles any complex scenarios
+- No data binding is done (immutable data model preferred by most developers)
+- More component code and less HTML markup
+- Reactive transformations can be made possible such as
+- Handling a event based on a debounce time
+- Handling events when the components are distinct until changed
+- Adding elements dynamically
+- Easier unit testing
+
+EX: _./src/app/blogpost-create/blogpost-create.component.html_:
+
 ### Two way binding
 
 ### @Injectable
@@ -223,6 +249,9 @@ ng serve
 - [Install MongoDB - WSL 2](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database).
 - [The mongo Shell](https://docs.mongodb.com/manual/mongo/).
 - [Moogose - Models](https://mongoosejs.com/docs/api/model.html).
+- [Angular la difference entre ngoninit et constructor](http://pierreterrat.com/angular-ngoninit-et-constructor/).
+- [Comment gérer l’injection de dépendances dans angular?](http://pierreterrat.com/dependances-angular/).
+- [Angular Forms - Template Driven & Reactive Forms | Explain](https://www.calibraint.com/blog/angular-formsl).
 - [Angular - Text interpolation](https://angular.io/guide/interpolation#text-interpolation).
 - [Angular - https://angular.io/guide/router](https://angular.io/guide/router).
 - [Understanding Angular Property Binding and Interpolation](https://www.telerik.com/blogs/understanding-angular-property-binding-and-interpolation).

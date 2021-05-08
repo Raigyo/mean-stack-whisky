@@ -32,7 +32,7 @@ export class BlogpostCreateComponent implements OnInit {
   ) {}
 
   // Used from template to manage file preview
-  getFiles(event: any) {
+  getFiles(event: any): any {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       const reader = new FileReader();
@@ -43,12 +43,12 @@ export class BlogpostCreateComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): any {
     this.createForm();
     // this.newImageName = uuid();
   }
 
-  createForm() {
+  createForm(): any {
     this.creationForm = this.formBuilder.group({
       title: "",
       subTitle: "",
@@ -57,13 +57,13 @@ export class BlogpostCreateComponent implements OnInit {
     });
   }
 
-  createBlogpost(formDirective: FormGroupDirective) {
+  createBlogpost(formDirective: FormGroupDirective): any {
     // Upload image to server and wait response for validity
-    let inputEl: HTMLInputElement = this.el.nativeElement.querySelector(
+    const inputEl: HTMLInputElement = this.el.nativeElement.querySelector(
       "#image"
     );
-    let fileCount: number = inputEl.files!.length;
-    let formData = new FormData();
+    const fileCount: number = inputEl.files!.length;
+    const formData = new FormData();
     if (fileCount > 0 && this.creationForm.valid) {
       console.log("add image", this.newImageName);
       // formData.append("blogimage", inputEl.files!.item(0)!, this.newImageName);
@@ -97,7 +97,7 @@ export class BlogpostCreateComponent implements OnInit {
   }
 
   // Modal
-  private displayModal() {
+  private displayModal(): any {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: "26.5rem",
       data: {
@@ -119,13 +119,13 @@ export class BlogpostCreateComponent implements OnInit {
     });
   }
 
-  resetForm() {
+  resetForm(): any {
     this.creationForm.reset();
     this.imagePreview.name = "";
     this.takeInput!.nativeElement.value = null;
   }
 
-  handleSuccess(data: any, formDirective: any) {
+  handleSuccess(data: any, formDirective: any): any {
     console.log("OK blogpost created", data);
     this.creationForm.reset();
     formDirective.resetForm();
@@ -133,7 +133,11 @@ export class BlogpostCreateComponent implements OnInit {
     this.blogpostService.dispatchBlogpostCreated(data._id);
   }
 
-  handleError(error: { status: number; statusText: any; error: any }) {
+  handleError(error: {
+    status: number;
+    statusText: any;
+    error: any;
+  }): number | any {
     console.error(error.error.msg);
     this.errorFromServer = `Error: ${error.status} - ${error.error.msg}`;
     if (error.status === 401 || error.status === 500) {

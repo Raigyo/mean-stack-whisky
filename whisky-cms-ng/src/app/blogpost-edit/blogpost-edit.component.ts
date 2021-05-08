@@ -24,14 +24,13 @@ export class BlogpostEditComponent implements OnInit {
   imagePreview: any = {
     name: "",
   };
-  oldImage = ""; // used to remember the original image
+
   file!: File;
-  // newImg!: string;
   errorFromServer = "";
   dialogTitleTxt = "";
   dialogMessageLine1Txt = "";
   newImageName = "";
-  newImg!: string;
+  oldImage = "";
 
   constructor(
     public dialog: MatDialog,
@@ -42,21 +41,22 @@ export class BlogpostEditComponent implements OnInit {
     private router: Router
   ) {}
 
+  // tslint:disable-next-line: typedef
   ngOnInit() {
+    // tslint:disable-next-line: no-non-null-assertion
     this.blogpostId = this.activatedRoute.snapshot.paramMap.get("id")!;
     this.blogpostService.getBlogpostById(this.blogpostId).subscribe(
       (data) => {
         this.blogpost = data;
         this.imagePreview.name = this.imagePath + this.blogpost.smallImage;
+        this.oldImage = this.imagePreview.name;
+        console.log("this.oldImage:", this.oldImage);
       },
       (error) => console.error(error)
     );
-    this.oldImage = this.imagePreview.name;
-    console.log("this.oldImage", this.oldImage);
-    // this.newImageName = uuid();
   }
 
-  getFiles(event: any) {
+  getFiles(event: any): any {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       const reader = new FileReader();
@@ -67,14 +67,14 @@ export class BlogpostEditComponent implements OnInit {
     }
   }
 
-  updateBlogpost(formDirective: NgForm) {
+  updateBlogpost(formDirective: NgForm): any {
     const editedBlogpost = this.blogpost;
 
-    let inputEl: HTMLInputElement = this.el.nativeElement.querySelector(
+    const inputEl: HTMLInputElement = this.el.nativeElement.querySelector(
       "#image"
     );
-    let fileCount: number = inputEl.files!.length;
-    let formData = new FormData();
+    const fileCount: number = inputEl.files!.length;
+    const formData = new FormData();
     if (fileCount > 0) {
       formData.append("blogimage", inputEl.files!.item(0)!);
     }
@@ -106,7 +106,7 @@ export class BlogpostEditComponent implements OnInit {
   }
 
   // Modal
-  private displayModal() {
+  private displayModal(): any {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: "26.5rem",
       data: {
@@ -122,17 +122,18 @@ export class BlogpostEditComponent implements OnInit {
       }
       if (this.dialogTitleTxt === "Wrong image format") {
         this.imagePreview.name = this.oldImage;
+        this.takeInput!.nativeElement.value = null;
       }
     });
   }
 
-  handleSuccess(data: any, formDirective: NgForm) {
+  handleSuccess(data: any, formDirective: NgForm): any | NgForm {
     // console.log("OK handleSuccess - blog post updated: ", data);
     console.log("OK handleSuccess - blog post updated: ");
     this.blogpostService.dispatchBlogpostCreated(data._id);
   }
 
-  logout() {
+  logout(): any {
     this.authService.logout().subscribe(
       (data) => {
         console.log(data);
@@ -142,7 +143,11 @@ export class BlogpostEditComponent implements OnInit {
     );
   }
 
-  handleError(error: { status: number; statusText: any; error: any }) {
+  handleError(error: {
+    status: number;
+    statusText: any;
+    error: any;
+  }): number | any {
     console.error(error.error.msg);
     this.errorFromServer = `Error: ${error.status} - ${error.error.msg}`;
     if (error.status === 401 || error.status === 500) {
