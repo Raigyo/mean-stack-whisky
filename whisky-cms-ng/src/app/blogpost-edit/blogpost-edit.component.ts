@@ -84,10 +84,8 @@ export class BlogpostEditComponent implements OnInit {
           console.log("we are in data");
 
           this.newImageName = data.file.filename;
-          // if (this.newImageName !== undefined) {
           editedBlogpost["image"] = this.newImageName;
           editedBlogpost["smallImage"] = "small-" + this.newImageName;
-          // }
           this.blogpostService
             .updateBlogpost(this.blogpostId, editedBlogpost)
             .subscribe(

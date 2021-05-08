@@ -1,6 +1,8 @@
-.cookieConsent {
+.cookieConsent,
+.register {
   color: aliceblue;
   text-align: center;
+  padding-top: 5px;
 }
 
 .example-container {
