@@ -11,6 +11,11 @@ export class AuthService {
   isAuthenticated = false;
   constructor(private http: HttpClient) {}
 
+  register(user: User) {
+    this.isAuthenticated = true;
+    return this.http.post<User>(`${this.baseURL}/register`, user);
+  }
+
   login(user: User) {
     this.isAuthenticated = true;
     return this.http.post<User>(`${this.baseURL}/login`, user);

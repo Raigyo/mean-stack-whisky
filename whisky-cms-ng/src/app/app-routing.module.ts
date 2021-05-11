@@ -6,10 +6,12 @@ import { ErrorpageComponent } from "./errorpage/errorpage.component";
 import { AdminComponent } from "./admin/admin.component";
 import { BlogpostEditComponent } from "./blogpost-edit/blogpost-edit.component";
 import { AuthComponent } from "./auth/auth.component";
+import { RegisterComponent } from "./register/register.component";
 
 const routes: Routes = [
   { path: "", component: BlogpostListComponent },
   { path: "blog-posts/:id", component: BlogpostComponent },
+  { path: "register", component: RegisterComponent },
   { path: "auth", component: AuthComponent },
   { path: "admin", component: AdminComponent },
   { path: "admin/blog-posts/:id", component: BlogpostEditComponent },

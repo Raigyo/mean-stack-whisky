@@ -1,10 +1,10 @@
-<h2 class="mat-h2">Login</h2>
+<h2 class="mat-h2">Register</h2>
 <div class="cookieConsent">
   <p>Warning: This application uses cookies during your session. They will be deleted when you
     will logout.</p>
 </div>
 <mat-card>
-  <form #loginForm="ngForm" (ngSubmit)="login()">
+  <form #loginForm="ngForm" (ngSubmit)="register()">
     <div class="example-container">
       <mat-form-field>
         <input matInput type="text" placeholder="User name" name="username" id="username" [(ngModel)]="user.username"
@@ -17,7 +17,5 @@
       <button mat-raised-button color="accent" type="submit" [disabled]="!loginForm.form.valid">login</button>
     </div>
   </form>
+  <mat-card>{{ errorFromServer }}</mat-card>
 </mat-card>
-<mat-card>{{ errorFromServer }}</mat-card>
-<div class="register">Not registered yet? Follow this link to <a [routerLink]="['/register']">registration form</a>.
-</div>
