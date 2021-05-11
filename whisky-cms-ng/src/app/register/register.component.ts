@@ -4,29 +4,27 @@ import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 
 @Component({
-  selector: "app-auth",
-  templateUrl: "./auth.component.html",
-  styleUrls: ["./auth.component.css"],
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.css"],
 })
-export class AuthComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   user: User = { username: "", password: "", status: "" };
   errorFromServer = "";
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
-  login() {
+  register() {
     console.log("user", this.user);
-    this.authService.login(this.user).subscribe(
+    this.authService.register(this.user).subscribe(
       (data) => this.handleSuccess(data),
       (error) => this.handleError(error)
     );
   }
 
   handleSuccess(data: User) {
-    console.log("logged in", data);
-    console.log(document.cookie);
-
+    console.log("logged in", data.username);
     this.router.navigate(["/admin"]);
   }
 

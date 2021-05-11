@@ -50,18 +50,20 @@ passport.use(
       usernameField: "username",
       passwordField: "password",
     },
-    (name, pwd, done) => {
+    (name, password, done) => {
       User.findOne({ username: name }, (err, user) => {
         if (err) {
           console.log(err);
           return done(err);
         }
-        if (!user) {
-          return done(null, false, { message: "Incorrect username." });
+        if (!user || !password || !user.validPassword(password)) {
+          return done(null, false, {
+            message: "Incorrect username or password!",
+          });
         }
-        if (!pwd || user.password !== pwd) {
-          return done(null, false, { message: "Incorrect password." });
-        }
+        // if (!pwd || user.password !== pwd) {
+        //   return done(null, false, { message: "Incorrect password." });
+        // }
         return done(null, user);
       });
     }

@@ -100,8 +100,6 @@ Ex: `ng g m material --flat` => Ceate module _\_src/app/material.module.ts_
 
 Ex: `ng g c blogpost --skip-tests --module=app` => Create new blogpost component
 
-Ex: `ng g c blogpost-list --skip-tests --module=app` => Create new blogpost-list component
-
 ### Models: Interfaces
 
 We use interfaces instead classes because we don't need behaviors (methods).
@@ -208,9 +206,17 @@ In JavaScript, for example, you can serialize an object to a JSON string by call
 
 `npm i passport cookie-parser express-session passport-local`
 
-- [dotenv](https://www.npmjs.com/package/dotenv): PDotenv is a zero-dependency module that loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology..
+- [dotenv](https://www.npmjs.com/package/dotenv): PDotenv is a zero-dependency module that loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology.
 
 `npm i dotenv`
+
+- [npm i mongoose-unique-validator](https://www.npmjs.com/package/mongoose-unique-validator): mongoose-unique-validator is a plugin which adds pre-save validation for unique fields within a Mongoose schema.
+
+`npm i mongoose-unique-validator`
+
+- [argon2](https://www.npmjs.com/package/argon2): A library to help you hash passwords.
+
+`npm i argon2`
 
 #### Tip
 
@@ -249,6 +255,8 @@ ng serve
 - [Install MongoDB - WSL 2](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database).
 - [The mongo Shell](https://docs.mongodb.com/manual/mongo/).
 - [Moogose - Models](https://mongoosejs.com/docs/api/model.html).
+- [Node.js Authentication with Passport](https://blog.cloudboost.io/node-js-authentication-with-passport-4a125f264cd4).
+- [Using Argon2 with Node.js](https://www.youtube.com/watch?v=fEV3D0ZuBgM).
 - [Angular la difference entre ngoninit et constructor](http://pierreterrat.com/angular-ngoninit-et-constructor/).
 - [Comment gérer l’injection de dépendances dans angular?](http://pierreterrat.com/dependances-angular/).
 - [Angular Forms - Template Driven & Reactive Forms | Explain](https://www.calibraint.com/blog/angular-formsl).

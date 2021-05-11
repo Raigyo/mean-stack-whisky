@@ -19,6 +19,7 @@ import { AuthComponent } from "./auth/auth.component";
 import { AddCookieInterceptor } from "./services/add-cookie.interceptor";
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 import { MatDialogModule } from "@angular/material/dialog";
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MatDialogModule } from "@angular/material/dialog";
     BlogpostEditComponent,
     AuthComponent,
     ConfirmDialogComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
