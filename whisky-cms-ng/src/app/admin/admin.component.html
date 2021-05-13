@@ -1,10 +1,11 @@
-<div class="logoutButton"><button mat-raised-button color="warn" (click)="logout()">Logout</button></div>
+<div class="logoutButton"><button mat-raised-button color="warn" (click)="logout()">{{currentUser}} - Logout</button>
+</div>
 <!-- {{ errorFromServer }} -->
 
 <h2 class="mat-h2">Update / Delete</h2>
 <mat-selection-list #blogposts>
   <mat-list-option *ngFor="let bp of allBlogposts" [value]="bp._id">
-    <a [routerLink]="['/admin/blog-posts/', bp._id]"><span>{{bp.title}} - {{bp.subTitle}}</span> </a>
+    <a [routerLink]="['/admin/blog-posts/', bp._id]"><span>{{bp.title}} - {{bp.subTitle}} - {{bp.creator}}</span> </a>
   </mat-list-option>
 </mat-selection-list>
 

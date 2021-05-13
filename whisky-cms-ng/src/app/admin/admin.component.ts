@@ -16,6 +16,7 @@ export class AdminComponent implements OnInit {
   allBlogposts: Blogpost[] | undefined;
   errorFromServer = "";
   ngFormRef: any;
+  currentUser = sessionStorage.getItem("currentUser");
 
   constructor(
     public dialog: MatDialog,
@@ -49,6 +50,7 @@ export class AdminComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
+      sessionStorage.removeItem("currentUser");
       this.router.navigate(["/auth"]);
     });
   }
@@ -84,7 +86,8 @@ export class AdminComponent implements OnInit {
   logout() {
     this.authService.logout().subscribe(
       (data) => {
-        console.log(data);
+        // console.log(data);
+        sessionStorage.removeItem("currentUser");
         this.router.navigate(["/auth"]);
       },
       (err) => console.error(err)

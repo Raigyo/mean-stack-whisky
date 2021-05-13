@@ -19,7 +19,7 @@ import { AuthComponent } from "./auth/auth.component";
 import { AddCookieInterceptor } from "./services/add-cookie.interceptor";
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 import { MatDialogModule } from "@angular/material/dialog";
-import { RegisterComponent } from './register/register.component';
+import { RegisterComponent } from "./register/register.component";
 
 @NgModule({
   declarations: [
@@ -47,6 +47,7 @@ import { RegisterComponent } from './register/register.component';
     MatDialogModule,
   ],
   providers: [
+    AuthComponent,
     { provide: HTTP_INTERCEPTORS, useClass: AddCookieInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

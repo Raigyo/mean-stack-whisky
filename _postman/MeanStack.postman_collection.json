@@ -48,6 +48,26 @@
 			"response": []
 		},
 		{
+			"name": "GET users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/auth/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GET blog-posts image",
 			"request": {
 				"method": "GET",
@@ -115,6 +135,37 @@
 						"v1",
 						"blog-posts",
 						"60756f3cd721d706942293b8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE user by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "blogimage",
+							"type": "file",
+							"src": "///wsl$/Ubuntu-18.04/home/chilot/development/MeanStack/_readme-img/logo.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth/users/60925a7cb8dde93c5108a75b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"users",
+						"60925a7cb8dde93c5108a75b"
 					]
 				}
 			},
@@ -201,7 +252,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"Testuser\",\r\n    \"password\": \"123456\"\r\n}"
+					"raw": "{\r\n    \"username\": \"raigyo\",\r\n    \"password\": \"123456\",\r\n    \"status\": \"author\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:3000/auth/register",
@@ -236,7 +287,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"Testuser\",\r\n    \"password\": \"123456\"\r\n}"
+					"raw": "{\r\n    \"username\": \"guest9\",\r\n    \"password\": \"123456\",\r\n    \"status\": \"creator\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:3000/auth/login",
@@ -248,6 +299,37 @@
 					"path": [
 						"auth",
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST logout",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/auth/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"logout"
 					]
 				}
 			},

@@ -11,12 +11,13 @@ import { Router } from "@angular/router";
 export class AuthComponent implements OnInit {
   user: User = { username: "", password: "", status: "" };
   errorFromServer = "";
+  userName = "";
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
   login() {
-    console.log("user", this.user);
+    // console.log("user", this.user);
     this.authService.login(this.user).subscribe(
       (data) => this.handleSuccess(data),
       (error) => this.handleError(error)
@@ -24,10 +25,11 @@ export class AuthComponent implements OnInit {
   }
 
   handleSuccess(data: User) {
-    console.log("logged in", data);
-    console.log(document.cookie);
-
-    this.router.navigate(["/admin"]);
+    console.log("logged in", this.user.username);
+    sessionStorage.setItem("currentUser", this.user.username);
+    // this.getLoggedInName.emit(this.user.username);
+    // this.getLoggedInName.next(this.user.username);
+    this.router.navigate(["/"]);
   }
 
   handleError(error: any) {

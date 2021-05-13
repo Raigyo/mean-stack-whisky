@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
 import { Blogpost } from "../models/blogpost";
 
@@ -51,7 +51,12 @@ export class BlogpostService {
     return this.httpClient.delete(`${this.baseUrl}/?ids=${allIds}`); // query parameter with all ids
   }
 
-  updateBlogpost(id: string, blogpost: Blogpost) {
-    return this.httpClient.put(`${this.baseUrl}/${id}`, blogpost);
+  updateBlogpost(id: string, blogpost: Blogpost, oldImage: string) {
+    // console.log("oldImage before sending:", oldImage);
+    // params is not used in backend
+    // is here for exemple of how to use HttpParams
+    let params = new HttpParams();
+    params = params.append("secondParameter", oldImage);
+    return this.httpClient.put(`${this.baseUrl}/${id}`, blogpost, { params });
   }
 }

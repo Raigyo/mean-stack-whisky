@@ -6,6 +6,7 @@ const blogpostSchema = new mongoose.Schema({
   image: String,
   smallImage: String,
   content: String,
+  creator: String,
   createdOn: { type: Date, default: Date.now },
 });
 

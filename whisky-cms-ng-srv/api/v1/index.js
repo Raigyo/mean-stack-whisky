@@ -137,70 +137,68 @@ router.get("/blog-posts/:id", (req, res) => {
 
 // UPDATE
 
-// Todo
-/* Function that delete all images that are not in json when  update */
-
 router.put("/blog-posts/:id", (req, res) => {
   if (!req.isAuthenticated()) {
     return res.status(401).json({
       result: "KO",
       msg: "You are not authorized to edit a blog post",
     });
-  }
-  const id = req.params.id;
-  let previousImage;
-  // Delete files in uploads
-  Blogpost.findById(id, (err, res) => {
-    previousImage = res.image;
-  });
-  const imageName = req.body.image;
-  console.log("Previous image:", previousImage);
-  console.log("Image name: ", imageName);
-  // If it's a new image we delete the previous one in UPLOADS
-  console.log("previousImage", previousImage);
-  if (previousImage !== imageName) {
-    const filesToDelete = [
-      `./uploads/${previousImage}`,
-      `./uploads/small-${previousImage}`,
-    ];
-    deleteFiles(filesToDelete, (err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Older images removed after update");
+  } else {
+    console.log("res:", res);
+    const id = req.params.id;
+    const imageName = req.body.image;
+    // Delete older files in uploads
+    Blogpost.findById(id, (err, res) => {
+      const previousImage = res.image;
+      console.log("Image name: ", imageName);
+      console.log("Previous image:", previousImage);
+      // If it's a new image we delete the previous one in UPLOADS
+      if (previousImage !== imageName) {
+        const filesToDelete = [
+          `./uploads/${previousImage}`,
+          `./uploads/small-${previousImage}`,
+        ];
+        deleteFiles(filesToDelete, (err) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("Older images removed after update");
+          }
+        });
       }
     });
-  }
-  const smallImagePath = `./uploads/${imageName}`;
-  const outputName = `./uploads/small-${imageName}`;
-  resize({
-    path: smallImagePath,
-    width: 200,
-    height: 200,
-    outputName: outputName,
-  })
-    .then((data) => {
-      console.log("OK resize", data.size);
+    // Images uploads + update datas
+    const smallImagePath = `./uploads/${imageName}`;
+    const outputName = `./uploads/small-${imageName}`;
+    resize({
+      path: smallImagePath,
+      width: 200,
+      height: 200,
+      outputName: outputName,
     })
-    .catch((err) => console.error("err from resize", err));
-  // const id = req.params.id;
-  const conditions = { _id: id };
-  const blogPost = {
-    ...req.body,
-    image: imageName,
-    smallImage: `small-${imageName}`,
-  };
-  const update = { $set: blogPost };
-  const options = {
-    upsert: true, // if document exists: update, else create
-    new: true, // return modified document
-  };
-  Blogpost.findOneAndUpdate(conditions, update, options, (err, response) => {
-    if (err) return res.status(500).json({ msg: "update failed", error: err });
-    res
-      .status(200)
-      .json({ msg: `document with id ${id} updated`, response: response });
-  });
+      .then((data) => {
+        console.log("OK resize", data.size);
+      })
+      .catch((err) => console.error("err from resize", err));
+    const conditions = { _id: id };
+    const blogPost = {
+      ...req.body,
+      image: imageName,
+      smallImage: `small-${imageName}`,
+    };
+    const update = { $set: blogPost };
+    const options = {
+      upsert: true, // if document exists: update, else create
+      new: true, // return modified document
+    };
+    Blogpost.findOneAndUpdate(conditions, update, options, (err, response) => {
+      if (err)
+        return res.status(500).json({ msg: "update failed", error: err });
+      res
+        .status(200)
+        .json({ msg: `document with id ${id} updated`, response: response });
+    });
+  }
 });
 
 // DELETE

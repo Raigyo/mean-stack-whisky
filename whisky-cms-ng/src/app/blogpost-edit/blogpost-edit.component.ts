@@ -71,9 +71,8 @@ export class BlogpostEditComponent implements OnInit {
     const editedBlogpost = this.blogpost;
     console.log("editedBlogpost", editedBlogpost);
 
-    const inputEl: HTMLInputElement = this.el.nativeElement.querySelector(
-      "#image"
-    );
+    const inputEl: HTMLInputElement =
+      this.el.nativeElement.querySelector("#image");
     const fileCount: number = inputEl.files!.length;
     const formData = new FormData();
     console.log(inputEl.files!.item(0));
@@ -87,7 +86,7 @@ export class BlogpostEditComponent implements OnInit {
           editedBlogpost["image"] = this.newImageName;
           editedBlogpost["smallImage"] = "small-" + this.newImageName;
           this.blogpostService
-            .updateBlogpost(this.blogpostId, editedBlogpost)
+            .updateBlogpost(this.blogpostId, editedBlogpost, this.oldImage)
             .subscribe(
               (data) => this.handleSuccess(data, formDirective),
               (error) => this.handleError(error)
@@ -104,7 +103,7 @@ export class BlogpostEditComponent implements OnInit {
       );
     } else {
       this.blogpostService
-        .updateBlogpost(this.blogpostId, editedBlogpost)
+        .updateBlogpost(this.blogpostId, editedBlogpost, this.oldImage)
         .subscribe(
           (data) => this.handleSuccess(data, formDirective),
           (error) => this.handleError(error)
@@ -125,6 +124,7 @@ export class BlogpostEditComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: any) => {
       if (this.dialogTitleTxt === "You've been disconnected") {
+        sessionStorage.removeItem("currentUser");
         this.router.navigate(["/auth"]);
       }
       if (this.dialogTitleTxt === "Wrong image format") {

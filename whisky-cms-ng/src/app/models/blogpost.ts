@@ -5,4 +5,5 @@ export interface Blogpost {
   image: string;
   smallImage: string;
   content: string;
+  creator: string;
 }

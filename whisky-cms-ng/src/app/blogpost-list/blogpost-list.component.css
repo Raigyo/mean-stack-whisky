@@ -30,3 +30,7 @@ mat-card img {
   margin: 0 16px;
   border: 2px solid green;
 }
+
+.mat-card-footer {
+  margin-left: 0px;
+}

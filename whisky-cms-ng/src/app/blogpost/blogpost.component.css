@@ -8,6 +8,10 @@ mat-card img {
   padding-left: 15px;
 }
 
+.mat-card-footer {
+  margin-left: 0px;
+}
+
 .no-margin {
   margin-left: -20px;
 }
