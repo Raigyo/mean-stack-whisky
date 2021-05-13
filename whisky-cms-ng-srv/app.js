@@ -54,7 +54,10 @@ passport.use(
       User.findOne({ username: name }, (err, user) => {
         if (err) {
           console.log(err);
-          return done(err);
+          //return done(err);
+          return err.status(401).json({
+            msg: "User already exists",
+          });
         }
         if (!user || !password || !user.validPassword(password)) {
           return done(null, false, {

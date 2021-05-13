@@ -4,7 +4,7 @@
     will logout.</p>
 </div>
 <mat-card>
-  <form #loginForm="ngForm" (ngSubmit)="register()">
+  <form #loginForm="ngForm" (ngSubmit)="register(loginForm)">
     <div class="example-container">
       <mat-form-field>
         <input matInput type="text" placeholder="User name" name="username" id="username" [(ngModel)]="user.username"
@@ -14,7 +14,7 @@
         <input matInput type="password" placeholder="Password" autocomplete="on" name="password" id="password"
           [(ngModel)]="user.password" required>
       </mat-form-field>
-      <button mat-raised-button color="accent" type="submit" [disabled]="!loginForm.form.valid">login</button>
+      <button mat-raised-button color="accent" type="submit" [disabled]="!loginForm.form.valid">register</button>
     </div>
   </form>
   <mat-card class="errorMessage">{{ errorFromServer }}</mat-card>

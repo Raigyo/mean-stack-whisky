@@ -2,7 +2,20 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const passport = require("passport");
-const argon2 = require("argon2");
+const passwordValidator = require("password-validator");
+
+// Password validator schema with properties
+const schema = new passwordValidator();
+schema
+  .is()
+  .min(8) // Minimum length 8
+  .has()
+  .uppercase() // Must have uppercase letters
+  .has()
+  .lowercase() // Must have lowercase letters
+  .has()
+  .not()
+  .spaces(); // Should not have spaces
 
 router.get("/users", (req, res) => {
   // console.log("req", req);
@@ -20,16 +33,29 @@ router.get("/users", (req, res) => {
 
 router.post("/register", async (req, res) => {
   console.log("user from req.body >>>", req.body);
-  // const newUser = new User(req.body);
-  const passwordHashed = await argon2.hash(req.body.password);
-  const newUser = await User.create({
+  if (!schema.validate(req.body.password)) {
+    return res.status(401).json({
+      msg: "Password must contain at least 8 characters with uppercase and lowercase. Spaces are not allowed.",
+    });
+  }
+
+  const newUser = new User({
     username: req.body.username,
-    password: passwordHashed,
+    password: req.body.password,
     status: "author",
   });
   newUser.save((err, user) => {
     if (err) {
-      return res.status(500).json(err);
+      // console.log("log:", err.errors.username.kind);
+      if (err.errors.username.kind === "unique") {
+        return res.status(401).json({
+          msg: "User already exists.",
+        });
+      } else {
+        return res.status(500).json({
+          msg: "Something went wrong.",
+        });
+      }
     }
     // we login the user that has just been created
     req.logIn(req.body, (err) => {
@@ -71,6 +97,10 @@ router.delete("/users/:id", (req, res) => {
     }
     res.status(202).json({ msg: `user post with id ${users._id} deleted` });
   });
+});
+
+router.delete("/users", () => {
+  User.deleteMany({});
 });
 
 module.exports = router;

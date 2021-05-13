@@ -218,6 +218,10 @@ In JavaScript, for example, you can serialize an object to a JSON string by call
 
 `npm i argon2`
 
+- [password-validator](https://www.npmjs.com/package/password-validator): A library to check password validity.
+
+`npm i password-validator`
+
 #### Tip
 
 **Kill process on port (here 3000)**
