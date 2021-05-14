@@ -1,4 +1,4 @@
-require("dotenv").config();
+const config = require("./config.js");
 const express = require("express");
 const app = express();
 const api = require("./api/v1/index");
@@ -7,7 +7,8 @@ const cors = require("cors");
 // Passport
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
-const session = require("express-session");
+// const session = require("express-session");
+const session = require("cookie-session");
 const Strategy = require("passport-local").Strategy;
 // to retrieve users from the MongoDB users collection
 const User = require("./auth/models/user");
@@ -77,7 +78,7 @@ passport.use(
 const mongoose = require("mongoose");
 const connection = mongoose.connection;
 
-app.set("port", process.env.PORT || 3000);
+// app.set("port", process.env.PORT || 3000);
 
 // Set up static folders
 const uploadsDir = require("path").join(__dirname, "/uploads"); // static documents directory
@@ -88,7 +89,9 @@ app.use(express.static(uploadsDir));
 app.use("/api/v1", api);
 app.use("/auth", auth);
 app.use(express.static("static"));
-
+// app.get("/", (req, res) => {
+//   res.send("Hello world");
+// });
 // 404 handling - don't put middlewares below
 app.use((req, res) => {
   const err = new Error("404 - Not found !!!!!");
@@ -109,7 +112,12 @@ connection.on("error", (err) => {
 });
 connection.once("open", () => {
   console.log("Connected to MongoDB");
-  app.listen(app.get("port"), () => {
-    console.log(`express listen to port ${app.get("port")}`);
+  // app.listen(app.get("port"), () => {
+  //   console.log(`express listen to port ${app.get("port")}`);
+  // });
+
+  app.listen(config.PORT, config.HOST, function () {
+    console.log(`App listening on http://${config.HOST}:${config.PORT}`);
+    console.log(config);
   });
 });

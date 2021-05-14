@@ -110,7 +110,7 @@ router.get("/ping", (req, res) => {
 });
 
 router.get("/blog-posts", (req, res) => {
-  console.log("req.user:", req.user); // test which is loggued
+  // console.log("req.user:", req.user); // test which is loggued
   Blogpost.find()
     .sort({ createdOn: -1 })
     .exec()
@@ -124,33 +124,43 @@ router.get("/blog-posts", (req, res) => {
 });
 
 router.get("/blog-posts/admin", (req, res) => {
+  Blogpost.find()
+    .sort({ createdOn: -1 })
+    .exec()
+    .then((blogPosts) => res.status(200).json(blogPosts))
+    .catch((err) =>
+      res.status(500).json({
+        msg: "blog posts not found",
+        error: err,
+      })
+    );
   // console.log("Admin route/user:", req.user.username); // test which is loggued
-  const userName = req.user.username;
-  const userStatus = req.user.status;
-  if (userStatus === "admin") {
-    Blogpost.find()
-      .sort({ createdOn: -1 })
-      .exec()
-      .then((blogPosts) => res.status(200).json(blogPosts))
-      .catch((err) =>
-        res.status(500).json({
-          msg: "blog posts not found",
-          error: err,
-        })
-      );
-  }
-  if (userStatus === "author") {
-    Blogpost.find({ creator: userName })
-      .sort({ createdOn: -1 })
-      .exec()
-      .then((blogPosts) => res.status(200).json(blogPosts))
-      .catch((err) =>
-        res.status(500).json({
-          msg: "blog posts not found",
-          error: err,
-        })
-      );
-  }
+  // const userName = req.user.username;
+  // const userStatus = req.user.status;
+  // if (userStatus === "admin") {
+  //   Blogpost.find()
+  //     .sort({ createdOn: -1 })
+  //     .exec()
+  //     .then((blogPosts) => res.status(200).json(blogPosts))
+  //     .catch((err) =>
+  //       res.status(500).json({
+  //         msg: "blog posts not found",
+  //         error: err,
+  //       })
+  //     );
+  // }
+  // if (userStatus === "author" && userName !== undefined) {
+  //   Blogpost.find({ creator: userName })
+  //     .sort({ createdOn: -1 })
+  //     .exec()
+  //     .then((blogPosts) => res.status(200).json(blogPosts))
+  //     .catch((err) =>
+  //       res.status(500).json({
+  //         msg: "blog posts not found",
+  //         error: err,
+  //       })
+  //     );
+  // }
 });
 
 router.get("/blog-posts/:id", (req, res) => {
@@ -174,14 +184,14 @@ router.put("/blog-posts/:id", (req, res) => {
       msg: "You are not authorized to edit a blog post",
     });
   } else {
-    console.log("res:", res);
+    // console.log("res:", res);
     const id = req.params.id;
     const imageName = req.body.image;
     // Delete older files in uploads
     Blogpost.findById(id, (err, res) => {
       const previousImage = res.image;
-      console.log("Image name: ", imageName);
-      console.log("Previous image:", previousImage);
+      // console.log("Image name: ", imageName);
+      // console.log("Previous image:", previousImage);
       // If it's a new image we delete the previous one in UPLOADS
       if (previousImage !== imageName) {
         const filesToDelete = [

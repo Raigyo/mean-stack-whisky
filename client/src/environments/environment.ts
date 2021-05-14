@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   imagePath: "http://localhost:3000/",
   baseUrlAuth: "http://localhost:3000/auth",
+  baseUrlApi: "http://localhost:3000/api/v1/blog-posts",
 };
 
 /*
