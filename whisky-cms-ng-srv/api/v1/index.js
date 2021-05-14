@@ -110,7 +110,7 @@ router.get("/ping", (req, res) => {
 });
 
 router.get("/blog-posts", (req, res) => {
-  // console.log("req.user:", req.user); // test which is loggued
+  console.log("req.user:", req.user); // test which is loggued
   Blogpost.find()
     .sort({ createdOn: -1 })
     .exec()
@@ -121,6 +121,36 @@ router.get("/blog-posts", (req, res) => {
         error: err,
       })
     );
+});
+
+router.get("/blog-posts/admin", (req, res) => {
+  // console.log("Admin route/user:", req.user.username); // test which is loggued
+  const userName = req.user.username;
+  const userStatus = req.user.status;
+  if (userStatus === "admin") {
+    Blogpost.find()
+      .sort({ createdOn: -1 })
+      .exec()
+      .then((blogPosts) => res.status(200).json(blogPosts))
+      .catch((err) =>
+        res.status(500).json({
+          msg: "blog posts not found",
+          error: err,
+        })
+      );
+  }
+  if (userStatus === "author") {
+    Blogpost.find({ creator: userName })
+      .sort({ createdOn: -1 })
+      .exec()
+      .then((blogPosts) => res.status(200).json(blogPosts))
+      .catch((err) =>
+        res.status(500).json({
+          msg: "blog posts not found",
+          error: err,
+        })
+      );
+  }
 });
 
 router.get("/blog-posts/:id", (req, res) => {

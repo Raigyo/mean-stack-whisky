@@ -17,5 +17,6 @@
       <button mat-raised-button color="accent" type="submit" [disabled]="!loginForm.form.valid">register</button>
     </div>
   </form>
-  <mat-card class="errorMessage">{{ errorFromServer }}</mat-card>
 </mat-card>
+<mat-card class="errorMessage">{{ errorFromServer }}</mat-card>
+<div class="register">Already registered? Follow this link to <a [routerLink]="['/auth']">login form</a>.

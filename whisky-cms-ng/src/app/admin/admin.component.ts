@@ -29,7 +29,9 @@ export class AdminComponent implements OnInit {
     if (!this.authService.isAuthenticated) {
       this.router.navigate(["/auth"]);
     }
-    this.blogpostService.getBlogposts().subscribe((data) => this.refresh(data));
+    this.blogpostService
+      .getBlogpostsAdminPage()
+      .subscribe((data) => this.refresh(data));
     this.blogpostService.handleBlogpostCreated().subscribe((data) => {
       // console.log("Admin component received", data);
       this.refresh(data);
@@ -72,7 +74,7 @@ export class AdminComponent implements OnInit {
 
   refresh(data: any) {
     // console.log("data", data);
-    this.blogpostService.getBlogposts().subscribe((data) => {
+    this.blogpostService.getBlogpostsAdminPage().subscribe((data) => {
       this.allBlogposts = data;
     });
   }

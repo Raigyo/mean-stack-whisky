@@ -99,8 +99,4 @@ router.delete("/users/:id", (req, res) => {
   });
 });
 
-router.delete("/users", () => {
-  User.deleteMany({});
-});
-
 module.exports = router;

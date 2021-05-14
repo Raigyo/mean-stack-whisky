@@ -38,6 +38,10 @@ export class BlogpostService {
     return this.httpClient.get<Blogpost[]>(`${this.baseUrl}/`);
   }
 
+  getBlogpostsAdminPage(): Observable<Blogpost[]> {
+    return this.httpClient.get<Blogpost[]>(`${this.baseUrl}/admin`);
+  }
+
   getBlogpostById(id: string | null): Observable<Blogpost> {
     return this.httpClient.get<Blogpost>(`${this.baseUrl}/${id}`);
   }

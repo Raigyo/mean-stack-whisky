@@ -27,7 +27,7 @@ export class AuthComponent implements OnInit {
   handleSuccess(data: User) {
     console.log("logged in", this.user.username);
     sessionStorage.setItem("currentUser", this.user.username);
-    this.router.navigate(["/"]);
+    this.router.navigate(["/admin"]);
   }
 
   handleError(error: any) {
