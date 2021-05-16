@@ -222,6 +222,10 @@ In JavaScript, for example, you can serialize an object to a JSON string by call
 
 `npm i password-validator`
 
+- [cloudinary](https://www.npmjs.com/package/cloudinary): Cloudinary is a cloud service that offers a solution to a web application's entire image management pipeline..
+
+`npm i cloudinary`
+
 #### Tip
 
 **Kill process on port (here 3000)**

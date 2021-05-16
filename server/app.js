@@ -100,11 +100,20 @@ app.use((req, res) => {
 });
 
 // Mongoose
-mongoose.connect(process.env.MOONGOOSE_CONNECT, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-});
+// mongoose.connect(process.env.MOONGOOSE_CONNECT, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   useFindAndModify: false,
+// });
+
+const run = async () => {
+  await mongoose.connect(process.env.MOONGOOSE_CONNECT, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  });
+};
+run().catch((error) => console.error(error));
 
 // EventEmitters
 connection.on("error", (err) => {
