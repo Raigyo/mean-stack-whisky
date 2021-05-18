@@ -1,6 +1,7 @@
 // const config = require("./config.js");
 const express = require("express");
 const app = express();
+const path = require("path");
 const api = require("./api/v1/index");
 const auth = require("./auth/routes");
 // const cors = require("cors");
@@ -85,11 +86,15 @@ const connection = mongoose.connection;
 // app.set("port", process.env.PORT || 3000);
 
 // Set up static folders
-const uploadsDir = require("path").join(__dirname, "/uploads"); // static documents directory
-console.log(uploadsDir);
-app.use(express.static(uploadsDir));
-app.get("/", function (req, res) {
-  res.sendFile(__dirname + "/client/index.html");
+app.use(express.static(path.join(__dirname, "./public")));
+// const uploadsDir = app.use(express.static(path.join(__dirname, "/uploads"))); // static documents directory
+// app.use(express.static(uploadsDir));
+
+// Set up static folders
+app.use(express.static(path.join(__dirname, "./public")));
+
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "/public/client/index.html"));
 });
 // Main routes
 app.use("/api/v1", api);
