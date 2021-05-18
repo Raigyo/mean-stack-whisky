@@ -95,7 +95,7 @@ app.use("/auth", auth);
 app.use(express.static("static"));
 app.get("/", (req, res) => {
   // res.send(`App listening on http://${HOST}:${PORT}`);
-  res.send("App listening");
+  res.send(`App listening on ${PORT}`);
 });
 // 404 handling - don't put middlewares below
 app.use((req, res) => {
@@ -124,5 +124,5 @@ connection.once("open", () => {
   //   console.log(`App listening on http://${HOST}:${PORT}`);
   //   console.log(process.env);
   // });
-  app.listen(process.env.PORT || 3000);
+  app.listen(PORT || 3000);
 });
