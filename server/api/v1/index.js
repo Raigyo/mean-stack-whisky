@@ -20,8 +20,8 @@ router.post("/blog-posts", (req, res) => {
       msg: "You are not authorized to edit a blog post",
     });
   }
-  const smallImagePath = `./uploads/${lastUploadedImageName}`;
-  const outputName = `./uploads/small-${lastUploadedImageName}`;
+  const smallImagePath = `./upload/${lastUploadedImageName}`;
+  const outputName = `./upload/small-${lastUploadedImageName}`;
   console.log("lastUploadedImageName:", lastUploadedImageName);
   resize({
     path: smallImagePath,
@@ -51,7 +51,7 @@ router.post("/blog-posts", (req, res) => {
 // File upload configuration
 let lastUploadedImageName = "";
 const storage = multer.diskStorage({
-  destination: "./uploads/",
+  destination: "./upload/",
   filename: function (req, file, callback) {
     console.log("filename", file);
     crypto.pseudoRandomBytes(16, function (err, raw) {
@@ -195,8 +195,8 @@ router.put("/blog-posts/:id", (req, res) => {
       // If it's a new image we delete the previous one in UPLOADS
       if (previousImage !== imageName) {
         const filesToDelete = [
-          `./uploads/${previousImage}`,
-          `./uploads/small-${previousImage}`,
+          `./upload/${previousImage}`,
+          `./upload/small-${previousImage}`,
         ];
         deleteFiles(filesToDelete, (err) => {
           if (err) {
@@ -208,8 +208,8 @@ router.put("/blog-posts/:id", (req, res) => {
       }
     });
     // Images uploads + update datas
-    const smallImagePath = `./uploads/${imageName}`;
-    const outputName = `./uploads/small-${imageName}`;
+    const smallImagePath = `./upload/${imageName}`;
+    const outputName = `./upload/small-${imageName}`;
     resize({
       path: smallImagePath,
       width: 200,
@@ -272,7 +272,7 @@ router.delete("/blog-posts/:id", (req, res) => {
   const id = req.params.id;
   // Delete files in uploads
   Blogpost.findById(id, function (err, res) {
-    const filesToDelete = [`uploads/${res.image}`, `uploads/${res.smallImage}`];
+    const filesToDelete = [`upload/${res.image}`, `upload/${res.smallImage}`];
     deleteFiles(filesToDelete, (err) => {
       if (err) {
         console.log(err);
@@ -315,10 +315,7 @@ router.delete("/blog-posts", (req, res) => {
   allIds.forEach((item) => {
     // console.log(item, index);
     Blogpost.findById(item, function (err, res) {
-      const filesToDelete = [
-        `uploads/${res.image}`,
-        `uploads/${res.smallImage}`,
-      ];
+      const filesToDelete = [`upload/${res.image}`, `upload/${res.smallImage}`];
       deleteFiles(filesToDelete, (err) => {
         if (err) {
           console.log(err);

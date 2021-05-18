@@ -255,6 +255,32 @@ ng serve
 
 `npm i @kolkov/angular-editor`
 
+## Heroku deploy
+
+### Angular build
+
+`ng build --prod --base-href --output-path ./../server/public/client`
+
+### Server + app
+
+On root:
+
+`heroku login`
+
+`heroku create my-app`
+
+`heroku git:remote -a my-app`
+
+`git add .`
+
+`git commit -m "my message"`
+
+`git subtree push --prefix server heroku master`
+
+If errors, check with:
+
+`heroku logs --tail`
+
 ## Useful links
 
 - [codeconcept/whisky-cms-ng](https://github.com/codeconcept/whisky-cms-ng).
@@ -276,6 +302,7 @@ ng serve
 - [Angular 11 MatDialog Basics](https://www.developer.com/languages/javascript/angular-11-matdialog-basics/)
 - [How to reset file input form after uploading the image in Angular?](https://stackoverflow.com/questions/54251208/how-to-reset-file-input-form-after-uploading-the-image-in-angular)
 - [Angular2 set value for formGroup](https://stackoverflow.com/questions/38655613/angular2-set-value-for-formgroup)
+- [How to use environment variables to configure your Angular application without a rebuild](https://www.jvandemo.com/how-to-use-environment-variables-to-configure-your-angular-application-without-a-rebuild/)
 - [FormData.append()](https://developer.mozilla.org/en-US/docs/Web/API/FormData/append)
 - [Tout pour la redirection HTTP vers HTTPS](https://www.webrankinfo.com/dossiers/techniques/redirection-http-https).
 - [Deploy Git subdirectory to Heroku](https://medium.com/@shalandy/deploy-git-subdirectory-to-heroku-ea05e95fce1f).
