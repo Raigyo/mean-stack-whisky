@@ -3,6 +3,7 @@
 .env
 .env.development
 .env.production
+.htaccess
 
 # compiled output
 /dist
