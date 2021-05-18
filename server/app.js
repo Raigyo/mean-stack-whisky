@@ -88,15 +88,17 @@ const connection = mongoose.connection;
 const uploadsDir = require("path").join(__dirname, "/uploads"); // static documents directory
 console.log(uploadsDir);
 app.use(express.static(uploadsDir));
-
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "client/index.html");
+});
 // Main routes
 app.use("/api/v1", api);
 app.use("/auth", auth);
 app.use(express.static("static"));
-app.get("/", (req, res) => {
-  // res.send(`App listening on http://${HOST}:${PORT}`);
-  res.send(`App listening on ${PORT}`);
-});
+
+// app.get("/", (req, res) => {
+//   res.send(`App listening on ${PORT}`);
+// });
 // 404 handling - don't put middlewares below
 app.use((req, res) => {
   const err = new Error("404 - Not found !!!!!");
