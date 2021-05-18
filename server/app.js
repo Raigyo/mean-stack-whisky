@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const api = require("./api/v1/index");
 const auth = require("./auth/routes");
-const cors = require("cors");
+// const cors = require("cors");
 // Passport
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
@@ -15,12 +15,12 @@ const User = require("./auth/models/user");
 const HOST = process.env.HOST;
 const PORT = process.env.PORT || 3000;
 const MOONGOOSE_CONNECT = process.env.MOONGOOSE_CONNECT;
-const CORS_ORIGIN = process.env.CORS_ORIGIN;
+// const CORS_ORIGIN = process.env.CORS_ORIGIN;
 
 // MIDDLEWARES
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ credentials: true, origin: CORS_ORIGIN }));
+// app.use(cors({ credentials: true, origin: CORS_ORIGIN }));
 app.use((req, res, next) => {
   console.log(`req handled at ${new Date()}`);
   next();

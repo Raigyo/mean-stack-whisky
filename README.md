@@ -277,5 +277,5 @@ ng serve
 - [How to reset file input form after uploading the image in Angular?](https://stackoverflow.com/questions/54251208/how-to-reset-file-input-form-after-uploading-the-image-in-angular)
 - [Angular2 set value for formGroup](https://stackoverflow.com/questions/38655613/angular2-set-value-for-formgroup)
 - [FormData.append()](https://developer.mozilla.org/en-US/docs/Web/API/FormData/append)
-- [How to deploy a MERN Stack App to Heroku](https://www.youtube.com/watch?v=5PaUiPyBDJY).
-- [How to deploy MERN applications 🚨 (Heroku and Atlas)](https://www.youtube.com/watch?v=2AIL1c-cJM0).
+- [Tout pour la redirection HTTP vers HTTPS](https://www.webrankinfo.com/dossiers/techniques/redirection-http-https).
+- [Deploy Git subdirectory to Heroku](https://medium.com/@shalandy/deploy-git-subdirectory-to-heroku-ea05e95fce1f).
