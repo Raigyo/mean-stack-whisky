@@ -13,7 +13,7 @@ const Strategy = require("passport-local").Strategy;
 const User = require("./auth/models/user");
 
 // const HOST = process.env.HOST;
-// const PORT = process.env.PORT;
+const PORT = process.env.PORT;
 const MOONGOOSE_CONNECT = process.env.MOONGOOSE_CONNECT;
 // const CORS_ORIGIN = process.env.CORS_ORIGIN;
 
@@ -124,7 +124,5 @@ connection.once("open", () => {
   //   console.log(`App listening on http://${HOST}:${PORT}`);
   //   console.log(process.env);
   // });
-  app.listen(function () {
-    console.log("App listening");
-  });
+  app.listen(process.env.PORT || 3000);
 });
