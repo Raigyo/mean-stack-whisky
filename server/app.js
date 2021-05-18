@@ -13,7 +13,7 @@ const Strategy = require("passport-local").Strategy;
 const User = require("./auth/models/user");
 
 const HOST = process.env.HOST;
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 const MOONGOOSE_CONNECT = process.env.MOONGOOSE_CONNECT;
 // const CORS_ORIGIN = process.env.CORS_ORIGIN;
 
