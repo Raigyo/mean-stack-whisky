@@ -12,10 +12,15 @@ const Strategy = require("passport-local").Strategy;
 // to retrieve users from the MongoDB users collection
 const User = require("./auth/models/user");
 
+const HOST = process.env.HOST;
+const PORT = process.env.PORT || 3000;
+const MOONGOOSE_CONNECT = process.env.MOONGOOSE_CONNECT;
+const CORS_ORIGIN = process.env.CORS_ORIGIN;
+
 // MIDDLEWARES
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ credentials: true, origin: process.env.CORS_ORIGIN }));
+app.use(cors({ credentials: true, origin: CORS_ORIGIN }));
 app.use((req, res, next) => {
   console.log(`req handled at ${new Date()}`);
   next();
@@ -89,7 +94,7 @@ app.use("/api/v1", api);
 app.use("/auth", auth);
 app.use(express.static("static"));
 app.get("/", (req, res) => {
-  res.send(`App listening on http://${process.env.HOST}:${process.env.PORT}`);
+  res.send(`App listening on http://${HOST}:${PORT}`);
 });
 // 404 handling - don't put middlewares below
 app.use((req, res) => {
@@ -99,7 +104,7 @@ app.use((req, res) => {
 });
 
 const run = async () => {
-  await mongoose.connect(process.env.MOONGOOSE_CONNECT, {
+  await mongoose.connect(MOONGOOSE_CONNECT, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -115,9 +120,7 @@ connection.once("open", () => {
   console.log("Connected to MongoDB");
 
   app.listen(process.env.PORT, process.env.HOST, function () {
-    console.log(
-      `App listening on http://${process.env.HOST}:${process.env.PORT}`
-    );
+    console.log(`App listening on http://${HOST}:${PORT}`);
     console.log(process.env);
   });
 });
