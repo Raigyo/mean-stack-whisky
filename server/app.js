@@ -99,12 +99,13 @@ app.use(express.static("static"));
 // app.get("/", (req, res) => {
 //   res.send(`App listening on ${PORT}`);
 // });
+
 // 404 handling - don't put middlewares below
-app.use((req, res) => {
-  const err = new Error("404 - Not found !!!!!");
-  err.status = 404;
-  res.json({ msg: "404 - Not found !!!!!", err: err });
-});
+// app.use((req, res) => {
+//   const err = new Error("404 - Not found !!!!!");
+//   err.status = 404;
+//   res.json({ msg: "404 - Not found !!!!!", err: err });
+// });
 
 const run = async () => {
   await mongoose.connect(MOONGOOSE_CONNECT, {
