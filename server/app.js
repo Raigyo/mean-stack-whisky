@@ -89,7 +89,7 @@ const uploadsDir = require("path").join(__dirname, "/uploads"); // static docume
 console.log(uploadsDir);
 app.use(express.static(uploadsDir));
 app.get("/", function (req, res) {
-  res.sendFile(__dirname + "client/index.html");
+  res.sendFile(__dirname + "/client/index.html");
 });
 // Main routes
 app.use("/api/v1", api);
