@@ -1,4 +1,4 @@
-const config = require("./config.js");
+// const config = require("./config.js");
 const express = require("express");
 const app = express();
 const api = require("./api/v1/index");
@@ -7,7 +7,6 @@ const cors = require("cors");
 // Passport
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
-// const session = require("express-session");
 const session = require("cookie-session");
 const Strategy = require("passport-local").Strategy;
 // to retrieve users from the MongoDB users collection
@@ -89,22 +88,15 @@ app.use(express.static(uploadsDir));
 app.use("/api/v1", api);
 app.use("/auth", auth);
 app.use(express.static("static"));
-// app.get("/", (req, res) => {
-//   res.send("Hello world");
-// });
+app.get("/", (req, res) => {
+  res.send(`App listening on http://${process.env.HOST}:${process.env.PORT}`);
+});
 // 404 handling - don't put middlewares below
 app.use((req, res) => {
   const err = new Error("404 - Not found !!!!!");
   err.status = 404;
   res.json({ msg: "404 - Not found !!!!!", err: err });
 });
-
-// Mongoose
-// mongoose.connect(process.env.MOONGOOSE_CONNECT, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   useFindAndModify: false,
-// });
 
 const run = async () => {
   await mongoose.connect(process.env.MOONGOOSE_CONNECT, {
@@ -121,12 +113,11 @@ connection.on("error", (err) => {
 });
 connection.once("open", () => {
   console.log("Connected to MongoDB");
-  // app.listen(app.get("port"), () => {
-  //   console.log(`express listen to port ${app.get("port")}`);
-  // });
 
-  app.listen(config.PORT, config.HOST, function () {
-    console.log(`App listening on http://${config.HOST}:${config.PORT}`);
-    console.log(config);
+  app.listen(process.env.PORT, process.env.HOST, function () {
+    console.log(
+      `App listening on http://${process.env.HOST}:${process.env.PORT}`
+    );
+    console.log(process.env);
   });
 });
