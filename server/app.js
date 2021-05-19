@@ -93,7 +93,7 @@ app.use(express.static(path.join(__dirname, "../public/upload")));
 // app.use(express.static(uploadsDir));
 
 app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "../public/client/index.html"));
+  res.sendFile(path.join(__dirname, "public/client/index.html"));
 });
 // Main routes
 app.use("/api/v1", api);
