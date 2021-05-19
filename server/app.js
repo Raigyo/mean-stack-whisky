@@ -86,9 +86,9 @@ const connection = mongoose.connection;
 // app.set("port", process.env.PORT || 3000);
 
 // Set up static folders
-app.use(express.static(path.join(__dirname, "../public")));
-app.use(express.static(path.join(__dirname, "../public/client")));
-app.use(express.static(path.join(__dirname, "../public/upload")));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public/client")));
+app.use(express.static(path.join(__dirname, "public/upload")));
 // const uploadsDir = app.use(express.static(path.join(__dirname, "/uploads"))); // static documents directory
 // app.use(express.static(uploadsDir));
 
