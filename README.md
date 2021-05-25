@@ -8,7 +8,39 @@ April / May 2021
 
 ![logo](_readme-img/logo.jpg)
 
+## Test online
+
+Test the application on [Heroku](https://raigyo-mean-server.herokuapp.com/).
+
+NB: due to the fact that the application is hosted on Heroku using external services like MongoDB Atlas, it can be slow to start (services use cold start) and when running.
+
 ## Test localy
+
+Clone and use [dev-version](https://github.com/Raigyo/mean-stack-whisky/tree/dev-version) branch.
+
+**Start server**
+
+You need MongoDB installed.
+
+`sudo service mongodb start`
+
+From root: `cd whisky-cms-ng-srv`
+
+`npm install`
+
+`npm start`
+
+The server should run at [http://localhost:3000](http://localhost:3000).
+
+**Start client app**
+
+From root: `cd whisky-cms-ng`
+
+`npm install`
+
+`npm start`
+
+The app should run at [http://localhost:4200](http://localhost:4200).
 
 ## Front End part
 
@@ -59,9 +91,16 @@ Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>
 
 - _./src/app/auth/auth.component.html_: Display login.
 - _./src/app/auth/auth.component.ts_: Manage login.
-- _./src/app/models/user.ts_: typed interface for Blogpost.
-- _./src/app/services/auth.service.ts_: Connect to base url. Manage login/logout.
+- _./src/app/models/user.ts_: typed interface for login page.
+- _./src/app/services/auth.service.ts_: Connect to base url. Manage login/logout/register routes.
 - \_./src/app/services/add-cookie.interceptor.ts: HTTP Interceptor: centralizes the sending of the header in each request (used for the cookie).
+
+**register**
+
+- _./src/app/register/auth.component.html_: Display register.
+- _./src/app/register/auth.component.ts_: Manage register.
+- _./src/app/models/user.ts_: typed interface for Blogpost.
+- _./src/app/services/auth.service.ts_: Connect to base url. Manage login/logout/register routes.
 
 ## Back-end part
 
