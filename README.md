@@ -12,7 +12,23 @@ April / May 2021
 
 Test the application on [Heroku](https://raigyo-mean-server.herokuapp.com/).
 
+You can test the app using these credentials if you don't want to register:
+
+User name: special-guest
+
+Password: MeanStack-2021-05-25
+
 NB: due to the fact that the application is hosted on Heroku using external services like MongoDB Atlas, it can be slow to start (services use cold start) and when running.
+
+![logo](_readme-img/capture-login.png)
+
+![logo](_readme-img/capture-hp.png)
+
+![logo](_readme-img/capture-admin-create.png)
+
+![logo](_readme-img/capture-create-wrong.png)
+
+![logo](_readme-img/capture-update-wrong.png)
 
 ## Test localy
 
@@ -42,7 +58,9 @@ From root: `cd whisky-cms-ng`
 
 The app should run at [http://localhost:4200](http://localhost:4200).
 
-## Front End part
+![logo](_readme-img/capture-api-more-than-1mb.png)
+
+## Files and components: Front End part
 
 - _./src/app/app.module.ts_: import / export all modules used in the application.
 - _./src/app/app-routing.module.ts_: routing.
@@ -102,7 +120,7 @@ Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>
 - _./src/app/models/user.ts_: typed interface for Blogpost.
 - _./src/app/services/auth.service.ts_: Connect to base url. Manage login/logout/register routes.
 
-## Back-end part
+## Files and components: Back-end part
 
 - _./appjs_: Express and Mongo connection. Static folders. Session mudlewares
 - _./utils/resize.js_: Helper to resize images.
