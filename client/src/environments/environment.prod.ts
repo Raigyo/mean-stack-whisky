@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  imagePath: "/public/client/upload",
+  imagePath: "/upload/",
   baseUrlAuth: "/auth",
   baseUrlApi: "/api/v1/blog-posts",
 };
