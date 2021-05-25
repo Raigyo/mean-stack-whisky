@@ -1,8 +1,10 @@
 .container {
-  width: 80%;
+  width: 50%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  /* justify-content: space-around; */
+  justify-content: space-between;
+  margin: 10px;
 }
 
 .example-card {
