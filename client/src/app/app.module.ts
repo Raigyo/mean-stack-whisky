@@ -19,6 +19,7 @@ import { AuthComponent } from "./auth/auth.component";
 import { AddCookieInterceptor } from "./services/add-cookie.interceptor";
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 import { MatDialogModule } from "@angular/material/dialog";
+import { MatButtonModule } from "@angular/material/button";
 import { RegisterComponent } from "./register/register.component";
 
 @NgModule({
@@ -45,6 +46,7 @@ import { RegisterComponent } from "./register/register.component";
     AngularEditorModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatButtonModule,
   ],
   providers: [
     AuthComponent,
