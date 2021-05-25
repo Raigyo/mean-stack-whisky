@@ -88,7 +88,7 @@ const connection = mongoose.connection;
 // Set up static folders
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public/client")));
-app.use(express.static(path.join(__dirname, "public/upload")));
+app.use(express.static(path.join(__dirname, "public/client/upload")));
 // const uploadsDir = app.use(express.static(path.join(__dirname, "/uploads"))); // static documents directory
 // app.use(express.static(uploadsDir));
 
@@ -98,18 +98,18 @@ app.get("/", function (req, res) {
 // Main routes
 app.use("/api/v1", api);
 app.use("/auth", auth);
-app.use(express.static("static"));
+// app.use(express.static("static"));
 
 // app.get("/", (req, res) => {
 //   res.send(`App listening on ${PORT}`);
 // });
 
 // 404 handling - don't put middlewares below
-// app.use((req, res) => {
-//   const err = new Error("404 - Not found !!!!!");
-//   err.status = 404;
-//   res.json({ msg: "404 - Not found !!!!!", err: err });
-// });
+app.use((req, res) => {
+  const err = new Error("404 - Not found !!!!!");
+  err.status = 404;
+  res.json({ msg: "404 - Not found !!!!!", err: err });
+});
 
 const run = async () => {
   await mongoose.connect(MOONGOOSE_CONNECT, {
