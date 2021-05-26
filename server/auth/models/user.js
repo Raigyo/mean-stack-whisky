@@ -15,10 +15,6 @@ const userSchema = new mongoose.Schema({
 
 userSchema.plugin(uniqueValidator);
 
-userSchema.methods.validPassword = async function (password) {
-  return await argon2.verify(this.password, password); // argon2.verify("<big long hash>", "password")
-};
-
 userSchema.pre("save", async function (next) {
   console.log("inside pre");
   if (this.password) {
@@ -27,5 +23,12 @@ userSchema.pre("save", async function (next) {
   }
   next();
 });
+
+userSchema.methods.validPassword = async function (hash, password) {
+  console.log("hash: ", hash);
+  console.log("password: ", password);
+  const result = await argon2.verify(hash, password);
+  return result;
+};
 
 module.exports = mongoose.model("User", userSchema);

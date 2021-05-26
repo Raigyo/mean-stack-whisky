@@ -59,21 +59,22 @@ passport.use(
     (name, password, done) => {
       User.findOne({ username: name }, (err, user) => {
         if (err) {
-          console.log(err);
-          //return done(err);
-          return err.status(401).json({
-            msg: "User already exists",
-          });
+          console.log("Something went wront try again later");
+          return done(null, false);
         }
-        if (!user || !password || !user.validPassword(password)) {
-          return done(null, false, {
-            message: "Incorrect username or password!",
-          });
+        if (!user) {
+          console.log("User doesn't exists in database!");
+          return done(null, false);
         }
-        // if (!pwd || user.password !== pwd) {
-        //   return done(null, false, { message: "Incorrect password." });
-        // }
-        return done(null, user);
+        user.validPassword(user.password, password).then((result) => {
+          console.log("result", result);
+          if (!result) {
+            console.log("Incorrect password");
+            return done(null, false, { message: "Incorrect password." });
+          }
+          console.log("Password matches");
+          return done(null, user);
+        });
       });
     }
   )
