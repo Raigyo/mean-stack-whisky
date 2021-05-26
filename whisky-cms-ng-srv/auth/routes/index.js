@@ -76,7 +76,7 @@ router.post(
 );
 
 router.get("/success", (req, res) => {
-  res.status(200).json({ msg: "logged in", user: req.user });
+  res.status(200).json({ msg: "Logged in", user: req.user });
 });
 
 router.get("/failure", (req, res) => {
@@ -85,7 +85,7 @@ router.get("/failure", (req, res) => {
 
 router.get("/logout", (req, res) => {
   req.logOut();
-  res.status(200).json({ msg: "logged out successfully" });
+  res.status(200).json({ msg: "Logged out successfully" });
 });
 
 router.delete("/users/:id", (req, res) => {
