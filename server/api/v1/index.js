@@ -11,6 +11,9 @@ const resize = require("../../utils/resize");
 
 const Blogpost = require("../models/blogpost");
 
+// const cloudinary = require("cloudinary").v2;
+// const { CloudinaryStorage } = require("multer-storage-cloudinary");
+
 // CREATE
 
 router.post("/blog-posts", (req, res) => {
@@ -49,6 +52,7 @@ router.post("/blog-posts", (req, res) => {
 });
 
 // File upload configuration
+// Local
 let lastUploadedImageName = "";
 const storage = multer.diskStorage({
   destination: "./public/upload/",
@@ -60,10 +64,29 @@ const storage = multer.diskStorage({
         raw.toString("hex") + path.extname(file.originalname);
       callback(null, lastUploadedImageName);
     });
-    // lastUploadedImageName =
-    //   file.originalname + +path.extname(file.originalname);
   },
 });
+
+// Cloudinary
+// let lastUploadedImageName = "";
+// cloudinary.config({
+//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//   api_key: process.env.CLOUDINARY_API_KEY,
+//   api_secret: process.env.CLOUDINARY_API_SECRET,
+// });
+// const storage = new CloudinaryStorage({
+//   cloudinary: cloudinary,
+//   folder: "image/upload/mean-dev-blog/",
+//   fileName: function (req, file, callback) {
+//     console.log("filename", file);
+//     crypto.pseudoRandomBytes(16, function (err, raw) {
+//       if (err) return callback(err);
+//       lastUploadedImageName =
+//         raw.toString("hex") + path.extname(file.originalname);
+//       callback(null, lastUploadedImageName);
+//     });
+//   },
+// });
 
 const upload = multer({
   storage: storage,
@@ -122,42 +145,33 @@ router.get("/blog-posts", (req, res) => {
 });
 
 router.get("/blog-posts/admin", (req, res) => {
-  // Blogpost.find()
-  //   .sort({ createdOn: -1 })
-  //   .exec()
-  //   .then((blogPosts) => res.status(200).json(blogPosts))
-  //   .catch((err) =>
-  //     res.status(500).json({
-  //       msg: "blog posts not found",
-  //       error: err,
-  //     })
-  //   );
-  // console.log("Admin route/user:", req.user.username); // test which is loggued
   const userName = req.user.username;
-  const userStatus = req.user.status;
-  if (userStatus === "admin") {
-    Blogpost.find()
-      .sort({ createdOn: -1 })
-      .exec()
-      .then((blogPosts) => res.status(200).json(blogPosts))
-      .catch((err) =>
-        res.status(500).json({
-          msg: "blog posts not found",
-          error: err,
-        })
-      );
-  }
-  if (userStatus === "author" && userName !== undefined) {
-    Blogpost.find({ creator: userName })
-      .sort({ createdOn: -1 })
-      .exec()
-      .then((blogPosts) => res.status(200).json(blogPosts))
-      .catch((err) =>
-        res.status(500).json({
-          msg: "blog posts not found",
-          error: err,
-        })
-      );
+  if (userName) {
+    const userStatus = req.user.status;
+    if (userStatus === "admin") {
+      Blogpost.find()
+        .sort({ createdOn: -1 })
+        .exec()
+        .then((blogPosts) => res.status(200).json(blogPosts))
+        .catch((err) =>
+          res.status(500).json({
+            msg: "blog posts not found",
+            error: err,
+          })
+        );
+    }
+    if (userStatus === "author") {
+      Blogpost.find({ creator: userName })
+        .sort({ createdOn: -1 })
+        .exec()
+        .then((blogPosts) => res.status(200).json(blogPosts))
+        .catch((err) =>
+          res.status(500).json({
+            msg: "blog posts not found",
+            error: err,
+          })
+        );
+    }
   } else {
     console.log("front end redirect to auth");
   }

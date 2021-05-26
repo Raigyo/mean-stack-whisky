@@ -1,10 +1,11 @@
-// const config = require("./config.js");
 const express = require("express");
 const app = express();
 const path = require("path");
+// const envConfig = require("./config/envConfig");
 const api = require("./api/v1/index");
 const auth = require("./auth/routes");
 // const cors = require("cors");
+
 // Passport
 const passport = require("passport");
 const cookieParser = require("cookie-parser");

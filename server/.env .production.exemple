@@ -1,0 +1,3 @@
+# To set in Heroku (settings / var )
+HOST=myapp.herokuapp.com
+MOONGOOSE_CONNECT=mongodb+srv:mongodb-atlas-url
