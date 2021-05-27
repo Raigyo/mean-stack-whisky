@@ -16,7 +16,7 @@
       </div>
       <input #takeInput type="file" name="image" formControlName="image" id="image" (change)="getFiles($event)"
         required>
-      <p>Only .png, .gif, .jpg and .jpeg files under 2MB are allowed!</p>
+      <p>Only .png, .gif, .jpg and .jpeg files under 1MB are allowed!</p>
       <div class="submitPost">
         <button mat-raised-button id="submitBtn" color="accent" type="submit" [disabled]="!formDirective.valid">Create
           blogpost</button>
