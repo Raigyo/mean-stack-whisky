@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  imagePath: "http://localhost:3000/",
+  imagePath:
+    "https://res.cloudinary.com/dxutqm552/image/upload/v1622110034/mean-dev-blog/",
   baseUrlAuth: "http://localhost:3000/auth",
   baseUrlApi: "http://localhost:3000/api/v1/blog-posts",
 };

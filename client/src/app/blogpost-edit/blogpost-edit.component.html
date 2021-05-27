@@ -1,4 +1,4 @@
-<mat-card *ngIf="blogpost as bp; else loading">
+<mat-card *ngIf="blogpost as bp">
   <form #formDirective="ngForm" (ngSubmit)="updateBlogpost(formDirective)">
     <div class="example-container">
       <mat-form-field>
@@ -24,6 +24,6 @@
   </form>
 </mat-card>
 
-<ng-template #loading>
-  loading...
-</ng-template>
+<div class="loading-indicator" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</div>

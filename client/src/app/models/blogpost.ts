@@ -3,7 +3,7 @@ export interface Blogpost {
   title: string;
   subTitle: string;
   image: string;
-  smallImage: string;
+  // smallImage: string;
   content: string;
   creator: string;
 }

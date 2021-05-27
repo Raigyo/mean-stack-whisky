@@ -28,9 +28,22 @@
 		},
 		{
 			"name": "GET blog-posts",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "blogimage",
+							"type": "file",
+							"src": "///wsl$/Ubuntu-18.04/home/chilot/development/MeanStack/_readme-img/logo.jpg"
+						}
+					]
+				},
 				"url": {
 					"raw": "http://localhost:3000/api/v1/blog-posts",
 					"protocol": "http",
@@ -184,7 +197,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"title qsd 7\",\r\n    \"subTitle\": \"subtitle qsd ter\",\r\n    \"image\": \"https://fakeimg.pl/300/?text=qsd\",\r\n    \"content\": \"qsd Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat incidunt, quae repudiandae debitis rem, odio labore quidem deleniti saepe enim porro laborum doloribus! Quam fugiat debitis earum, necessitatibus consequuntur cumque?\"\r\n}"
+					"raw": "{\r\n    \"title\": \"title qsd 7\",\r\n    \"subTitle\": \"subtitle qsd ter\",\r\n    \"image\": \"https://fakeimg.pl/300/?text=qsd\",\r\n    \"content\": \"qsd Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat incidunt, quae repudiandae debitis rem, odio labore quidem deleniti saepe enim porro laborum doloribus! Quam fugiat debitis earum, necessitatibus consequuntur cumque?\",\r\n    \"creator\": \"raigyo-dev\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:3000/api/v1/blog-posts",

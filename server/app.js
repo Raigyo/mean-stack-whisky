@@ -4,7 +4,7 @@ const path = require("path");
 // const envConfig = require("./config/envConfig");
 const api = require("./api/v1/index");
 const auth = require("./auth/routes");
-// const cors = require("cors");
+const cors = require("cors");
 
 // Passport
 const passport = require("passport");
@@ -22,7 +22,7 @@ const MOONGOOSE_CONNECT = process.env.MOONGOOSE_CONNECT;
 // MIDDLEWARES
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
-// app.use(cors({ credentials: true, origin: CORS_ORIGIN }));
+app.use(cors({ credentials: true, origin: process.env.CORS_ORIGIN }));
 app.use((req, res, next) => {
   console.log(`req handled at ${new Date()}`);
   next();

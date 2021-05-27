@@ -17,13 +17,18 @@ export class AdminComponent implements OnInit {
   errorFromServer = "";
   ngFormRef: any;
   currentUser = sessionStorage.getItem("currentUser");
+  loading!: boolean;
 
   constructor(
     public dialog: MatDialog,
     private blogpostService: BlogpostService,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    setTimeout(() => {
+      this.loading = true;
+    }, 5000);
+  }
 
   ngOnInit() {
     if (!this.authService.isAuthenticated) {

@@ -324,9 +324,9 @@ On root:
 
 `heroku login`
 
-`heroku create my-app`
+(`heroku create my-app`)
 
-`heroku git:remote -a my-app`
+(`heroku git:remote -a my-app`)
 
 `git add .`
 

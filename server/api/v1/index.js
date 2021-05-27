@@ -3,16 +3,12 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const multer = require("multer");
-const crypto = require("crypto");
 const path = require("path");
-const fs = require("fs");
-
-const resize = require("../../utils/resize");
 
 const Blogpost = require("../models/blogpost");
 
-// const cloudinary = require("cloudinary").v2;
-// const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 // CREATE
 
@@ -20,27 +16,14 @@ router.post("/blog-posts", (req, res) => {
   if (!req.isAuthenticated()) {
     return res.status(401).json({
       result: "KO",
-      msg: "You are not authorized to edit a blog post",
+      msg: "You are not authorized to create a blog post",
     });
   }
-  const smallImagePath = `./public/upload/${lastUploadedImageName}`;
-  const outputName = `./public/upload/small-${lastUploadedImageName}`;
-  console.log("lastUploadedImageName:", lastUploadedImageName);
-  resize({
-    path: smallImagePath,
-    width: 200,
-    height: 200,
-    outputName: outputName,
-  })
-    .then((data) => {
-      console.log("OK resize", data.size);
-    })
-    .catch((err) => console.error("err from resize", err));
+
   console.log("blogPost:", req.body);
   const blogPost = new Blogpost({
     ...req.body,
     image: lastUploadedImageName,
-    smallImage: `small-${lastUploadedImageName}`,
   });
   blogPost.save((err, blogPost) => {
     if (err) {
@@ -52,41 +35,21 @@ router.post("/blog-posts", (req, res) => {
 });
 
 // File upload configuration
-// Local
+// Cloudinary
 let lastUploadedImageName = "";
-const storage = multer.diskStorage({
-  destination: "./public/upload/",
-  filename: function (req, file, callback) {
-    console.log("filename", file);
-    crypto.pseudoRandomBytes(16, function (err, raw) {
-      if (err) return callback(err);
-      lastUploadedImageName =
-        raw.toString("hex") + path.extname(file.originalname);
-      callback(null, lastUploadedImageName);
-    });
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: "image/upload/mean-dev-blog/",
+  params: {
+    folder: "mean-dev-blog",
+    allowedFormats: ["jpg", "jpeg", "png", "gif"],
   },
 });
-
-// Cloudinary
-// let lastUploadedImageName = "";
-// cloudinary.config({
-//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//   api_key: process.env.CLOUDINARY_API_KEY,
-//   api_secret: process.env.CLOUDINARY_API_SECRET,
-// });
-// const storage = new CloudinaryStorage({
-//   cloudinary: cloudinary,
-//   folder: "image/upload/mean-dev-blog/",
-//   fileName: function (req, file, callback) {
-//     console.log("filename", file);
-//     crypto.pseudoRandomBytes(16, function (err, raw) {
-//       if (err) return callback(err);
-//       lastUploadedImageName =
-//         raw.toString("hex") + path.extname(file.originalname);
-//       callback(null, lastUploadedImageName);
-//     });
-//   },
-// });
 
 const upload = multer({
   storage: storage,
@@ -110,7 +73,6 @@ const upload = multer({
 
 // File upload route
 router.post("/blog-posts/images", (req, res) => {
-  console.log(req.file);
   upload(req, res, function (error) {
     if (error) {
       if (error.code == "LIMIT_FILE_SIZE") {
@@ -120,6 +82,10 @@ router.post("/blog-posts/images", (req, res) => {
         return res.status(415).send(error.msg);
       }
     }
+    lastUploadedImageName = req.file.path.substr(
+      req.file.path.lastIndexOf("/") + 1
+    );
+    console.log("lastUploadedImageName", lastUploadedImageName);
     res.status(201).send({ fileName: req.file.filename, file: req.file });
   });
 });
@@ -201,44 +167,29 @@ router.put("/blog-posts/:id", (req, res) => {
     // console.log("res:", res);
     const id = req.params.id;
     const imageName = req.body.image;
+
+    lastUploadedImageName = imageName.substr(imageName.lastIndexOf("/") + 1);
+
     // Delete older files in uploads
     Blogpost.findById(id, (err, res) => {
       const previousImage = res.image;
-      // console.log("Image name: ", imageName);
-      // console.log("Previous image:", previousImage);
+      console.log("updated image name: ", lastUploadedImageName);
+      console.log("previous image name:", previousImage);
       // If it's a new image we delete the previous one in UPLOADS
       if (previousImage !== imageName) {
-        const filesToDelete = [
-          `./public/upload/${previousImage}`,
-          `./public/upload/small-${previousImage}`,
-        ];
-        deleteFiles(filesToDelete, (err) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log("Older images removed after update");
+        cloudinary.uploader.destroy(
+          process.env.FILE_UPLOAD_DIR + path.parse(previousImage).name,
+          function (error, result) {
+            console.log(result, error);
           }
-        });
+        );
       }
     });
     // Images uploads + update datas
-    const smallImagePath = `./public/upload/${imageName}`;
-    const outputName = `./public/upload/small-${imageName}`;
-    resize({
-      path: smallImagePath,
-      width: 200,
-      height: 200,
-      outputName: outputName,
-    })
-      .then((data) => {
-        console.log("OK resize", data.size);
-      })
-      .catch((err) => console.error("err from resize", err));
     const conditions = { _id: id };
     const blogPost = {
       ...req.body,
-      image: imageName,
-      smallImage: `small-${imageName}`,
+      image: lastUploadedImageName,
     };
     const update = { $set: blogPost };
     const options = {
@@ -257,26 +208,8 @@ router.put("/blog-posts/:id", (req, res) => {
 
 // DELETE
 
-// Helper: Delete files in UPLOADs
-const deleteFiles = (files, callback) => {
-  var i = files.length;
-  files.forEach((filepath) => {
-    fs.unlink(filepath, function (err) {
-      i--;
-      if (err) {
-        callback(err);
-        return;
-      } else if (i <= 0) {
-        callback(null);
-      }
-    });
-  });
-};
-
+// Delete one file by ID
 router.delete("/blog-posts/:id", (req, res) => {
-  // console.log("req.isAuthenticated()", req.isAuthenticated());
-  // req.logOut();
-  // console.log("req.isAuthenticated()", req.isAuthenticated());
   if (!req.isAuthenticated()) {
     return res.status(401).json({
       result: "KO",
@@ -284,19 +217,15 @@ router.delete("/blog-posts/:id", (req, res) => {
     });
   }
   const id = req.params.id;
-  // Delete files in uploads
+  // Delete files on cloudinary
   Blogpost.findById(id, function (err, res) {
-    const filesToDelete = [
-      `public/upload/${res.image}`,
-      `public/upload/${res.smallImage}`,
-    ];
-    deleteFiles(filesToDelete, (err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("All files removed");
+    console.log("res.image", path.parse(res.image).name);
+    cloudinary.uploader.destroy(
+      process.env.FILE_UPLOAD_DIR + path.parse(res.image).name,
+      function (error, result) {
+        console.log(result, error);
       }
-    });
+    );
   });
   // Delete in DB
   Blogpost.findByIdAndDelete(id, (err, blogPostDeletedById) => {
@@ -309,7 +238,7 @@ router.delete("/blog-posts/:id", (req, res) => {
   });
 });
 
-// Delete several ids sent from front-end
+// Delete several files by IDs
 router.delete("/blog-posts", (req, res) => {
   if (!req.isAuthenticated()) {
     return res.status(401).json({
@@ -328,21 +257,16 @@ router.delete("/blog-posts", (req, res) => {
       console.log("Id not valid!");
     }
   });
-  // Delete files in uploads
+  // Delete files on cloudinary
   allIds.forEach((item) => {
     // console.log(item, index);
     Blogpost.findById(item, function (err, res) {
-      const filesToDelete = [
-        `public/upload/${res.image}`,
-        `public/upload/${res.smallImage}`,
-      ];
-      deleteFiles(filesToDelete, (err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("All files removed");
+      cloudinary.uploader.destroy(
+        process.env.FILE_UPLOAD_DIR + path.parse(res.image).name,
+        function (error, result) {
+          console.log(result, error);
         }
-      });
+      );
     });
   });
   // Delete in DB

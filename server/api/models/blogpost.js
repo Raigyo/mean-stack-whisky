@@ -4,7 +4,7 @@ const blogpostSchema = new mongoose.Schema({
   title: String,
   subTitle: String,
   image: String,
-  smallImage: String,
+  // smallImage: String,
   content: String,
   creator: String,
   createdOn: { type: Date, default: Date.now },

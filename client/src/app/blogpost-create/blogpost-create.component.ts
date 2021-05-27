@@ -23,6 +23,7 @@ export class BlogpostCreateComponent implements OnInit {
   dialogMessageLine1Txt = "";
   newImageName = "";
   currentUser = sessionStorage.getItem("currentUser");
+  loading = false;
 
   constructor(
     public dialog: MatDialog,
@@ -60,6 +61,7 @@ export class BlogpostCreateComponent implements OnInit {
   }
 
   createBlogpost(formDirective: FormGroupDirective): any {
+    this.loading = true;
     // Upload image to server and wait response for validity
     const inputEl: HTMLInputElement =
       this.el.nativeElement.querySelector("#image");
@@ -67,7 +69,6 @@ export class BlogpostCreateComponent implements OnInit {
     const formData = new FormData();
     if (fileCount > 0 && this.creationForm.valid) {
       console.log("add image", this.newImageName);
-      // formData.append("blogimage", inputEl.files!.item(0)!, this.newImageName);
       formData.append("blogimage", inputEl.files!.item(0)!);
       this.blogpostService.uploadImage(formData).subscribe(
         // If ok from server, we send all the data
@@ -138,6 +139,7 @@ export class BlogpostCreateComponent implements OnInit {
     this.blogpostService.dispatchBlogpostCreated(data._id);
     this.dialogTitleTxt = "Success";
     this.dialogMessageLine1Txt = "The article has been created!";
+    this.loading = false;
     this.displayModal();
   }
 

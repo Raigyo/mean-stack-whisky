@@ -31,6 +31,7 @@ export class BlogpostEditComponent implements OnInit {
   dialogMessageLine1Txt = "";
   newImageName = "";
   oldImage = "";
+  loading = false;
 
   constructor(
     public dialog: MatDialog,
@@ -48,7 +49,7 @@ export class BlogpostEditComponent implements OnInit {
     this.blogpostService.getBlogpostById(this.blogpostId).subscribe(
       (data) => {
         this.blogpost = data;
-        this.imagePreview.name = this.imagePath + this.blogpost.smallImage;
+        this.imagePreview.name = this.imagePath + this.blogpost.image;
         this.oldImage = this.imagePreview.name;
         // console.log("this.oldImage:", this.oldImage);
       },
@@ -68,6 +69,7 @@ export class BlogpostEditComponent implements OnInit {
   }
 
   updateBlogpost(formDirective: NgForm): any {
+    this.loading = true;
     const editedBlogpost = this.blogpost;
     console.log("editedBlogpost", editedBlogpost);
 
@@ -82,9 +84,10 @@ export class BlogpostEditComponent implements OnInit {
         (data) => {
           console.log("we are in data");
 
-          this.newImageName = data.file.filename;
+          this.newImageName = data.file.path;
+          console.log("updated image", data.file);
           editedBlogpost["image"] = this.newImageName;
-          editedBlogpost["smallImage"] = "small-" + this.newImageName;
+          // editedBlogpost["smallImage"] = "small-" + this.newImageName;
           this.blogpostService
             .updateBlogpost(this.blogpostId, editedBlogpost, this.oldImage)
             .subscribe(
@@ -141,6 +144,7 @@ export class BlogpostEditComponent implements OnInit {
     this.blogpostService.dispatchBlogpostCreated(data._id);
     this.dialogTitleTxt = "Success";
     this.dialogMessageLine1Txt = "The article has been updated!";
+    this.loading = false;
     this.displayModal();
   }
 
