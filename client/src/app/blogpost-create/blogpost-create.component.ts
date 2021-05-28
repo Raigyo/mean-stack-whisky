@@ -86,9 +86,10 @@ export class BlogpostCreateComponent implements OnInit {
         },
         // Else we display a msg to user using modal and reset image field
         (error) => {
+          this.loading = false;
           this.dialogTitleTxt = "Wrong image format";
           this.dialogMessageLine1Txt =
-            "Only .png, .gif, .jpg and .jpeg files under 2MB are allowed!";
+            "Only .png, .gif, .jpg and .jpeg files under 1MB are allowed!";
           this.displayModal();
           this.creationForm.patchValue({
             image: "",

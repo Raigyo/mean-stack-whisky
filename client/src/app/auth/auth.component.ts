@@ -37,6 +37,6 @@ export class AuthComponent implements OnInit {
   handleError(error: any) {
     console.error("NOT logged in", error);
     this.loading = false;
-    this.errorFromServer = `Error: ${error.error.msg}`;
+    this.errorFromServer = `${error.error.msg}`;
   }
 }

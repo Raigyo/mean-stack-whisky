@@ -22,6 +22,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatButtonModule } from "@angular/material/button";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { RegisterComponent } from "./register/register.component";
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { RegisterComponent } from "./register/register.component";
     MatDialogModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    FlexLayoutModule,
   ],
   providers: [
     AuthComponent,

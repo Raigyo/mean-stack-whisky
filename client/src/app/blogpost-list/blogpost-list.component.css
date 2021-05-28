@@ -1,14 +1,12 @@
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  /* justify-content: space-around; */
-  justify-content: space-between;
-  margin: 20px;
+.cardList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 10px;
 }
 
-.example-card {
+.cardListItem {
   margin-top: 5px;
+  padding: 10px;
   border: thick double #32a1ce;
   padding-bottom: 50px;
   border-radius: 10px;
@@ -16,18 +14,16 @@
 }
 
 mat-card .img-container {
-  margin: 10px;
-  width: 200px;
-  /*height: 200px;*/
-  line-height: 115px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 mat-card img {
+  /* max-width: 100%;
+  max-height: 100%; */
   max-width: 100%;
-  max-height: 100%;
-  vertical-align: middle;
-  /*border-radius: 50%;*/
+  height: 250px;
+  object-fit: cover;
 }
 
 .no-margin {

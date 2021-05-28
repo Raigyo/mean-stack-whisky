@@ -312,6 +312,10 @@ ng serve
 
 `npm i @kolkov/angular-editor`
 
+- [@angular/flex-layout](https://www.npmjs.com/package/@angular/flex-layout): https://www.npmjs.com/package/@angular/flex-layout.
+
+`npm i @angular/flex-layout`
+
 ## Heroku deploy
 
 ### Angular build

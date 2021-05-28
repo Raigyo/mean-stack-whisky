@@ -97,10 +97,10 @@ export class BlogpostEditComponent implements OnInit {
         },
         (error) => {
           console.log("error", error);
-
+          this.loading = false;
           this.dialogTitleTxt = "Wrong image format";
           this.dialogMessageLine1Txt =
-            "Only .png, .gif, .jpg and .jpeg files under 2MB are allowed!";
+            "Only .png, .gif, .jpg and .jpeg files under 1MB are allowed!";
           this.displayModal();
         }
       );
