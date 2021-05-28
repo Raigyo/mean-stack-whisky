@@ -1,12 +1,30 @@
-# MEAN Stack
+# MEAN Stack: Developers Blog
 
 April / May 2021
 
-> 🔨 From udemy: [La MEAN stack par la pratique - Samir Medjdoub / Code Concept](https://www.udemy.com/course/la-mean-stack-par-la-pratique/)
+> 🔨 Blog for developers using Node and Express, MongoDB and Mongoose as ODM, and Angular on Client side (MEAN Stack). From udemy: [La MEAN stack par la pratique - Samir Medjdoub / Code Concept](https://www.udemy.com/course/la-mean-stack-par-la-pratique/) with some improvements.
 
 ---
 
+Mean Stack refers to a collection of JavaScript technologies used to develop web applications. Therefore, from the client to the server and from server to database, everything is based on JavaScript. MEAN is a full-stack development toolkit used to develop a fast and robust web applications.
+
+MEAN is a user-friendly stack which is the ideal solution for building dynamic websites and applications. This free and open-source stack offers a quick and organized method for creating rapid prototypes for web-based applications.
+
+MEAN is comprised of four different technologies:
+
+- MongoDB express is a schemaless NoSQL database system
+- Express JS is a framework used to build web applications in Node
+- AngularJS is a JavaScript framework developed by Google
+- Node.js is a server-side JavaScript execution environment
+
 ![logo](_readme-img/logo.jpg)
+
+With this app, developers can register and login to add and share some articles about technologies, languages, librairies and so on.
+
+The homepage displays all the articles (extracts). When clicking on them, we have access to the complete article.
+Authors can add, delete or update their own articles. Admin have the right to do the same but for all authors.
+
+Angular is the part that manage displaying of the views according to events. But evything is Managed with the node server including session management (passport), password encryption and credential validation (Mongoose schemas) or user registrations, sending the articles of the author only or all to the admins, check size and mime of the images (Multer) or send errors to the client side.
 
 ## Test online
 
@@ -32,15 +50,19 @@ NB: due to the fact that the application is hosted on Heroku using external serv
 
 ## Test localy
 
+With file uploads and MongoDB on local:
+
 Clone and use [dev-version](https://github.com/Raigyo/mean-stack-whisky/tree/dev-version) branch.
+
+With cloudinary and MongoDB Atlas instead, clone main.
 
 **Start server**
 
-You need MongoDB installed.
+You need MongoDB installed for dev-version.
 
 `sudo service mongodb start`
 
-From root: `cd whisky-cms-ng-srv`
+From root: `cd server`
 
 `npm install`
 
@@ -50,13 +72,15 @@ The server should run at [http://localhost:3000](http://localhost:3000).
 
 **Start client app**
 
-From root: `cd whisky-cms-ng`
+From root: `cd client`
 
 `npm install`
 
 `npm start`
 
 The app should run at [http://localhost:4200](http://localhost:4200).
+
+Whatever the version, environment variables will have to be change from both server and client side following the exemples.
 
 ![logo](_readme-img/capture-api-more-than-1mb.png)
 
@@ -145,15 +169,21 @@ A subject is a special type of Observable that allows values to be multicasted t
 
 ### Pipeable Operators
 
-### Creation Operators
+A Pipeable Operator is a function that takes an Observable as its input and returns another Observable. It is a pure operation: the previous Observable stays unmodified. Subscribing to the output Observable will also subscribe to the input Observable.
 
 ### Higher-order Observables
 
+We define a higher-order Observable whenever we use data emitted from one Observable to emit another Observable. ... In the code above, we subscribe to the outer Observable but we don't subscribe to the inner Observable. Since Observables are lazy, they won't emit until subscribed.
+
 ### Modules
+
+In Angular, a module is a mechanism to group components, directives, pipes and services that are related, in such a way that can be combined with other modules to create an application. An Angular application can be thought of as a puzzle where each piece (or each module) is needed to be able to see the full picture.
 
 Ex: `ng g m material --flat` => Ceate module _\_src/app/material.module.ts_
 
 ### Components
+
+Components are the main building block for Angular applications. Each component consists of: An HTML template that declares what renders on the page. A Typescript class that defines behavior. A CSS selector that defines how the component is used in a template.
 
 Ex: `ng g c blogpost --skip-tests --module=app` => Create new blogpost component
 
@@ -164,6 +194,8 @@ We use interfaces instead classes because we don't need behaviors (methods).
 Ex: Interface _blogpost.ts_ in _\_src/app/models_
 
 ### Services
+
+Angular services are singleton objects that get instantiated only once during the lifetime of an application. ... The main objective of a service is to organize and share business logic, models, or data and functions with different components of an Angular application.
 
 Ex: `ng g s blogpost` => Create new blogpost service
 
@@ -199,7 +231,13 @@ EX: _./src/app/blogpost-create/blogpost-create.component.html_:
 
 ### @Injectable
 
+Dependency Injection is often more simply referred to as DI. The paradigm exists throughout Angular. It keeps code flexible, testable, and mutable. Classes can inherit external logic without knowing how to create it. Any consumers of those classes also do not need to know anything.
+
+DI saves classes and consumers alike from having to know more than necessary. Yet the code is as modular as it was before thanks to the mechanisms supporting DI in Angular.
+
 ### HTTP Interceptor
+
+The Angular HTTP Interceptor is introduced along with the new HTTPClientModule. The Interceptor helps us to modify the HTTP Request by intercepting it before the Request is sent to the back end. The Interceptor can be useful for adding custom headers to the outgoing request, logging the incoming response, etc.
 
 ### Serialization
 
@@ -320,6 +358,8 @@ ng serve
 
 ### Angular build
 
+`cd client`
+
 `ng build --prod --base-href --output-path ./../server/public/client`
 
 ### Server + app
@@ -353,6 +393,7 @@ If errors, check with:
 - [Node.js Authentication with Passport](https://blog.cloudboost.io/node-js-authentication-with-passport-4a125f264cd4).
 - [Using Argon2 with Node.js](https://www.youtube.com/watch?v=fEV3D0ZuBgM).
 - [Angular la difference entre ngoninit et constructor](http://pierreterrat.com/angular-ngoninit-et-constructor/).
+- [Angular Dependency Injection Explained with Examples](https://www.freecodecamp.org/news/angular-dependency-injection/).
 - [Structural Directives](https://medium.com/@rm.dev/angular-enhancing-your-templates-with-else-as-eb92f1cc4037).
 - [Comment gérer l’injection de dépendances dans angular?](http://pierreterrat.com/dependances-angular/).
 - [Angular Forms - Template Driven & Reactive Forms | Explain](https://www.calibraint.com/blog/angular-formsl).
