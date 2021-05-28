@@ -3,12 +3,12 @@
     <mat-card class="cardListItem" *ngFor="let bp of blogPostList$ | async">
       <a [routerLink]="['/blog-posts', bp._id]">
         <mat-card-header class="no-margin">
-          <mat-card-title>{{ bp.title }}</mat-card-title>
-          <mat-card-subtitle>{{ bp.subTitle }}</mat-card-subtitle>
+          <mat-card-title class="truncate-overflow-one-line">{{ bp.title }}</mat-card-title>
+          <mat-card-subtitle class="truncate-overflow-one-line">{{ bp.subTitle }}</mat-card-subtitle>
         </mat-card-header>
         <div class="img-container"><img [src]="imagePath + bp.image" alt="{{ bp.title }}"></div>
         <mat-card-content>
-          <p [innerHTML]=bp.content></p>
+          <p class="truncate-overflow" [innerHTML]=bp.content></p>
         </mat-card-content>
         <mat-card-footer>
           Created by: {{bp.creator}}
