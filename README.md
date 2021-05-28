@@ -229,6 +229,8 @@ EX: _./src/app/blogpost-create/blogpost-create.component.html_:
 
 ### Two way binding
 
+Two-way binding gives components in your application a way to share data. Use two-way binding to listen for events and update values simultaneously between parent and child components.
+
 ### @Injectable
 
 Dependency Injection is often more simply referred to as DI. The paradigm exists throughout Angular. It keeps code flexible, testable, and mutable. Classes can inherit external logic without knowing how to create it. Any consumers of those classes also do not need to know anything.
