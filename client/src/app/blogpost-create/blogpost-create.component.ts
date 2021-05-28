@@ -23,6 +23,7 @@ export class BlogpostCreateComponent implements OnInit {
   dialogMessageLine1Txt = "";
   newImageName = "";
   currentUser = sessionStorage.getItem("currentUser");
+  loading = false;
 
   constructor(
     public dialog: MatDialog,
@@ -60,6 +61,7 @@ export class BlogpostCreateComponent implements OnInit {
   }
 
   createBlogpost(formDirective: FormGroupDirective): any {
+    this.loading = true;
     // Upload image to server and wait response for validity
     const inputEl: HTMLInputElement =
       this.el.nativeElement.querySelector("#image");
@@ -67,7 +69,6 @@ export class BlogpostCreateComponent implements OnInit {
     const formData = new FormData();
     if (fileCount > 0 && this.creationForm.valid) {
       console.log("add image", this.newImageName);
-      // formData.append("blogimage", inputEl.files!.item(0)!, this.newImageName);
       formData.append("blogimage", inputEl.files!.item(0)!);
       this.blogpostService.uploadImage(formData).subscribe(
         // If ok from server, we send all the data
@@ -85,9 +86,10 @@ export class BlogpostCreateComponent implements OnInit {
         },
         // Else we display a msg to user using modal and reset image field
         (error) => {
+          this.loading = false;
           this.dialogTitleTxt = "Wrong image format";
           this.dialogMessageLine1Txt =
-            "Only .png, .gif, .jpg and .jpeg files under 2MB are allowed!";
+            "Only .png, .gif, .jpg and .jpeg files under 1MB are allowed!";
           this.displayModal();
           this.creationForm.patchValue({
             image: "",
@@ -111,6 +113,7 @@ export class BlogpostCreateComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: any) => {
       if (this.dialogTitleTxt === "You've been disconnected") {
+        sessionStorage.removeItem("currentUser");
         this.router.navigate(["/auth"]);
       }
       if (this.dialogTitleTxt === "Wrong image format") {
@@ -138,6 +141,7 @@ export class BlogpostCreateComponent implements OnInit {
     this.blogpostService.dispatchBlogpostCreated(data._id);
     this.dialogTitleTxt = "Success";
     this.dialogMessageLine1Txt = "The article has been created!";
+    this.loading = false;
     this.displayModal();
   }
 
@@ -147,6 +151,7 @@ export class BlogpostCreateComponent implements OnInit {
     error: any;
   }): number | any {
     console.error(error.error.msg);
+    this.loading = false;
     this.errorFromServer = `Error: ${error.status} - ${error.error.msg}`;
     if (error.status === 401 || error.status === 500) {
       this.dialogTitleTxt = "You've been disconnected";

@@ -16,10 +16,8 @@
   margin-left: 2em;
 }
 
-button {
-  opacity: 0.8;
-}
-
-button:hover {
-  opacity: 1;
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label:not(.mat-empty):not(.mat-form-field-empty) {
+  color: antiquewhite;
+  font-size: large;
 }

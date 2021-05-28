@@ -17,6 +17,12 @@ export class AdminComponent implements OnInit {
   errorFromServer = "";
   ngFormRef: any;
   currentUser = sessionStorage.getItem("currentUser");
+  loading!: boolean;
+  dialogTitleTxt = "";
+  dialogMessageLine1Txt = "";
+  button1MessageText = "";
+  button2MessageText = "";
+  selectedFiles = [];
 
   constructor(
     public dialog: MatDialog,
@@ -43,22 +49,40 @@ export class AdminComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: "26.5rem",
       data: {
-        dialogTitle: "You've been disconnected",
-        dialogMessageLine1: "Please login again",
-        // dialogMessageLine2: "Are you sure you want to leave the page?",
-        yesButtonText: "OK",
-        // noButtonText: "Stay on this Page",
+        dialogTitle: this.dialogTitleTxt,
+        dialogMessageLine1: this.dialogMessageLine1Txt,
+        yesButtonText: this.button1MessageText,
+        noButtonText: this.button2MessageText,
       },
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      sessionStorage.removeItem("currentUser");
-      this.router.navigate(["/auth"]);
+      if (this.dialogTitleTxt === "You've been disconnected") {
+        sessionStorage.removeItem("currentUser");
+        this.router.navigate(["/auth"]);
+      }
+      if (this.button1MessageText === "DELETE" && result === true) {
+        this.loading = true;
+        this.deleteBlogposts(this.selectedFiles);
+      }
     });
   }
 
+  deleteModal(selectedFiles: any) {
+    console.log("selectedFiles", selectedFiles);
+    this.selectedFiles = selectedFiles;
+    this.dialogTitleTxt = "You'are about to delete files";
+    this.dialogMessageLine1Txt = "Are you sure?";
+    this.button1MessageText = "DELETE";
+    this.button2MessageText = "Cancel";
+    this.displayModal();
+  }
+
   deleteBlogposts(selectedOptions: any[]) {
+    console.log("deleteBlogposts");
+
     const ids = selectedOptions.map((so) => so.value);
+
     if (ids.length === 1) {
       return this.blogpostService.deleteSingleBlogpost(ids[0]).subscribe(
         (data) => this.refresh(data),
@@ -74,6 +98,7 @@ export class AdminComponent implements OnInit {
 
   refresh(data: any) {
     // console.log("data", data);
+    this.loading = false;
     this.blogpostService.getBlogpostsAdminPage().subscribe((data) => {
       this.allBlogposts = data;
     });
@@ -81,8 +106,14 @@ export class AdminComponent implements OnInit {
 
   handleError(error: { status: number; statusText: any; error: any }) {
     console.error(error.error.msg);
+    this.loading = false;
     this.errorFromServer = `Error: ${error.status} - ${error.error.msg}`;
-    if (error.status === 401) this.displayModal();
+    if (error.status === 401 || error.status === 500) {
+      this.dialogTitleTxt = "You've been disconnected";
+      this.dialogMessageLine1Txt = "Please login again";
+      this.button1MessageText = "OK";
+      this.displayModal();
+    }
   }
 
   logout() {

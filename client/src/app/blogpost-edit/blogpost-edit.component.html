@@ -1,29 +1,30 @@
-<mat-card *ngIf="blogpost as bp; else loading">
-  <form #formDirective="ngForm" (ngSubmit)="updateBlogpost(formDirective)">
-    <div class="example-container">
-      <mat-form-field>
-        <input matInput placeholder="title" [(ngModel)]="bp.title" name="title" required>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="sub-title" [(ngModel)]="bp.subTitle" name="subTitle" required>
-      </mat-form-field>
-      <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="bp.content" name="content" required>
-      </angular-editor>
-      <label for="image">Choose image</label>
-      <div class="col-6">
-        <img [src]="imagePreview.name" alt="">
+<ng-container>
+  <mat-card *ngIf="blogpost as bp">
+    <form #formDirective="ngForm" (ngSubmit)="updateBlogpost(formDirective)">
+      <div class="example-container">
+        <mat-form-field>
+          <input matInput placeholder="title" [(ngModel)]="bp.title" name="title" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="sub-title" [(ngModel)]="bp.subTitle" name="subTitle" required>
+        </mat-form-field>
+        <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="bp.content" name="content" required>
+        </angular-editor>
+        <label for="image">Choose image</label>
+        <div class="col-6">
+          <img [src]="imagePreview.name" alt="">
+        </div>
+        <input #takeInput type="file" name="image" id="image" ngModel (change)="getFiles($event)">
+        <p>Only .png, .gif, .jpg and .jpeg files under 1MB are allowed!</p>
+        <div class="submitEdit">
+          <button mat-raised-button color="accent" type="submit" [disabled]="!formDirective.valid">Update blog
+            post</button>
+          <button mat-raised-button color="warn" routerLink="/admin" routerLinkActive="active">Cancel</button>
+        </div>
       </div>
-      <input #takeInput type="file" name="image" id="image" ngModel (change)="getFiles($event)">
-      <p>Only .png, .gif, .jpg and .jpeg files under 2MB are allowed!</p>
-      <div class="submitEdit">
-        <button mat-raised-button color="accent" type="submit" [disabled]="!formDirective.valid">Update blog
-          post</button>
-        <button mat-raised-button color="warn" routerLink="/admin" routerLinkActive="active">Cancel</button>
-      </div>
-    </div>
-  </form>
-</mat-card>
-
-<ng-template #loading>
-  loading...
-</ng-template>
+    </form>
+  </mat-card>
+</ng-container>
+<div class="loading-indicator" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</div>

@@ -3,7 +3,6 @@ import { ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
-import { v4 as uuid } from "uuid";
 
 import { environment } from "./../../environments/environment";
 import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
@@ -31,6 +30,7 @@ export class BlogpostEditComponent implements OnInit {
   dialogMessageLine1Txt = "";
   newImageName = "";
   oldImage = "";
+  loading = false;
 
   constructor(
     public dialog: MatDialog,
@@ -45,12 +45,13 @@ export class BlogpostEditComponent implements OnInit {
   ngOnInit() {
     // tslint:disable-next-line: no-non-null-assertion
     this.blogpostId = this.activatedRoute.snapshot.paramMap.get("id")!;
+    this.loading = true;
     this.blogpostService.getBlogpostById(this.blogpostId).subscribe(
       (data) => {
         this.blogpost = data;
-        this.imagePreview.name = this.imagePath + this.blogpost.smallImage;
+        this.imagePreview.name = this.imagePath + this.blogpost.image;
         this.oldImage = this.imagePreview.name;
-        // console.log("this.oldImage:", this.oldImage);
+        this.loading = false;
       },
       (error) => console.error(error)
     );
@@ -68,6 +69,7 @@ export class BlogpostEditComponent implements OnInit {
   }
 
   updateBlogpost(formDirective: NgForm): any {
+    this.loading = true;
     const editedBlogpost = this.blogpost;
     console.log("editedBlogpost", editedBlogpost);
 
@@ -82,9 +84,10 @@ export class BlogpostEditComponent implements OnInit {
         (data) => {
           console.log("we are in data");
 
-          this.newImageName = data.file.filename;
+          this.newImageName = data.file.path;
+          console.log("updated image", data.file);
           editedBlogpost["image"] = this.newImageName;
-          editedBlogpost["smallImage"] = "small-" + this.newImageName;
+          // editedBlogpost["smallImage"] = "small-" + this.newImageName;
           this.blogpostService
             .updateBlogpost(this.blogpostId, editedBlogpost, this.oldImage)
             .subscribe(
@@ -94,10 +97,10 @@ export class BlogpostEditComponent implements OnInit {
         },
         (error) => {
           console.log("error", error);
-
+          this.loading = false;
           this.dialogTitleTxt = "Wrong image format";
           this.dialogMessageLine1Txt =
-            "Only .png, .gif, .jpg and .jpeg files under 2MB are allowed!";
+            "Only .png, .gif, .jpg and .jpeg files under 1MB are allowed!";
           this.displayModal();
         }
       );
@@ -141,6 +144,7 @@ export class BlogpostEditComponent implements OnInit {
     this.blogpostService.dispatchBlogpostCreated(data._id);
     this.dialogTitleTxt = "Success";
     this.dialogMessageLine1Txt = "The article has been updated!";
+    this.loading = false;
     this.displayModal();
   }
 
@@ -160,6 +164,7 @@ export class BlogpostEditComponent implements OnInit {
     error: any;
   }): number | any {
     console.error(error.error.msg);
+    this.loading = false;
     this.errorFromServer = `Error: ${error.status} - ${error.error.msg}`;
     if (error.status === 401 || error.status === 500) {
       this.dialogTitleTxt = "You've been disconnected";

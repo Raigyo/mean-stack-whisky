@@ -1,21 +1,26 @@
-<div class="logoutButton"><button mat-raised-button color="warn" (click)="logout()">{{currentUser}} - Logout</button>
-</div>
-<!-- {{ errorFromServer }} -->
+<ng-container *ngIf="allBlogposts; else loading">
+  <div class="logoutButton"><button mat-raised-button color="warn" (click)="logout()">{{currentUser}} - Logout</button>
+  </div>
+  <!-- {{ errorFromServer }} -->
 
-<h2 class="mat-h2">Update / Delete</h2>
-<mat-selection-list #blogposts>
-  <mat-list-option *ngFor="let bp of allBlogposts" [value]="bp._id">
-    <a [routerLink]="['/admin/blog-posts/', bp._id]"><span>{{bp.title}} - {{bp.subTitle}} - {{bp.creator}}</span> </a>
-  </mat-list-option>
-</mat-selection-list>
+  <h2 class="mat-h2">Update / Delete</h2>
+  <mat-selection-list #blogposts>
+    <mat-list-option *ngFor="let bp of allBlogposts" [value]="bp._id">
+      <a [routerLink]="['/admin/blog-posts/', bp._id]"><span>{{bp.title}} - {{bp.subTitle}} - {{bp.creator}}</span> </a>
+    </mat-list-option>
+  </mat-selection-list>
+  <mat-card>Blog posts selected: {{blogposts.selectedOptions.selected.length}}</mat-card>
+  <mat-card>
+    <mat-card-actions class="deleteButton">
+      <!-- <button mat-raised-button color="warn" (click)="deleteBlogposts(blogposts.selectedOptions.selected)" -->
+      <button mat-raised-button color="warn" (click)="deleteModal(blogposts.selectedOptions.selected)"
+        *ngIf="blogposts.selectedOptions.selected.length>0">Delete</button>
+    </mat-card-actions>
+  </mat-card>
 
-<mat-card>Blog posts selected: {{blogposts.selectedOptions.selected.length}}</mat-card>
-<mat-card>
-  <mat-card-actions class="deleteButton">
-    <button mat-raised-button color="warn" (click)="deleteBlogposts(blogposts.selectedOptions.selected)"
-      *ngIf="blogposts.selectedOptions.selected.length>0">Delete</button>
-  </mat-card-actions>
-</mat-card>
 
-
-<app-blogpost-create></app-blogpost-create>
+  <app-blogpost-create></app-blogpost-create>
+</ng-container>
+<ng-template class="loading-indicator" #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>

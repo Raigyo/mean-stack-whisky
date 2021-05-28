@@ -2,12 +2,14 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
 import { Blogpost } from "../models/blogpost";
+import { environment } from "./../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class BlogpostService {
-  baseUrl = "http://localhost:3000/api/v1/blog-posts";
+  // baseUrl = "http://localhost:3000/api/v1/blog-posts";
+  baseURL = environment.baseUrlApi;
 
   // subject = obsevable with next method
   private blogpostCreated = new Subject<String>();
@@ -16,11 +18,11 @@ export class BlogpostService {
   constructor(private httpClient: HttpClient) {}
 
   createBlogpost(blogpost: Blogpost) {
-    return this.httpClient.post<Blogpost>(this.baseUrl, blogpost);
+    return this.httpClient.post<Blogpost>(this.baseURL, blogpost);
   }
 
   uploadImage(formData: FormData) {
-    return this.httpClient.post<any>(`${this.baseUrl}/images`, formData);
+    return this.httpClient.post<any>(`${this.baseURL}/images`, formData);
   }
 
   dispatchBlogpostCreated(id: string) {
@@ -35,24 +37,24 @@ export class BlogpostService {
   // method that returns an array (typed in schema)
   getBlogposts(): Observable<Blogpost[]> {
     // request that returns an observable with an array
-    return this.httpClient.get<Blogpost[]>(`${this.baseUrl}/`);
+    return this.httpClient.get<Blogpost[]>(`${this.baseURL}/`);
   }
 
   getBlogpostsAdminPage(): Observable<Blogpost[]> {
-    return this.httpClient.get<Blogpost[]>(`${this.baseUrl}/admin`);
+    return this.httpClient.get<Blogpost[]>(`${this.baseURL}/admin`);
   }
 
   getBlogpostById(id: string | null): Observable<Blogpost> {
-    return this.httpClient.get<Blogpost>(`${this.baseUrl}/${id}`);
+    return this.httpClient.get<Blogpost>(`${this.baseURL}/${id}`);
   }
 
   deleteSingleBlogpost(id: string) {
-    return this.httpClient.delete(`${this.baseUrl}/${id}`);
+    return this.httpClient.delete(`${this.baseURL}/${id}`);
   }
 
   deleteBlogposts(ids: string[]) {
     const allIds = ids.join(","); // array with ids list "id1,id2,id3"
-    return this.httpClient.delete(`${this.baseUrl}/?ids=${allIds}`); // query parameter with all ids
+    return this.httpClient.delete(`${this.baseURL}/?ids=${allIds}`); // query parameter with all ids
   }
 
   updateBlogpost(id: string, blogpost: Blogpost, oldImage: string) {
@@ -61,6 +63,6 @@ export class BlogpostService {
     // is here for exemple of how to use HttpParams
     let params = new HttpParams();
     params = params.append("secondParameter", oldImage);
-    return this.httpClient.put(`${this.baseUrl}/${id}`, blogpost, { params });
+    return this.httpClient.put(`${this.baseURL}/${id}`, blogpost, { params });
   }
 }

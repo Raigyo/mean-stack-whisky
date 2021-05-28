@@ -3,14 +3,6 @@
   padding-right: 10px;
 }
 
-button {
-  opacity: 0.8;
-}
-
-button:hover {
-  opacity: 1;
-}
-
 .mat-list-item:nth-child(2n + 1) {
   background-color: blueviolet;
 }
