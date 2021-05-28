@@ -12,12 +12,15 @@ export class AuthComponent implements OnInit {
   user: User = { username: "", password: "", status: "" };
   errorFromServer = "";
   userName = "";
+  loading = false;
+
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
   login() {
     // console.log("user", this.user);
+    this.loading = true;
     this.authService.login(this.user).subscribe(
       (data) => this.handleSuccess(data),
       (error) => this.handleError(error)
@@ -26,12 +29,14 @@ export class AuthComponent implements OnInit {
 
   handleSuccess(data: User) {
     console.log("logged in", this.user.username);
+    this.loading = false;
     sessionStorage.setItem("currentUser", this.user.username);
     this.router.navigate(["/admin"]);
   }
 
   handleError(error: any) {
     console.error("NOT logged in", error);
+    this.loading = false;
     this.errorFromServer = `Error: ${error.error.msg}`;
   }
 }

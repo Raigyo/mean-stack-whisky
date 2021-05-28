@@ -13,14 +13,6 @@
   margin: 8px 8px 8px 0;
 }
 
-button {
-  opacity: 0.8;
-}
-
-button:hover {
-  opacity: 1;
-}
-
 img {
   display: block;
   max-width: 230px;

@@ -1,3 +1,8 @@
 # To set in Heroku (settings / var )
 HOST=myapp.herokuapp.com
-MOONGOOSE_CONNECT=mongodb+srv:mongodb-atlas-url
+MOONGOOSE_CONNECT=mongodb+srv:<MONGODB_ATLAS_URL>
+FILE_UPLOAD_DIR=mean-dev-blog/
+CLOUDINARY_URL=<CLOUDINARY_URL>
+CLOUDINARY_CLOUD_NAME=<ACME>
+CLOUDINARY_API_KEY=<ACME>
+CLOUDINARY_API_SECRET=<ACME>

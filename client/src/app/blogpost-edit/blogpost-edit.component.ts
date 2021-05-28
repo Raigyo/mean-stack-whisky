@@ -164,6 +164,7 @@ export class BlogpostEditComponent implements OnInit {
     error: any;
   }): number | any {
     console.error(error.error.msg);
+    this.loading = false;
     this.errorFromServer = `Error: ${error.status} - ${error.error.msg}`;
     if (error.status === 401 || error.status === 500) {
       this.dialogTitleTxt = "You've been disconnected";

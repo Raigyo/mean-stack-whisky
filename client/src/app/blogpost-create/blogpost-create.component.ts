@@ -112,6 +112,7 @@ export class BlogpostCreateComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: any) => {
       if (this.dialogTitleTxt === "You've been disconnected") {
+        sessionStorage.removeItem("currentUser");
         this.router.navigate(["/auth"]);
       }
       if (this.dialogTitleTxt === "Wrong image format") {
@@ -149,6 +150,7 @@ export class BlogpostCreateComponent implements OnInit {
     error: any;
   }): number | any {
     console.error(error.error.msg);
+    this.loading = false;
     this.errorFromServer = `Error: ${error.status} - ${error.error.msg}`;
     if (error.status === 401 || error.status === 500) {
       this.dialogTitleTxt = "You've been disconnected";

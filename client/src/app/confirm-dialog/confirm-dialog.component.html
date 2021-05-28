@@ -7,9 +7,11 @@
     {{data.dialogMessageLine2}}</p> -->
 </div>
 <div class="dialog-footer">
-  <!-- <button class="standard-button dialog-button" mat-raised-button [mat-dialog-close]="false"
-    cdkFocusInitial>{{data.noButtonText}}</button> -->
+
 
   <button mat-raised-button color="primary" [mat-dialog-close]="true">{{data.yesButtonText}}</button>
   {{data.callbackAfterClosed}}
+
+  <button class="standard-button dialog-button" mat-raised-button [mat-dialog-close]="false"
+    cdkFocusInitial>{{data.noButtonText}}</button>
 </div>

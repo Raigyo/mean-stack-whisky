@@ -26,6 +26,14 @@ h2 {
   color: white;
 }
 
+button {
+  opacity: 0.8;
+}
+
+button:hover {
+  opacity: 1;
+}
+
 .loading-indicator {
   content: "";
   display: block;

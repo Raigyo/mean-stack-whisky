@@ -349,6 +349,7 @@ If errors, check with:
 - [Node.js Authentication with Passport](https://blog.cloudboost.io/node-js-authentication-with-passport-4a125f264cd4).
 - [Using Argon2 with Node.js](https://www.youtube.com/watch?v=fEV3D0ZuBgM).
 - [Angular la difference entre ngoninit et constructor](http://pierreterrat.com/angular-ngoninit-et-constructor/).
+- [Structural Directives](https://medium.com/@rm.dev/angular-enhancing-your-templates-with-else-as-eb92f1cc4037).
 - [Comment gérer l’injection de dépendances dans angular?](http://pierreterrat.com/dependances-angular/).
 - [Angular Forms - Template Driven & Reactive Forms | Explain](https://www.calibraint.com/blog/angular-formsl).
 - [Angular - Text interpolation](https://angular.io/guide/interpolation#text-interpolation).
