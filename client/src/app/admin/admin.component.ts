@@ -29,11 +29,7 @@ export class AdminComponent implements OnInit {
     private blogpostService: BlogpostService,
     private authService: AuthService,
     private router: Router
-  ) {
-    // setTimeout(() => {
-    //   this.loading = true;
-    // }, 5000);
-  }
+  ) {}
 
   ngOnInit() {
     if (!this.authService.isAuthenticated) {
@@ -52,13 +48,6 @@ export class AdminComponent implements OnInit {
   private displayModal() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: "26.5rem",
-      // data: {
-      //   dialogTitle: "You've been disconnected",
-      //   dialogMessageLine1: "Please login again",
-      //   // dialogMessageLine2: "Are you sure you want to leave the page?",
-      //   yesButtonText: "OK",
-      //   // noButtonText: "Stay on this Page",
-      // },
       data: {
         dialogTitle: this.dialogTitleTxt,
         dialogMessageLine1: this.dialogMessageLine1Txt,
@@ -73,6 +62,7 @@ export class AdminComponent implements OnInit {
         this.router.navigate(["/auth"]);
       }
       if (this.button1MessageText === "DELETE" && result === true) {
+        this.loading = true;
         this.deleteBlogposts(this.selectedFiles);
       }
     });
@@ -92,7 +82,7 @@ export class AdminComponent implements OnInit {
     console.log("deleteBlogposts");
 
     const ids = selectedOptions.map((so) => so.value);
-    this.loading = true;
+
     if (ids.length === 1) {
       return this.blogpostService.deleteSingleBlogpost(ids[0]).subscribe(
         (data) => this.refresh(data),

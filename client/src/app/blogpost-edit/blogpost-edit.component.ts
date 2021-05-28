@@ -3,7 +3,6 @@ import { ActivatedRoute } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
-import { v4 as uuid } from "uuid";
 
 import { environment } from "./../../environments/environment";
 import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
@@ -46,12 +45,13 @@ export class BlogpostEditComponent implements OnInit {
   ngOnInit() {
     // tslint:disable-next-line: no-non-null-assertion
     this.blogpostId = this.activatedRoute.snapshot.paramMap.get("id")!;
+    this.loading = true;
     this.blogpostService.getBlogpostById(this.blogpostId).subscribe(
       (data) => {
         this.blogpost = data;
         this.imagePreview.name = this.imagePath + this.blogpost.image;
         this.oldImage = this.imagePreview.name;
-        // console.log("this.oldImage:", this.oldImage);
+        this.loading = false;
       },
       (error) => console.error(error)
     );
