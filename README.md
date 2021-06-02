@@ -40,9 +40,9 @@ NB: due to the fact that the application is hosted on Heroku using external serv
 
 ![logo](_readme-img/capture-login.png)
 
-![logo](_readme-img/capture-hp.png)
+![logo](_readme-img/angular-mean-dev-blog-01.png)
 
-![logo](_readme-img/capture-admin-create.png)
+![logo](_readme-img/angular-mean-dev-blog-02.png)
 
 ![logo](_readme-img/capture-create-wrong.png)
 
