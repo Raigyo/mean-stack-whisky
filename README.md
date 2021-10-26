@@ -146,7 +146,7 @@ Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>
 
 ## Files and components: Back-end part
 
-- _./appjs_: Express and Mongo connection. Static folders. Session mudlewares
+- _./appjs_: Express and Mongo connection. Static folders. Session midlewares
 - _./utils/resize.js_: Helper to resize images.
 - _./api/models/blogpost.js_: Mongoose model for CRUD.
 - _./api/v1/index.js_: Routes + Api CRUD.
