@@ -157,7 +157,7 @@ Exemple to display detail of an object: `<div>{{blogPost$ | async | json}}</div>
 
 ### Observable
 
-An observable is source of ollections of multiple values pushed when we suscribe.
+An observable is source of collections of multiple values pushed when we suscribe.
 
 ### Observer
 
